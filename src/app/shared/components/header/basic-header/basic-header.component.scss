@@ -1,0 +1,129 @@
+// Header separator line between top and bottom sections
+.header-separator-line {
+  width: 100%;
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 0;
+}
+
+// Position search box next to logo with gap
+.navbar-top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  
+  app-logo {
+    flex-shrink: 0;
+    margin-right: 20px; // Gap between logo and search
+  }
+  
+  .middle-box {
+    flex: 1;
+    max-width: 600px;
+    margin-right: auto; // Push rightside-box to the right
+    
+    .search-box {
+      width: 100%;
+    }
+  }
+  
+  .rightside-box {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  
+  @media (max-width: 1199px) {
+    justify-content: space-between;
+    
+    .middle-box {
+      margin-right: 0;
+      max-width: none;
+      flex: 0 1 auto;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    app-logo {
+      margin-right: 12px;
+    }
+  }
+}
+
+// Vertical separators between header items
+.right-side-menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  
+  .right-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .header-separator {
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 30px;
+      background-color: #e0e0e0;
+      
+      @media (max-width: 767px) {
+        display: none;
+      }
+    }
+    
+    &:first-child {
+      &::before {
+        display: none;
+      }
+    }
+  }
+}
+
+// Ensure navigation menu displays horizontally
+.header-nav {
+  .header-nav-middle {
+    width: 100%;
+    
+    .main-nav {
+      width: 100%;
+      
+      .navbar-nav {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        
+        .nav-item {
+          white-space: nowrap;
+          flex-shrink: 0;
+          
+          .nav-link {
+            padding: 12px 16px;
+            font-size: 15px;
+            color: #333;
+            text-decoration: none;
+            
+            &:hover {
+              color: var(--theme-color);
+            }
+          }
+        }
+      }
+    }
+  }
+}

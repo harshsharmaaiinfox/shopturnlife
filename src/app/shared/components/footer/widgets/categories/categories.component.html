@@ -1,0 +1,5 @@
+<ul>
+    <li *ngFor="let category of categories">
+        <a [routerLink]="['/collections']" [queryParams]="{ category: getUrlFriendlySlug(category?.slug) }" class="text-content" [title]="category.name" [href]="'/collections?category=' + getUrlFriendlySlug(category?.slug)">{{ category.name }}</a>
+    </li>
+</ul>
