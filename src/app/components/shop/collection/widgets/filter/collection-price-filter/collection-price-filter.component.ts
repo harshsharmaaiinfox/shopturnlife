@@ -14,45 +14,33 @@ export class CollectionPriceFilterComponent {
   public prices = [
     {
       id: 1,
-      price: 100,
-      text: 'Below',
-      value: '100'
+      price: 500,
+      text: 'Under',
+      value: '0-500'
     },
     {
       id: 2,
-      minPrice: 100,
-      maxPrice: 200,
-      value: '0-200'
+      price: 800,
+      text: 'Under',
+      value: '0-800'
     },
     {
       id: 3,
-      minPrice: 200,
-      maxPrice: 400,
-      value: '200-400'
+      price: 1000,
+      text: 'Under',
+      value: '0-1000'
     },
     {
       id: 4,
-      minPrice: 400,
-      maxPrice: 600,
-      value: '400-600'
+      price: 1500,
+      text: 'Under',
+      value: '0-1500'
     },
     {
       id: 5,
-      minPrice: 600,
-      maxPrice: 800,
-      value: '600-800'
-    },
-    {
-      id: 6,
-      minPrice: 800,
-      maxPrice: 1000,
-      value: '800-1000'
-    },
-    {
-      id: 7,
-      price: 1000,
-      text: 'Above',
-      value: '1000'
+      price: 2000,
+      text: 'Under',
+      value: '0-2000'
     }
   ]
 
@@ -66,14 +54,21 @@ export class CollectionPriceFilterComponent {
     this.selectedPrices = this.filter['price'] ? this.filter['price'].split(',') : [];
   }
 
-  applyFilter(event: Event) {
-    const index = this.selectedPrices.indexOf((<HTMLInputElement>event?.target)?.value);  // checked and unchecked value
+  togglePriceFilter(value: string) {
+    const index = this.selectedPrices.indexOf(value);
 
-    if ((<HTMLInputElement>event?.target)?.checked)
-      this.selectedPrices.push((<HTMLInputElement>event?.target)?.value); // push in array cheked value
-    else
-      this.selectedPrices.splice(index,1);  // removed in array unchecked value
+    if (index !== -1) {
+      // Remove if already selected
+      this.selectedPrices.splice(index, 1);
+    } else {
+      // Add if not selected
+      this.selectedPrices.push(value);
+    }
 
+    this.applyFilter();
+  }
+
+  applyFilter() {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {

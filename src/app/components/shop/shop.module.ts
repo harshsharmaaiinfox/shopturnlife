@@ -196,6 +196,10 @@ import { CheckoutSuccessComponent } from './checkout/checkout-success/checkout-s
     NgxsModule.forRoot([
       BrandState
     ])
+  ],
+  exports: [
+    CollectionSidebarComponent,
+    CollectionProductsComponent
   ]
 })
 export class ShopModule { }

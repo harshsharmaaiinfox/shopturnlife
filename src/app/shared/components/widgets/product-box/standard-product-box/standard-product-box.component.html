@@ -1,8 +1,8 @@
 <div class="product-box product-white-bg">
     <div class="product-image">
-        <div class="label-tag" [ngClass]="product.is_sale_enable ? 'sale-tag' : product.is_featured ? 'featured-tag' : product.is_trending
-            ? 'trending-tag' : '' " *ngIf="product.is_trending || product.is_sale_enable || product.is_featured">
-            <span>{{ (product.is_sale_enable ? 'sale' : product.is_featured ? 'featured' : product.is_trending ? 'trending' : '' ) | translate }}</span>
+        <div class="label-tag" [ngClass]="product.is_sale_enable ? 'sale-tag' : product.is_trending
+            ? 'trending-tag' : '' " *ngIf="product.is_trending || product.is_sale_enable">
+            <span>{{ (product.is_sale_enable ? 'sale' : product.is_trending ? 'trending' : '' ) | translate }}</span>
         </div>
         <a [routerLink]="['/product/', product.slug]">
             <img [src]="product.product_thumbnail ?

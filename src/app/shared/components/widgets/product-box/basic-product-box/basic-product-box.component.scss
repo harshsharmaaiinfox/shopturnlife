@@ -1,3 +1,115 @@
 .hidden {
     display: none !important;
-  }
+}
+
+.product-box {
+    padding: 0 !important;
+    border: none !important;
+    overflow: visible;
+    
+    .product-image {
+        margin-bottom: 0;
+        padding: 0;
+        
+        img {
+            width: 100%;
+            display: block;
+        }
+    }
+    
+    .product-detail {
+        padding: 15px !important;
+        margin-top: 0 !important;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+        
+        a {
+            color: inherit;
+            text-decoration: none;
+            
+            &:hover {
+                color: inherit;
+            }
+        }
+        
+        .product-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: #333 !important;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: left;
+            width: 100%;
+            display: block;
+            
+            &:hover {
+                color: var(--theme-color) !important;
+            }
+        }
+        
+        .product-price {
+            margin: 10px 0;
+            display: flex;
+            align-items: start;
+            justify-content: start;
+            gap: 8px;
+            
+            .price {
+                font-size: 26px;
+                font-weight: 700;
+                color: #333 !important;
+            }
+            
+            .original-price {
+                font-size: 14px;
+                color: #999 !important;
+                text-decoration: line-through;
+            }
+        }
+        
+        .product-rating {
+            margin-top: 10px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            
+            .rating-badge {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                background-color: #22c55e !important;
+                color: white !important;
+                padding: 6px 14px;
+                border-radius: 6px;
+                font-size: 13px;
+                font-weight: 500;
+                min-width: fit-content;
+                height: auto;
+                
+                i {
+                    font-size: 14px;
+                    color: white !important;
+                    display: inline-flex;
+                    line-height: 1;
+                }
+                
+                .rating-value {
+                    color: white !important;
+                    font-weight: 600;
+                    line-height: 1;
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+    
+    .price {
+        margin-top: 0;
+        font-weight: 600;
+    }
+}

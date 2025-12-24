@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { Select, Store  } from '@ngxs/store';
 import { Observable, forkJoin } from 'rxjs';
-import { GetProductByIds } from '../../../shared/action/product.action';
+import { GetProductByIds, GetProducts } from '../../../shared/action/product.action';
 import { Denver } from '../../../shared/interface/theme.interface';
 import { ThemeOptionService } from '../../../shared/services/theme-option.service';
 import * as data from  '../../../shared/data/owl-carousel';
@@ -10,6 +10,7 @@ import { GetStores } from '../../../shared/action/store.action';
 import { ThemeOptionState } from '../../../shared/state/theme-option.state';
 import { Option } from '../../../shared/interface/theme-option.interface';
 import { ActivatedRoute } from '@angular/router';
+import { Params } from '../../../shared/interface/core.interface';
 
 @Component({
   selector: 'app-denver',
@@ -25,6 +26,21 @@ export class DenverComponent implements OnInit, AfterViewInit {
 
   public categorySlider = data.categorySlider9;
   public productSlider6ItemMargin = data.productSlider6ItemMargin;
+  
+  // Filter for collection page with sidebar
+  public filter: Params = {
+    'page': 1,
+    'paginate': 40,
+    'status': 1,
+    'field': 'created_at',
+    'price': '',
+    'category': '',
+    'tag': '',
+    'sort': 'asc',
+    'sortBy': 'asc',
+    'rating': '',
+    'attribute': ''
+  };
 
   constructor(private store: Store,
     private route: ActivatedRoute,
@@ -62,7 +78,26 @@ export class DenverComponent implements OnInit, AfterViewInit {
     }
 
     this.route.queryParams.subscribe(params => {
-      if(this.route.snapshot.data['data'].theme_option.productBox === 'digital'){
+      // Update filter based on query params
+      this.filter = {
+        'page': params['page'] ? params['page'] : 1,
+        'paginate': 40,
+        'status': 1,
+        'field': params['field'] ? params['field'] : 'created_at',
+        'price': params['price'] ? params['price'] : '',
+        'category': params['category'] ? params['category'] : '',
+        'tag': params['tag'] ? params['tag'] : '',
+        'sort': params['sort'] ? params['sort'] : 'asc',
+        'sortBy': params['sortBy'] ? params['sortBy'] : 'asc',
+        'rating': params['rating'] ? params['rating'] : '',
+        'attribute': params['attribute'] ? params['attribute'] : ''
+      };
+
+      // Load products for collection section with updated filters
+      this.store.dispatch(new GetProducts(this.filter));
+
+      // Handle product box slider settings
+      if(this.route.snapshot.data['data']?.theme_option?.productBox === 'digital'){
         if (this.productSlider6ItemMargin && this.productSlider6ItemMargin.responsive && this.productSlider6ItemMargin.responsive['1180']) {
           this.productSlider6ItemMargin = {...this.productSlider6ItemMargin, items: 4, responsive :{
             ...this.productSlider6ItemMargin.responsive,
@@ -81,7 +116,7 @@ export class DenverComponent implements OnInit, AfterViewInit {
           }}
         }
       }
-    })
+    });
   }
 
 }
