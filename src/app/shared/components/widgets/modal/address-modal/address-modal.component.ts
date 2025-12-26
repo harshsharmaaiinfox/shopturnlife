@@ -64,7 +64,7 @@ export class AddressModalComponent {
       city: new FormControl('', [Validators.required]),
       area: new FormControl('', [Validators.required]),
       pincode: new FormControl('', [Validators.required]),
-      country_code: new FormControl('91', [Validators.required]),
+      country_code: new FormControl('', [Validators.required]),
       phone: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]*$/)])
     })
 
@@ -312,14 +312,12 @@ export class AddressModalComponent {
         country_code: value?.country_code,
         phone: value?.phone
       });
-      setTimeout(() => this.form.controls['country_code'].setValue('91'), 300);
       setTimeout(() => this.form.controls['state_id'].setValue(value?.state_id), 400);
       setTimeout(() => this.form.controls['city'].setValue(value?.city), 600);
       setTimeout(() => this.form.controls['area'].setValue(value?.area), 800);
     } else {
       this.address = null;
       this.form.reset();
-      this.form?.controls?.['country_code'].setValue('91');
     }
   }
 
@@ -336,9 +334,6 @@ export class AddressModalComponent {
       this.store.dispatch(action).subscribe({
         complete: () => {
           this.form.reset();
-          if(!this.address){
-            this.form?.controls?.['country_code'].setValue('91');
-          }
         }
       });
     }

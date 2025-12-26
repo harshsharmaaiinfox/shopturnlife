@@ -44,13 +44,13 @@ export class ContactUsComponent implements OnInit {
   ngOnInit() {
     // Set unique SEO data for Contact Us page
     this.seoService.setSEOData({
-      title: 'Contact Stylexio – We\'re Here to Help You 24/7',
-      description: 'Get in touch with Stylexio customer support. We\'re available 24/7 to help with orders, products, and any questions you may have.',
-      keywords: 'contact us, customer support, help, stylexio contact, customer service',
-      canonicalUrl: 'https://stylexio.in/Contact-Us', // ✅ Canonical URL for SEO
-      url: 'https://stylexio.in/Contact-Us',
+      title: 'Contact Turn Life – We\'re Here to Help You',
+      description: 'Get in touch with Turn Life customer support. Contact us for orders, products, and any questions you may have.',
+      keywords: 'contact us, customer support, help, turn life contact, customer service, shopturnlife',
+      canonicalUrl: 'https://shopturnlife.com/Contact-Us',
+      url: 'https://shopturnlife.com/Contact-Us',
       type: 'website',
-      image: 'https://stylexio.in/assets/images/contact-us.jpg'
+      image: 'https://shopturnlife.com/assets/images/contact-us.jpg'
     });
   }
 

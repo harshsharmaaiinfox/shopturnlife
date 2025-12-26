@@ -1,228 +1,82 @@
-<!-- Fresh Vegetable Section Start -->
+<!-- Breadcrumb Section -->
 <app-breadcrumb [breadcrumb]="breadcrumb"></app-breadcrumb>
 
-<section class="fresh-vegetable-section section-lg-space" *ngIf="aboutUs?.about?.futures?.length && (aboutUs?.about?.content_left_image_url || aboutUs?.about?.content_right_image_url)">
-    <div class="container-fluid">
-        <div class="row gx-xl-5 gy-xl-0 g-3 ratio_148_1">
-            <div class="col-xl-6 col-12">
-                <div class="row g-sm-4 g-2">
-                    <div class="col-6">
-                        <div class="fresh-image-2">
-                            <div>
-                                <img [src]="storageURL + aboutUs?.about?.content_left_image_url" class="bg-img " alt="about us left content image">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="fresh-image">
-                            <div>
-                                <img [src]="storageURL + aboutUs?.about?.content_right_image_url" class="bg-img " alt="about us right content image">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-6 col-12">
-                <div class="fresh-contain p-center-left">
-                    <div>
-                        <div class="review-title">
-                            <h4>{{ aboutUs?.about?.sub_title }}</h4>
-                            <h2>{{ aboutUs?.about?.title }}</h2>
-                        </div>
-
-                        <div class="delivery-list">
-                            <p class="text-content">{{ aboutUs?.about?.description }}</p>
-
-                            <ul class="delivery-box">
-                                <li *ngFor="let futures of aboutUs?.about?.futures">
-                                    <div class="delivery-box">
-                                        <div class="delivery-icon">
-                                            <img [src]="storageURL + futures.icon" alt="icon">
-                                        </div>
-                                        <div class="delivery-detail">
-                                            <h5 class="text">{{ futures.title }}</h5>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Fresh Vegetable Section End -->
-
-<!-- Client Section Start -->
-<section class="client-section section-lg-space" *ngIf="aboutUs?.clients?.status && aboutUs?.clients?.content?.length && (aboutUs?.clients?.sub_title || aboutUs?.clients?.title)">
+<!-- About Us Section Start -->
+<section class="about-us-section section-b-space">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="about-us-title text-center">
-                    <h4>{{ aboutUs?.clients?.sub_title }}</h4>
-                    <h2 class="center">{{ aboutUs?.clients?.title }}</h2>
-                </div>
-                <div class="slider-dots">
-                <owl-carousel-o [options]="clientsOptions">
-                    <ng-template carouselSlide *ngFor="let client of aboutUs?.clients?.content">
-                    <div class="slider-3_1 product-wrapper">
-                        <div>
-                            <div class="clint-contain">
-                                <div class="client-icon">
-                                    <img [src]="storageURL + client.icon" [alt]="client.title">
-                                </div>
-                                <h4>{{ client.title }}</h4>
-                                <p>{{ client.description }}</p>
+                <div class="about-us-content">
+                    <h1 class="about-title">About Turn Life</h1>
+                    <div class="title-divider"></div>
+                    
+                    <div class="about-description">
+                        <p>
+                            Welcome to <strong>Turn Life</strong>, your trusted destination for quality fashion and lifestyle products. 
+                            We are committed to bringing you the latest trends in clothing, combining style, comfort, and affordability 
+                            in every piece we offer.
+                        </p>
+                        <p>
+                            At Turn Life, we believe that fashion is a form of self-expression. Our carefully curated collection 
+                            features a wide range of clothing options for every occasion. We strive to make fashion accessible to 
+                            everyone while maintaining the highest standards of quality and customer service.
+                        </p>
+                        <p>
+                            Our journey began with a simple vision: to make premium fashion accessible to everyone. We understand 
+                            that clothing is more than just fabric—it's a way to express your personality, boost your confidence, 
+                            and feel comfortable in your own skin. That's why every product in our collection is thoughtfully selected 
+                            to ensure it meets our high standards of quality, durability, and style.
+                        </p>
+                        <p>
+                            Whether you're looking for casual everyday wear, office attire, party outfits, or special occasion dresses, 
+                            Turn Life has something for everyone. Our diverse range includes trendy designs that keep you ahead of 
+                            fashion curves, classic pieces that never go out of style, and comfortable basics that form the foundation 
+                            of any wardrobe.
+                        </p>
+                        <p>
+                            What sets us apart is our unwavering commitment to customer satisfaction. We believe in building long-term 
+                            relationships with our customers by providing exceptional service, quality products, and competitive prices. 
+                            Our team works tirelessly to ensure that every shopping experience with Turn Life is smooth, enjoyable, 
+                            and memorable.
+                        </p>
+                        <p>
+                            We are proud to be part of the fashion industry and are constantly evolving to meet the changing needs and 
+                            preferences of our customers. From sourcing the finest materials to ensuring ethical manufacturing practices, 
+                            we take every step to deliver products that you can trust and love.
+                        </p>
+                        <p>
+                            Thank you for choosing Turn Life. We are here to help you turn your life around with style, confidence, 
+                            and comfort. Shop with us today and discover why thousands of customers trust us for their fashion needs.
+                        </p>
+                    </div>
+
+                    <div class="company-details">
+                        <h2 class="details-title">Company Information</h2>
+                        <div class="details-list">
+                            <div class="detail-item">
+                                <strong>Company Name:</strong>
+                                <span>TURN LIFE RETAIL PRIVATE LIMITED</span>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Email:</strong>
+                                <span><a href="mailto:info&#64;shopturnlife.com">info&#64;shopturnlife.com</a></span>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Website:</strong>
+                                <span><a href="https://shopturnlife.com" target="_blank" rel="noopener">shopturnlife.com</a></span>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Address:</strong>
+                                <span>
+                                    Office no. 11112 Gaur city mall, Sector-4, Greater Noida West, 
+                                    GB Nagar, UP-201318, India
+                                </span>
                             </div>
                         </div>
                     </div>
-                    </ng-template>
-                </owl-carousel-o>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- Client Section End -->
-
-<!-- Team Section Start -->
-<section class="team-section section-lg-space" *ngIf="aboutUs?.team?.status && aboutUs?.team?.members?.length && (aboutUs?.team?.sub_title || aboutUs?.team?.title)">
-    <div class="container-fluid">
-        <div class="about-us-title text-center">
-            <h4 class="text-content">{{ aboutUs?.team?.sub_title }}</h4>
-            <h2 class="center">{{ aboutUs?.team?.title }}</h2>
-        </div>
-        <div class="row">
-            <div class="col-12">
-            <div class="slider-dots">
-                <owl-carousel-o [options]="teamOptions">
-                <ng-template carouselSlide *ngFor="let team of aboutUs?.team?.members">
-                    <div>
-                        <div class="team-box">
-                            <div class="team-iamge">
-                                <img [src]="storageURL + team?.profile_image_url" class="img-fluid "
-                                    alt="team member profile photo">
-                            </div>
-                            <div class="team-name">
-                                <h3>{{ team?.name }}</h3>
-                                <h5>{{ team?.designation }}</h5>
-                                <p>{{ team?.description }}</p>
-                                <ul class="team-media">
-                                    <li *ngIf="team?.facebook">
-                                        <a href="{{ team?.facebook }}" class="fb-bg">
-                                            <i class="ri-facebook-fill"></i>
-                                        </a>
-                                    </li>
-
-                                    <li *ngIf="team?.pinterest">
-                                        <a href="{{ team?.pinterest }}" class="pint-bg">
-                                            <i class="ri-pinterest-fill"></i>
-                                        </a>
-                                    </li>
-
-                                    <li *ngIf="team?.twitter">
-                                        <a href="{{ team?.twitter }}" class="twitter-bg">
-                                            <i class="ri-twitter-fill"></i>
-                                        </a>
-                                    </li>
-
-                                    <li *ngIf="team?.instagram">
-                                        <a href="{{ team?.instagram }}" class="insta-bg">
-                                            <i class="ri-instagram-fill"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </ng-template>
-                </owl-carousel-o>
-            </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Team Section End -->
-
-<!-- Review Section Start -->
-<section class="review-section section-lg-space" *ngIf="aboutUs?.testimonial?.status && aboutUs?.testimonial?.reviews?.length && (aboutUs?.testimonial?.sub_title || aboutUs?.testimonial?.title)">
-    <div class="container-fluid" >
-        <div class="about-us-title text-center">
-            <h4 class="text-content">{{ aboutUs?.testimonial?.sub_title }}</h4>
-            <h2 class="center">{{ aboutUs?.testimonial?.title }}</h2>
-        </div>
-        <div class="row">
-            <div class="col-12">
-            <div class="slider-dots">
-                <owl-carousel-o [options]="testimonialsOptions">
-                    <ng-template carouselSlide *ngFor="let team of aboutUs?.testimonial?.reviews">
-                    <div>
-                        <div class="reviewer-box">
-                            <i class="ri-double-quotes-r"></i>
-                            <h3>{{ team?.title }}</h3>
-                            <p>"{{ team?.review }}"</p>
-                            <div class="reviewer-profile">
-                                <div class="reviewer-image">
-                                    <img [src]="storageURL + team?.profile_image_url" alt="image">
-                                </div>
-                                <div class="reviewer-name">
-                                    <h4>{{ team?.name }}</h4>
-                                    <h6>{{ team?.designation }}</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </ng-template>
-                </owl-carousel-o>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Review Section End -->
-
-<!-- Blog Section Start -->
-<section class="section-lg-space" *ngIf="aboutUs?.blog?.status">
-    <div class="container-fluid">
-        <div class="about-us-title text-center">
-            <h4 class="text-content">{{ 'our_blog' | translate }}</h4>
-            <h2 class="center">{{ 'our_latest_blog' | translate }}</h2>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="slider-dots">
-                    <owl-carousel-o [options]="blogOptions">
-                        <ng-template carouselSlide *ngFor="let blog of blogs">
-                        <div >
-                            <div class="blog-box">
-                                <div class="blog-box-image">
-                                    <div class="blog-image">
-                                        <a [routerLink]="['/blog/', blog.slug]">
-                                        <img [src]="blog.blog_thumbnail.original_url
-                                                ? blog.blog_thumbnail.original_url
-                                                : 'assets/images/blog.png'" [alt]="blog.title">
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <a [routerLink]="['/blog/', blog.slug]" class="blog-detail d-block">
-                                    <h6>{{ blog.created_by.name }}</h6>
-                                    <h5>{{ blog.title }}</h5>
-                                </a>
-                            </div>
-                        </div>
-                        </ng-template>
-                    </owl-carousel-o>
-                    <app-no-data
-                    [class]="'no-data-added bg-light'"
-                    [text]="'no_blog_found'"
-                    *ngIf="!blogs?.length">
-                    </app-no-data>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Blog Section End -->
+<!-- About Us Section End -->

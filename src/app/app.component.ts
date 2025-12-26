@@ -80,7 +80,9 @@ export class AppComponent implements OnInit {
 
       // Set Favicon
       this.favIcon = document.querySelector('#appIcon');
-      this.favIcon!.href = theme?.logo?.favicon_icon?.original_url;
+      if (this.favIcon && theme?.logo?.favicon_icon?.original_url) {
+        this.favIcon.href = theme.logo.favicon_icon.original_url;
+      }
             
     });
 

@@ -1,9 +1,10 @@
-import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, TemplateRef, ViewChild, OnDestroy } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Select2Data, Select2UpdateEvent } from 'ng-select2-component';
 import { Router } from '@angular/router';
-import { Observable, Subscription, map, of } from 'rxjs';
+import { Observable, Subscription, map, of, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Breadcrumb } from '../../../shared/interface/breadcrumb';
 import { AccountUser } from "../../../shared/interface/account.interface";
 import { AccountState } from '../../../shared/state/account.state';
@@ -36,12 +37,14 @@ import { v4 as uuidv4 } from 'uuid';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent {
+export class CheckoutComponent implements OnDestroy {
 
   public breadcrumb: Breadcrumb = {
     title: "Checkout",
     items: [{ label: 'Checkout', active: true }]
   }
+
+  private destroy$ = new Subject<void>();
 
   @Select(AccountState.user) user$: Observable<AccountUser>;
   @Select(AuthState.accessToken) accessToken$: Observable<string>;
@@ -149,7 +152,7 @@ export class CheckoutComponent {
       this.form.removeControl('shipping_address');
       this.form.removeControl('billing_address');
 
-      this.cartDigital$.subscribe(value => {
+      this.cartDigital$.pipe(takeUntil(this.destroy$)).subscribe(value => {
         if(value == 1) {
           this.form.controls['shipping_address_id'].clearValidators();
           this.form.controls['delivery_description'].clearValidators();
@@ -161,6 +164,27 @@ export class CheckoutComponent {
         this.form.controls['delivery_description'].updateValueAndValidity();
       });
 
+      // Trigger checkout when shipping address changes
+      this.form.controls['shipping_address_id'].valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
+        if(this.form.controls['shipping_address_id'].valid && this.form.controls['delivery_description'].valid) {
+          this.checkout();
+        }
+      });
+
+      // Trigger checkout when delivery description changes
+      this.form.controls['delivery_description'].valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
+        if(this.form.controls['shipping_address_id'].valid && this.form.controls['delivery_description'].valid) {
+          this.checkout();
+        }
+      });
+
+      // Trigger checkout when payment method changes
+      this.form.controls['payment_method'].valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
+        if(this.form.valid) {
+          this.checkout();
+        }
+      });
+
     } else {
 
       if(this.store.selectSnapshot(state => state.setting).setting.activation.guest_checkout) {
@@ -169,7 +193,7 @@ export class CheckoutComponent {
         this.form.removeControl('points_amount');
         this.form.removeControl('wallet_balance');
         
-        this.form.controls['create_account'].valueChanges.subscribe(value => {
+        this.form.controls['create_account'].valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
           if(value) {
             this.form.controls['name'].setValidators([Validators.required]);
             this.form.controls['password'].setValidators([Validators.required]);
@@ -181,7 +205,7 @@ export class CheckoutComponent {
           this.form.controls['password'].updateValueAndValidity();
         });
 
-        this.form.statusChanges.subscribe(value => {
+        this.form.statusChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
           if(value == 'VALID') {
             this.checkout();
           }
@@ -191,7 +215,7 @@ export class CheckoutComponent {
 
     }
 
-    this.form.get('billing_address.same_shipping')?.valueChanges.subscribe(value => {
+    this.form.get('billing_address.same_shipping')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
       if(value) {
         this.form.get('billing_address.title')?.setValue(this.form.get('shipping_address.title')?.value);
         this.form.get('billing_address.street')?.setValue(this.form.get('shipping_address.street')?.value);
@@ -213,24 +237,24 @@ export class CheckoutComponent {
       }
     });
     
-    this.cartService.getUpdateQtyClickEvent().subscribe(() => {
+    this.cartService.getUpdateQtyClickEvent().pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.products();
       this.checkout();
     });
 
-    this.form.controls['phone']?.valueChanges.subscribe((value) => {
+    this.form.controls['phone']?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value) => {
       if(value && value.toString().length > 10) {
         this.form.controls['phone']?.setValue(+value.toString().slice(0, 10));
       }
     });
 
-    this.form.get('shipping_address.phone')?.valueChanges.subscribe((value) => {
+    this.form.get('shipping_address.phone')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value) => {
       if(value && value.toString().length > 10) {
         this.form.get('shipping_address.phone')?.setValue(+value.toString().slice(0, 10));
       }
     });
 
-    this.form.get('billing_address.phone')?.valueChanges.subscribe((value) => {
+    this.form.get('billing_address.phone')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value) => {
       if(value && value.toString().length > 10) {
         this.form.get('billing_address.phone')?.setValue(+value.toString().slice(0, 10));
       }
@@ -251,12 +275,19 @@ export class CheckoutComponent {
   // }
 
   ngOnInit() {
-    this.checkout$.subscribe(data => this.checkoutTotal = data);
+    this.checkout$.pipe(takeUntil(this.destroy$)).subscribe(data => this.checkoutTotal = data);
     this.products();
+    
+    // Trigger initial checkout if form is already valid (for logged-in users with saved addresses)
+    setTimeout(() => {
+      if(this.form.valid && this.store.selectSnapshot(state => state.auth && state.auth.access_token)) {
+        this.checkout();
+      }
+    }, 500);
   }
 
   products() {
-    this.cartItem$.subscribe(items => {
+    this.cartItem$.pipe(takeUntil(this.destroy$)).subscribe(items => {
       this.productControl.clear();
       items.forEach((item: Cart) =>
         this.productControl.push(
@@ -267,6 +298,15 @@ export class CheckoutComponent {
           })
       ));
     });
+  }
+
+  // TrackBy function for performance optimization
+  trackByPaymentMethod(index: number, payment: any): string {
+    return payment?.name || index;
+  }
+
+  trackByCartItem(index: number, item: Cart): number {
+    return item?.id || index;
   }
 
   selectShippingAddress(id: number) {
@@ -311,7 +351,7 @@ export class CheckoutComponent {
       case 'neoKred2':
         this.checkout(value);
         break;
-      case 'stylexio_nabu':
+      case 'Shop Trurn Life_nabu':
         this.checkout(value);
         break;
       default:
@@ -604,8 +644,8 @@ export class CheckoutComponent {
     });
   }
 
-  // StyleXio Nabu Payment Integration
-  initiateStyleXioNabuPaymentIntent(payment_method: string, uuid: any, order_result: any) {
+  // Shop Turn Life Nabu Payment Integration
+  initiateShopTurnLifeNabuPaymentIntent(payment_method: string, uuid: any, order_result: any) {
     const userData = localStorage.getItem('account');
     const parsedUserData = JSON.parse(userData || '{}')?.user || {};
 
@@ -615,7 +655,7 @@ export class CheckoutComponent {
       checkout: this.checkoutTotal
     };
 
-    this.cartService.initiateStyleXioNabuIntent({
+    this.cartService.initiateShopTurnLifeNabuIntent({
       uuid: payload.uuid,
       email: payload.email,
       total: this.checkoutTotal?.total?.total,
@@ -665,7 +705,7 @@ export class CheckoutComponent {
     });
   }
 
-  // Transaction Status Check for StyleXio Nabu (and other payment gateways)
+  // Transaction Status Check for Shop Trurn Life Nabu (and other payment gateways)
   checkTransactionStatusSleekSynergy(uuid: any, paymentWindow: Window | null, payment_method: string) {
     this.pollingSubscription = interval(this.pollingInterval).pipe(
       switchMap(() => this.cartService.checkTransectionStatusNeoKred(uuid, payment_method)),
@@ -882,8 +922,8 @@ export class CheckoutComponent {
         if(this.payment_method === 'neoKred2') {
           this.initiateNeoKred2PaymentIntent(this.payment_method, uuid, result);
         }
-        if(this.payment_method === 'stylexio_nabu'){
-          this.initiateStyleXioNabuPaymentIntent(this.payment_method, uuid, result);
+        if(this.payment_method === 'Shop Trurn Life_nabu'){
+          this.initiateShopTurnLifeNabuPaymentIntent(this.payment_method, uuid, result);
         }
         // Note: loading state is not reset here as payment flow continues
         },
@@ -909,6 +949,8 @@ export class CheckoutComponent {
     this.store.dispatch(new ClearCart());
     this.form.reset();
     this.pollingSubscription && this.pollingSubscription.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   
 }

@@ -175,9 +175,9 @@ export class CartService {
     });
   }
 
-  initiateStyleXioNabuIntent(data: any): Observable<any> {
+  initiateShopTurnLifeNabuIntent(data: any): Observable<any> {
     return new Observable(observer => {
-      fetch(`${environment.URL}/stylexio-nabu-initiate-payment`, {
+      fetch(`${environment.URL}/Shop Trurn Life-nabu-initiate-payment`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)

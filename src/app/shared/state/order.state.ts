@@ -114,10 +114,10 @@ export class OrderState {
     return this.orderService.placeOrder(action?.payload).pipe(
       tap({
         next: result => {
-          if((action.payload.payment_method == 'cod' || action.payload.payment_method == 'cash_free' || action.payload.payment_method == 'sub_paisa' || action.payload.payment_method == 'zyaada_pay' || action.payload.payment_method == 'bank_transfer' || action.payload.payment_method == 'neoKred' || action.payload.payment_method == 'ease_buzz' || action.payload.payment_method == 'neoKred2' || action.payload.payment_method == 'stylexio_nabu') && !result.is_guest) {
+          if((action.payload.payment_method == 'cod' || action.payload.payment_method == 'cash_free' || action.payload.payment_method == 'sub_paisa' || action.payload.payment_method == 'zyaada_pay' || action.payload.payment_method == 'bank_transfer' || action.payload.payment_method == 'neoKred' || action.payload.payment_method == 'ease_buzz' || action.payload.payment_method == 'neoKred2' || action.payload.payment_method == 'Shop Trurn Life_nabu') && !result.is_guest) {
             this.router.navigateByUrl(`/account/order/details/${result.order_number}`);
             // setTimeout(() => { window.location.reload() }, 1000);
-          } else if((action.payload.payment_method == 'cod' || action.payload.payment_method == 'cash_free' || action.payload.payment_method == 'sub_paisa' || action.payload.payment_method == 'zyaada_pay' || action.payload.payment_method == 'bank_transfer' || action.payload.payment_method == 'neoKred' || action.payload.payment_method == 'ease_buzz' || action.payload.payment_method == 'neoKred2' || action.payload.payment_method == 'stylexio_nabu') && result.is_guest) {
+          } else if((action.payload.payment_method == 'cod' || action.payload.payment_method == 'cash_free' || action.payload.payment_method == 'sub_paisa' || action.payload.payment_method == 'zyaada_pay' || action.payload.payment_method == 'bank_transfer' || action.payload.payment_method == 'neoKred' || action.payload.payment_method == 'ease_buzz' || action.payload.payment_method == 'neoKred2' || action.payload.payment_method == 'Shop Trurn Life_nabu') && result.is_guest) {
             this.router.navigate([ 'order/details' ], { queryParams: { order_number: result.order_number, email_or_phone: action?.payload.email } });
             // setTimeout(() => { window.location.reload() }, 1000);
           } else {
@@ -176,13 +176,23 @@ export class OrderState {
     return this.orderService.downloadInvoice(action.payload).pipe(
       tap({
         next: result => {
-          const blob = new Blob([result], { type: 'pdf' });
-          const url = window.URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = `invoice-${action.payload['order_number']}.pdf`;
-          link.click();
-          window.URL.revokeObjectURL(url);
+          if (result && typeof document !== 'undefined') {
+            try {
+              const blob = new Blob([result], { type: 'pdf' });
+              const url = window.URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              if (link) {
+                link.href = url;
+                link.download = `invoice-${action.payload['order_number']}.pdf`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+              }
+            } catch (error) {
+              console.error('Error downloading invoice:', error);
+            }
+          }
         },
         error: err => { 
           throw new Error(err?.error?.message);

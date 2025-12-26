@@ -27,4 +27,8 @@ export class PaymentBlockComponent {
     this.selectPaymentMethod.emit(value);
   }
 
+  trackByPaymentMethod(index: number, payment: any): string {
+    return payment?.name || index.toString();
+  }
+
 }

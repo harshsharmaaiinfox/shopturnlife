@@ -24,8 +24,8 @@ export class LoginComponent {
 
   public form: FormGroup;
   public breadcrumb: Breadcrumb = {
-    title: "Log in",
-    items: [{ label: 'Log in', active: true }]
+    title: "Sign In",
+    items: [{ label: 'Sign In', active: true }]
   }
   public reCaptcha: boolean = true;
 

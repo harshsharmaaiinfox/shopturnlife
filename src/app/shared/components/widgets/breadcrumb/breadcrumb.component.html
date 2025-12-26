@@ -1,22 +1,15 @@
-<section class="breadcrumb-section pt-0" *ngIf="breadcrumb">
+<section class="breadcrumb-section-simple" *ngIf="breadcrumb">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="breadcrumb-contain">
-                    <h2 class="">{{ breadcrumb.title | titleCase }}</h2>
-                    <nav>
-                        <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item">
-                                <a [routerLink]="['/']">
-                                    <i class="ri-home-3-fill"></i>
-                                </a>
-                            </li>
-                            <li class="breadcrumb-item" [class.active]="item?.active" *ngFor="let item of breadcrumb?.items">
-                                {{ item?.label! | titleCase }}
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
+                <nav class="breadcrumb-simple">
+                    <a [routerLink]="['/']" class="breadcrumb-item-link">{{ 'Home' | translate }}</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <ng-container *ngFor="let item of breadcrumb?.items; let last = last">
+                        <span class="breadcrumb-item" [class.active]="last">{{ item?.label! | titleCase }}</span>
+                        <span class="breadcrumb-separator" *ngIf="!last">/</span>
+                    </ng-container>
+                </nav>
             </div>
         </div>
     </div>

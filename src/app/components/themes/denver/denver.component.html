@@ -252,7 +252,7 @@
 </section>
 <!-- Collection Page Section with Filters End -->
 
-<!-- Stylexio Banner End -->
+<!-- Shop Trurn Life Banner End -->
 <!-- Category Section Start -->
 <section *ngIf="data?.content?.categories_icon_list?.status">
     <div class="container-fluid">
@@ -262,18 +262,3 @@
 </section>
 <!-- Category Section End -->
 
-
-
-
-<!-- Deal Section Start -->
-<section class="product-section product-section-3" *ngIf="data?.content?.products_list_1?.status">
-    <div class="container-fluid">
-        <div>
-            <app-title [title]="data?.content?.products_list_1?.title" [style]="'simple'" [headingLevel]="'h1'" class="h1-text">
-            </app-title>
-            <app-theme-product [productIds]="data?.content?.products_list_1?.product_ids || []" [style]="'horizontal'" [slider]="true" [sliderOption]="productSlider6ItemMargin" [productStyle]="'product-solid'" [boxClass]="'product-box-bg'">
-            </app-theme-product>
-        </div>
-    </div>
-</section>
-<!-- Deal Section End -->

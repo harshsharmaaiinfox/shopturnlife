@@ -44,9 +44,9 @@ export class ThemesComponent implements OnInit {
     
     // Set additional homepage-specific SEO data
     this.seoService.setSEOData({
-      canonicalUrl: 'https://stylexio.in/',
-      url: 'https://stylexio.in/',
-      image: 'https://stylexio.in/assets/images/hero-banner.jpg'
+      canonicalUrl: 'https://Shop Trurn Life.in/',
+      url: 'https://Shop Trurn Life.in/',
+      image: 'https://Shop Trurn Life.in/assets/images/hero-banner.jpg'
     });
   }
   

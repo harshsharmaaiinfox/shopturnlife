@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -10,6 +10,7 @@ import { Option } from '../../../../../../shared/interface/theme-option.interfac
 import { AddToWishlist, DeleteWishlist } from '../../../../../../shared/action/wishlist.action';
 import { AddToCompare } from '../../../../../../shared/action/compare.action';
 import { WishlistState } from '../../../../../../shared/state/wishlist.state';
+import { CartPopupModalComponent } from '../../../../../../shared/components/widgets/modal/cart-popup-modal/cart-popup-modal.component';
 
 @Component({
   selector: 'app-product-contain',
@@ -24,6 +25,8 @@ export class ProductContainComponent {
 
   @Select(CartState.cartItems) cartItem$: Observable<Cart[]>;
   @Select(WishlistState.wishlistIds) wishlistIds$: Observable<number[]>;
+
+  @ViewChild("cartPopupModal") cartPopupModal: CartPopupModalComponent;
 
   public cartItem: Cart | null;
   public productQty: number = 1;
@@ -97,6 +100,13 @@ export class ProductContainComponent {
         complete: () => {
           if(buyNow) {
             this.router.navigate(['/checkout']);
+          } else {
+            // Open cart popup modal after adding to cart
+            setTimeout(() => {
+              if (this.cartPopupModal) {
+                this.cartPopupModal.openModal();
+              }
+            }, 200);
           }
         }
       });

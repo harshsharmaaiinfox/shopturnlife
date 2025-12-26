@@ -160,15 +160,21 @@ export class SeoService {
     this.meta.addTag({ rel: 'canonical', href: url });
     
     // For SSR compatibility, also set canonical tag directly in document
-    if (isPlatformServer(this.platformId)) {
-      let canonicalTag = this.document.querySelector('link[rel="canonical"]');
-      if (canonicalTag) {
-        canonicalTag.setAttribute('href', url);
-      } else {
-        canonicalTag = this.document.createElement('link');
-        canonicalTag.setAttribute('rel', 'canonical');
-        canonicalTag.setAttribute('href', url);
-        this.document.head.appendChild(canonicalTag);
+    if (isPlatformServer(this.platformId) && this.document) {
+      try {
+        let canonicalTag = this.document.querySelector('link[rel="canonical"]');
+        if (canonicalTag) {
+          canonicalTag.setAttribute('href', url);
+        } else {
+          canonicalTag = this.document.createElement('link');
+          if (canonicalTag && this.document.head) {
+            canonicalTag.setAttribute('rel', 'canonical');
+            canonicalTag.setAttribute('href', url);
+            this.document.head.appendChild(canonicalTag);
+          }
+        }
+      } catch (error) {
+        console.error('Error setting canonical tag:', error);
       }
     }
     
@@ -226,7 +232,7 @@ export class SeoService {
       "image": images.length > 0 ? images : undefined,
       "brand": {
         "@type": "Brand",
-        "name": product.brand?.name || "Stylexio"
+        "name": product.brand?.name || "Shop Trurn Life"
       },
       "offers": {
         "@type": "Offer",
@@ -237,7 +243,7 @@ export class SeoService {
         "itemCondition": "https://schema.org/NewCondition",
         "seller": {
           "@type": "Organization",
-          "name": "Stylexio"
+          "name": "Shop Trurn Life"
         }
       }
     };
@@ -261,8 +267,8 @@ export class SeoService {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Ecomus",
-      "url": "https://stylexio.in",
-      "logo": "https://stylexio.in/assets/images/logo.png",
+      "url": "https://Shop Trurn Life.in",
+      "logo": "https://Shop Trurn Life.in/assets/images/logo.png",
       "sameAs": [
         "https://facebook.com/ecomus",
         "https://twitter.com/ecomus",
@@ -315,7 +321,7 @@ export class SeoService {
         "name": "Ecomus",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://stylexio.in/assets/images/logo.png"
+          "url": "https://Shop Trurn Life.in/assets/images/logo.png"
         }
       },
       "datePublished": article.publishedDate,
@@ -433,11 +439,11 @@ export class SeoService {
     
     console.log('✅ Setting default SEO for non-product page:', currentUrl);
     this.setSEOData({
-      title: 'Stylexio Premium Mens and Womens Fashion Online',
-      description: 'Discover new season shirts jackets suits denim and more at Stylexio. Premium quality fast shipping across India COD and easy returns.',
-      keywords: 'activewear, gym wear, joggers, men\'s clothes, women\'s clothes, stylish outfits, comfort fit, performance clothing, Stylexio',
+      title: 'Shop Trurn Life Premium Mens and Womens Fashion Online',
+      description: 'Discover new season shirts jackets suits denim and more at Shop Trurn Life. Premium quality fast shipping across India COD and easy returns.',
+      keywords: 'activewear, gym wear, joggers, men\'s clothes, women\'s clothes, stylish outfits, comfort fit, performance clothing, Shop Trurn Life',
       type: 'website',
-      url: 'https://stylexio.in/'
+      url: 'https://Shop Trurn Life.in/'
     });
   }
 
@@ -455,7 +461,7 @@ export class SeoService {
    * Set SEO data specifically for product pages
    * This method provides a convenient way to set all product-related SEO data
    */
-  setProductPageSEO(product: any, productSlug: string | null, baseUrl: string = 'https://stylexio.in'): void {
+  setProductPageSEO(product: any, productSlug: string | null, baseUrl: string = 'https://Shop Trurn Life.in'): void {
     // Handle null/undefined slug
     const slug = productSlug || product.slug || `product-${product.id}`;
     const productUrl = `${baseUrl}/product/${slug}`;
@@ -474,7 +480,7 @@ export class SeoService {
       url: productUrl,
       canonicalUrl: product.canonical_url || productUrl,
       type: 'product',
-      author: 'Stylexio'
+      author: 'Shop Trurn Life'
     });
 
     // Set product structured data for rich snippets
@@ -514,8 +520,8 @@ export class SeoService {
     const category = product.categories?.[0]?.name ? ` ${product.categories[0].name}` : '';
     const price = product.sale_price ? `₹${product.sale_price}` : `₹${product.price}`;
     
-    // Example: "Nike Air Max 270 Men's Running Shoes - ₹8,999 | Stylexio"
-    return `${brand}${product.name}${category} - ${price} | Stylexio`;
+    // Example: "Nike Air Max 270 Men's Running Shoes - ₹8,999 | Shop Trurn Life"
+    return `${brand}${product.name}${category} - ${price} | Shop Trurn Life`;
   }
 
   /**
@@ -531,7 +537,7 @@ export class SeoService {
     let rawDescription: string = product.meta_description
       || product.short_description
       || product.description
-      || `Shop ${brand}${product.name}${category} online at Stylexio. Premium quality, great prices, fast delivery.${discount}`;
+      || `Shop ${brand}${product.name}${category} online at Shop Trurn Life. Premium quality, great prices, fast delivery.${discount}`;
 
     // Sanitize sizing/measurement notes and HTML, normalize whitespace
     rawDescription = this.stripHtmlTags(this.sanitizeProductDescription(rawDescription));
@@ -566,7 +572,7 @@ export class SeoService {
 
     // If description becomes empty after sanitization, fallback to a generic line
     if (!sanitized) {
-      sanitized = 'Premium quality, great prices, fast delivery from Stylexio.';
+      sanitized = 'Premium quality, great prices, fast delivery from Shop Trurn Life.';
     }
 
     return sanitized;
@@ -601,7 +607,7 @@ export class SeoService {
     }
     
     // Add generic keywords
-    keywords.push('buy online', 'Stylexio', 'fashion', 'clothing');
+    keywords.push('buy online', 'Shop Trurn Life', 'fashion', 'clothing');
     
     return keywords.join(', ');
   }

@@ -5,7 +5,7 @@
     [class]="'btn p-0 position-relative simple-cart-icon'"
     [spinner]="false"
     [id]="'cart_sidebar_btn'"
-    (click)="cartStyle == 'cart_sidebar' && cartToggle(true)">
+    (click)="navigateToCart()">
       <i class="ri-shopping-cart-line"></i>
       <span class="position-absolute top-0 start-100 translate-middle badge" *ngIf="(cartItem$ | async)?.length">
           {{ (cartItem$ | async)?.length }} <span class="visually-hidden">{{ 'unread_messages' | translate }}</span>
@@ -16,7 +16,7 @@
 
 <!-- Cart Style Classic -->
 <a href="javascript:void(0)" class="header-icon swap-icon"
-    (click)="cartStyle == 'cart_sidebar' && cartToggle(true)"
+    (click)="navigateToCart()"
     *ngIf="style == 'classic'">
     <small class="badge-number badge-light" *ngIf="(cartItem$ | async)?.length">
         {{ (cartItem$ | async)?.length }}

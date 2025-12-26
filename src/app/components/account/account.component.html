@@ -1,13 +1,13 @@
-<app-breadcrumb [breadcrumb]="breadcrumb"></app-breadcrumb>
-<section class="user-dashboard-section section-b-space">
+<app-breadcrumb [breadcrumb]="breadcrumb" *ngIf="showSidebar"></app-breadcrumb>
+<section class="user-dashboard-section section-b-space p-0" [class.bank-details-full-width]="!showSidebar" [class.orders-full-width]="!showSidebar" [class.order-details-full-width]="!showSidebar" [class.addresses-full-width]="!showSidebar" [class.dashboard-full-width]="!showSidebar">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xxl-3 col-lg-4">
+            <div class="col-xxl-3 col-lg-4" *ngIf="showSidebar">
                 <div class="dashboard-left-sidebar" [class.show]="open">
                     <app-sidebar [show]="open" (menu)="openMenu($event)"></app-sidebar>
                 </div>
             </div>
-            <div class="col-xxl-9 col-lg-8 custom-box-loader" id="account">
+            <div [class]="showSidebar ? 'col-xxl-9 col-lg-8 custom-box-loader' : 'col-12 custom-box-loader'" id="account">
                 <div class="box-loader" *ngIf="(loadingStatus$ | async)">
                     <app-loader [loaderClass]="'custom-loader-wrapper blur-bg'"></app-loader>
                 </div>
@@ -17,7 +17,8 @@
                       [type]="'button'"
                       [id]="'show_menu'"
                       (click)="openMenu(true)"
-                      [spinner]="false">
+                      [spinner]="false"
+                      *ngIf="showSidebar">
                         {{ 'show_menu' | translate }}
                     </app-button>
                     <div class="dashboard-right-sidebar">

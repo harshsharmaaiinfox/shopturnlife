@@ -1,5 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ClearCart, DeleteCart, 
          ToggleSidebarCart, UpdateCart } from '../../../../action/cart.action';
@@ -38,7 +39,7 @@ export class CartComponent {
   public loader: boolean = false;
   public cartHide: boolean = true;
 
-  constructor(private store: Store, public cartService: CartService) {
+  constructor(private store: Store, public cartService: CartService, private router: Router) {
     this.themeOption$.subscribe(option => this.cartStyle = option?.general?.cart_style);
 
     // Calculation
@@ -87,6 +88,10 @@ export class CartComponent {
 
   clearCart(){
     this.store.dispatch(new ClearCart());
+  }
+
+  navigateToCart() {
+    this.router.navigate(['/cart']);
   }
 
 }

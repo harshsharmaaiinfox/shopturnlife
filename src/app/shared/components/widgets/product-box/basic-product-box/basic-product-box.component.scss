@@ -6,14 +6,89 @@
     padding: 0 !important;
     border: none !important;
     overflow: visible;
+    position: relative;
+    
+    .label-tag {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        z-index: 2;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        
+        &.sale-tag {
+            background-color: #ef4444;
+            color: #ffffff;
+        }
+        
+        &.trending-tag {
+            background-color: #3b82f6;
+            color: #ffffff;
+        }
+    }
     
     .product-image {
+        position: relative;
         margin-bottom: 0;
-        padding: 0;
+        padding: 20px;
+        background-color: #ffffff;
+        background-image: linear-gradient(to bottom, #ffffff 0%, #fafafa 100%);
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 280px;
+        transition: all 0.3s ease-in-out;
+        
+        @media (max-width: 768px) {
+            padding: 15px;
+            min-height: 240px;
+        }
+        
+        @media (max-width: 480px) {
+            padding: 12px;
+            min-height: 200px;
+        }
+        
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+        }
         
         img {
             width: 100%;
+            max-width: 100%;
+            height: auto;
+            max-height: 240px;
             display: block;
+            object-fit: contain;
+            object-position: center;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            
+            @media (max-width: 768px) {
+                max-height: 200px;
+            }
+            
+            @media (max-width: 480px) {
+                max-height: 160px;
+            }
+        }
+        
+        &:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            
+            img {
+                transform: scale(1.05);
+            }
         }
     }
     

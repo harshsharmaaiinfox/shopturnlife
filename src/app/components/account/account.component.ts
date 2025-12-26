@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { LoaderState } from '../../shared/state/loader.state';
 import { Breadcrumb } from '../../shared/interface/breadcrumb';
 import { GetNotification } from '../../shared/action/notification.action';
@@ -16,6 +17,7 @@ export class AccountComponent {
   @Select(LoaderState.status) loadingStatus$: Observable<boolean>;
 
   public open: boolean = false;
+  public showSidebar: boolean = true;
   public breadcrumb: Breadcrumb = {
     title: "Dashboard",
     items: [{ label: 'Dashboard', active: false }]
@@ -30,6 +32,22 @@ export class AccountComponent {
       }
       this.breadcrumb.items = [];
       this.breadcrumb.items.push({ label: this.breadcrumb.title, active: false });
+      
+      // Hide sidebar for bank-details page
+      this.updateSidebarVisibility();
+      
+      // Listen to route changes
+      this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd)
+      ).subscribe(() => {
+        this.updateSidebarVisibility();
+      });
+  }
+
+  updateSidebarVisibility() {
+    // Hide sidebar for bank-details, order pages (including order details), addresses, and dashboard
+    const url = this.router?.url || '';
+    this.showSidebar = !url.includes('bank-details') && !url.includes('/account/order') && !url.includes('/account/addresses') && !url.includes('/account/dashboard');
   }
 
   openMenu(value: boolean) {

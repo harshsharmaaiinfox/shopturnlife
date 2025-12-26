@@ -5099,9 +5099,9 @@
   .product-style-1,
   .product-style-2,
   .product-theme-box {
-    background: $light-gray;
+    background: #F8F8FF;
     border-radius: 5px;
-    padding: calc(10px + (14 - 10) * ((100vw - 320px) / (1920 - 320)));
+    padding: calc(10px + 4 * (100vw - 320px) / 1600);
     border: none;
 
     .add-to-cart-box {

@@ -25,8 +25,8 @@ export class RegisterComponent {
 
   public form: FormGroup;
   public breadcrumb: Breadcrumb = {
-    title: "Sign In",
-    items: [{ label: 'Sign In', active: true }]
+    title: "Create Account",
+    items: [{ label: 'Create Account', active: true }]
   }
   public codes = data.countryCodes;
   public tnc = new FormControl(false, [Validators.requiredTrue]);

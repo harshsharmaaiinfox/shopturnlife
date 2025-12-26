@@ -1,47 +1,142 @@
-<div class="container">
-    <div class="contact-details">
-      <h2>Contact Us</h2>
-      <p>We’d love to hear from you! Reach out to us using the details below.</p>
-      <div class="contact-info">
-        <p><strong>Company Name:</strong> STYLEXIO FASHION FABRIC PRIVATE LIMITED</p>
-        <p><strong>Address:</strong> Office No-1404 Galaxy Diamond Plaza 13th Floor, Plot No C-1A Sector 4 Greater Noida, I.A. Surajpur, Gautam Buddha Nagar, Noida, Uttar Pradesh, India, 201301</p>
-        <p><strong>Mobile:</strong> <a href="tel:+918368711465"> +91 8920874879
-        </a></p>
-        <p><strong>Website:</strong> <a href="https://stylexio.in" target="_blank"> stylexio.in</a></p>
-      </div>
+<!-- Contact Us Main Section -->
+<section class="contact-main-section">
+    <div class="container-fluid">
+        <div class="contact-wrapper">
+            <div class="row g-0">
+                <!-- Left Side - Contact Information -->
+                <div class="col-lg-5">
+                    <div class="contact-info-panel">
+                        <div class="info-panel-header">
+                            <h1 class="main-title">Let's Connect</h1>
+                            <p class="main-subtitle">We'd love to hear from you. Reach out to us through any of these channels.</p>
+                        </div>
+                        
+                        <div class="contact-details-list">
+                            <div class="contact-detail-item">
+                                <div class="detail-icon-wrapper">
+                                    <i class="ri-mail-fill"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4>Email Address</h4>
+                                    <p><a href="mailto:info&#64;shopturnlife.com">info&#64;shopturnlife.com</a></p>
+                                </div>
+                            </div>
+
+                            <div class="contact-detail-item">
+                                <div class="detail-icon-wrapper">
+                                    <i class="ri-map-pin-2-fill"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4>Office Address</h4>
+                                    <p>
+                                        Office no. 11112 Gaur city mall,<br>
+                                        Sector-4, Greater Noida West,<br>
+                                        GB Nagar, UP-201318, India
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="contact-detail-item">
+                                <div class="detail-icon-wrapper">
+                                    <i class="ri-global-fill"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4>Website</h4>
+                                    <p><a href="https://shopturnlife.com" target="_blank" rel="noopener">shopturnlife.com</a></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-panel-footer">
+                            <div class="company-badge">
+                                <span class="badge-text">TURN LIFE RETAIL PRIVATE LIMITED</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Contact Form -->
+                <div class="col-lg-7">
+                    <div class="contact-form-panel">
+                        <div class="form-panel-header">
+                            <h2 class="form-title">Send Us a Message</h2>
+                            <p class="form-subtitle">Fill in your details and we'll respond within 24 hours</p>
+                        </div>
+
+                        <div class="form-panel-body">
+                            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+                                <div class="form-row">
+                                    <div class="form-field">
+                                        <label for="name">Full Name <span class="required">*</span></label>
+                                        <input 
+                                            type="text" 
+                                            id="name" 
+                                            placeholder="John Doe" 
+                                            formControlName="name"
+                                            [class.error]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+                                        <span class="error-message" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+                                            Name should contain only letters and spaces.
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-row form-row-split">
+                                    <div class="form-field">
+                                        <label for="email">Email Address <span class="required">*</span></label>
+                                        <input 
+                                            type="email" 
+                                            id="email" 
+                                            placeholder="john@example.com" 
+                                            formControlName="email"
+                                            [class.error]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                                        <span class="error-message" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                                            Enter a valid email address.
+                                        </span>
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label for="phone">Phone Number <span class="required">*</span></label>
+                                        <input 
+                                            type="tel" 
+                                            id="phone" 
+                                            placeholder="1234567890" 
+                                            formControlName="phone"
+                                            [class.error]="contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched">
+                                        <span class="error-message" *ngIf="contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched">
+                                            Phone number should be exactly 10 digits.
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-field">
+                                        <label for="message">Your Message <span class="required">*</span></label>
+                                        <textarea 
+                                            id="message" 
+                                            placeholder="Tell us how we can help you..." 
+                                            rows="5"
+                                            formControlName="message"
+                                            [class.error]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched"></textarea>
+                                        <span class="error-message" *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
+                                            Message field cannot be empty.
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <button 
+                                        type="submit" 
+                                        [disabled]="contactForm.invalid" 
+                                        class="submit-button">
+                                        <span>Send Message</span>
+                                        <i class="ri-send-plane-fill"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  
-    <div class="contact-form">
-      <h2>Get in Touch</h2>
-      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-  
-        <label for="name">Name</label>
-        <input type="text" id="name" formControlName="name">
-        <div *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched" class="error">
-          Name should contain only letters and spaces.
-        </div>
-      
-        <label for="email">Email</label>
-        <input type="email" id="email" formControlName="email">
-        <div *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched" class="error">
-          Enter a valid email address.
-        </div>
-      
-        <label for="phone">Phone</label>
-        <input type="tel" id="phone" formControlName="phone">
-        <div *ngIf="contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched" class="error">
-          Phone number should be exactly 10 digits.
-        </div>
-      
-        <label for="message">Message</label>
-        <textarea id="message" formControlName="message" rows="4"></textarea>
-        <div *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched" class="error">
-          Message field cannot be empty.
-        </div>
-      
-        <button type="submit" [disabled]="contactForm.invalid" class="sub-btn">Submit</button>
-      </form>
-      
-    </div>
-  </div>
-  
+</section>

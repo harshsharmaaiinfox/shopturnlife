@@ -1,17 +1,4 @@
 <ng-container *ngIf="product">
-    <div class="product-count" *ngIf="(option?.product?.encourage_order && product?.encourage_order) ||
-        (option?.product?.encourage_view && product?.encourage_view)">
-        <ul>
-            <li *ngIf="option?.product?.encourage_order && product?.encourage_order">
-                <i class="ri-flashlight-line"></i>
-                <h6 class="lang">{{ ordersCount }} {{ 'Customers Ordered' | translate }}</h6>
-            </li>
-            <li *ngIf="option?.product?.encourage_view && product?.encourage_view">
-                <i class="ri-eye-line"></i>
-                <h6 class="lang">{{ viewsCount }} {{ 'Active View in This Item' | translate }}</h6>
-            </li>
-        </ul>
-    </div>
     <h1 class="name">{{ selectedVariation ? selectedVariation.name : product.name }}</h1>
     <div class="brand-box-suggection" *ngIf="product?.brand">
         <h5>
@@ -28,10 +15,6 @@
                 {{ (selectedVariation ? selectedVariation.discount : product.discount) }}% {{ 'Off' | translate }}
             </span>
         </h3>
-        <div class="product-rating custom-rate" *ngIf="!product?.is_external">
-            <ngb-rating [rate]="product.rating_count"></ngb-rating>
-            <span class="review">{{ product.reviews_count }} {{ 'Review' | translate }}</span>
-        </div>
     </div>
     <div class="product-contain" *ngIf="product?.short_description">
         <p [innerHTML]="product.short_description"></p>
@@ -68,28 +51,24 @@
                 <a href="javascript:void(0)" class="wishlist-button btn" (click)="addToWishlist(product)">
                     <i class="ri-heart-{{product.is_wishlist ? 'fill' : 'line' }}" [class.theme-color]="product.is_wishlist" ></i>
                 </a>
-                <app-button [class]="'wishlist-button btn'" [id]="'compare_btn'" [spinner]="false"
-                    (click)="addToCompare(product.id)">
-                    <i class="ri-refresh-line"></i>
-                </app-button>
             </div>
         </div>
         <div class="dynamic-checkout">
             <ng-container *ngIf="!product?.is_external else isExternalProduct">
-                <app-button [id]="'addcartbtnVariation'+product.id" [class]="'btn btn-md bg-theme scroll-button'"
+                <app-button [id]="'addcartbtnVariation'+product.id" [class]="'btn btn-md add-btn scroll-button'"
                     (click)="addToCart(product)" *ngIf="((selectedVariation && selectedVariation.status && selectedVariation.quantity >= productQty) || (!selectedVariation && product.quantity >= productQty)) else outStock">
-                    <i class="ri-shopping-cart-line me-1"></i> {{ 'Add To Cart' | translate }}
+                    {{ 'Add To Cart' | translate }}
                 </app-button>
                 <ng-template #outStock>
                     <app-button [class]="'btn btn-md bg-theme scroll-button disabled'"
                         [id]="'soldoutbtnproductcontain'" [spinner]="false" [disabled]="true">
-                        <i class="ri-shopping-cart-line me-1" *ngIf="((selectedVariation && selectedVariation.status && selectedVariation.quantity >= productQty) || (!selectedVariation && product.quantity >= productQty))"></i> {{
+                        {{
                             ((selectedVariation && selectedVariation.status && selectedVariation.quantity < productQty || (!selectedVariation && product.quantity < productQty)) ? 'out_of_stock'
                         : 'Add To Cart') | translate }}
                     </app-button>
                 </ng-template>
                 <app-button 
-                    [class]="'btn btn-md border-theme-color'" 
+                    [class]="'btn btn-md border-theme-color buy-btn'" 
                     [id]="'buynowbtn'+product.id" 
                     [disabled]="((selectedVariation && selectedVariation.status && selectedVariation.quantity >= productQty) || (!selectedVariation && product.quantity >= productQty)) ? false : true"
                     (click)="((selectedVariation && selectedVariation.status && selectedVariation.quantity >= productQty) || (!selectedVariation && product.quantity >= productQty)) && addToCart(product, true)">
@@ -110,3 +89,4 @@
         <div class="not-available">{{ 'Currently Item Unavailable' | translate }}</div>
     </ng-container>
 </ng-container>
+<app-cart-popup-modal #cartPopupModal></app-cart-popup-modal>

@@ -14,7 +14,10 @@ export class BasicFooterComponent {
 
   public active: { [key: string]: boolean } = {
     categories: false,
-    useful_link: false
+    useful_link: false,
+    help_center: false,
+    legal_policies: false,
+    more_about: true // Default to expanded
   };
 
   toggle(value: string){

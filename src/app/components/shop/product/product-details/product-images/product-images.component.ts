@@ -14,4 +14,14 @@ export class ProductImagesComponent {
 
   public videType = ['video/mp4', 'video/webm', 'video/ogg'];
   public audioType = ['audio/mpeg', 'audio/wav', 'audio/ogg'];
+
+  get firstGalleryImage() {
+    return this.product?.product_galleries && this.product.product_galleries.length > 0 
+      ? this.product.product_galleries[0] 
+      : null;
+  }
+
+  get hasMultipleImages() {
+    return this.product?.product_galleries && this.product.product_galleries.length > 1;
+  }
 }

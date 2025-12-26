@@ -1,0 +1,114 @@
+<ng-template #cartPopupModal let-modal>
+  <div class="modal-header cart-popup-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="ri-shopping-cart-line"></i>
+      </div>
+      <h4 class="modal-title">{{ 'Shopping Cart' | translate }}</h4>
+    </div>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <i class="ri-close-line"></i>
+    </button>
+  </div>
+  <div class="modal-body cart-popup-body">
+    <div class="cart-header-info" *ngIf="(cartItem$ | async)?.length">
+      <h5>
+        {{ (cartItem$ | async)?.length }} 
+        {{ ((cartItem$ | async)?.length == 1 ? 'product' : 'products') | translate }}
+        <a href="javascript:void(0)" (click)="clearCart()" class="clear-cart-link">
+          {{ 'clear_cart' | translate }}
+        </a>
+      </h5>
+    </div>
+
+    <div class="cart-items-list" *ngIf="(cartItem$ | async)?.length">
+      <div class="cart-item" *ngFor="let item of cartItem$ | async">
+        <div class="item-image">
+          <img [src]="item?.variation && item?.variation?.variation_image
+                  ? item?.variation?.variation_image?.original_url
+                  : item?.product?.product_thumbnail
+                  ? item?.product?.product_thumbnail?.original_url
+                  : 'assets/images/product.png'" 
+               class="img-fluid" [alt]="item?.product?.name">
+        </div>
+        <div class="item-details">
+          <h6 class="item-name">{{ item?.variation ? item?.variation?.name : item?.product?.name }}</h6>
+          <div class="item-variation" *ngIf="item?.variation">
+            <span>{{ item?.variation?.selected_variation }}</span>
+          </div>
+          <div class="item-price">
+            {{ (item?.variation ? item.variation.sale_price : item?.product && item?.wholesale_price ? item?.wholesale_price : item?.product?.sale_price)! | currencySymbol }}
+          </div>
+          <div class="item-actions">
+            <div class="quantity-control">
+              <h5 class="control-label">{{ 'Quantity' | translate }}</h5>
+              <div class="qty-box">
+                <app-button
+                  [class]="'btn qty-btn'"
+                  [id]="'qty-minus-'+item.product.id"
+                  [spinner]="false"
+                  [type]="'button'"
+                  (click)="updateQuantity(item, -1)">
+                  <i class="ri-subtract-line"></i>
+                </app-button>
+                <input class="qty-input" type="text" name="quantity" [value]="item?.quantity" readonly>
+                <app-button
+                  [class]="'btn qty-btn'"
+                  [id]="'qty-plus-'+item.product.id"
+                  [spinner]="false"
+                  [type]="'button'"
+                  (click)="updateQuantity(item, 1)">
+                  <i class="ri-add-line"></i>
+                </app-button>
+              </div>
+            </div>
+            <div class="item-buttons">
+              <app-button 
+                [class]="'btn edit-btn'" 
+                [id]="'edit-'+item.product.id" 
+                [spinner]="false" 
+                (click)="VariationModal.openModal(item)" 
+                *ngIf="item?.variation">
+                <i class="ri-pencil-line"></i>
+              </app-button>
+              <app-button 
+                [class]="'btn delete-btn'" 
+                [id]="'delete-'+item.product.id" 
+                [spinner]="false" 
+                (click)="delete(item.id)">
+                <i class="ri-delete-bin-line"></i>
+              </app-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-cart" *ngIf="!(cartItem$ | async)?.length">
+      <div class="empty-cart-icon">
+        <i class="ri-shopping-cart-line"></i>
+      </div>
+      <h5>{{ 'Your Cart Is Currently Empty' | translate }}</h5>
+    </div>
+
+    <div class="cart-summary" *ngIf="(cartItem$ | async)?.length">
+      <p class="shipping-note">{{ 'Shipping And Taxes Are Calculated At Checkout' | translate }}</p>
+      <div class="total-section">
+        <h5>{{ 'Total' | translate }}:</h5>
+        <h4 class="total-price">{{ (cartTotal$ | async)! | currencySymbol }}</h4>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer cart-popup-footer" *ngIf="(cartItem$ | async)?.length">
+    <div class="footer-buttons">
+      <button type="button" class="btn btn-view-cart" (click)="navigateToCart()">
+        {{ 'View Cart' | translate }}
+      </button>
+      <button type="button" class="btn btn-checkout" (click)="navigateToCheckout()">
+        {{ 'Checkout' | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+<app-variation-modal #variationModal></app-variation-modal>
+
