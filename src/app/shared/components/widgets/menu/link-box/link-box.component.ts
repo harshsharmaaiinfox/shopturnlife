@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Menu } from '../../../../interface/menu.interface';
 import {  Router } from '@angular/router';
+import { isCategoryDisabled } from '../../../../utils/category.utils';
 
 @Component({
   selector: 'app-link-box',
@@ -15,6 +16,12 @@ export class LinkBoxComponent {
   }
 
   redirect(path:string){
-    this.router.navigateByUrl(path)
+    if (!this.isDisabled()) {
+      this.router.navigateByUrl(path)
+    }
+  }
+
+  isDisabled(): boolean {
+    return isCategoryDisabled(this.menu?.title);
   }
 }

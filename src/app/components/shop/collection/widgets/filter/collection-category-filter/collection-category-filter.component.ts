@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Params } from '../../../../../../shared/interface/core.interface';
 import { Category, CategoryModel } from '../../../../../../shared/interface/category.interface';
 import { CategoryState } from '../../../../../../shared/state/category.state';
+import { isCategoryDisabled } from '../../../../../../shared/utils/category.utils';
 
 @Component({
   selector: 'app-collection-category-filter',
@@ -26,16 +27,29 @@ export class CollectionCategoryFilterComponent {
     this.category$.subscribe(res => this.categories = res.data.filter(category => category.type == 'product'));
   }
 
+  isCategoryDisabled(categoryName: string | null | undefined): boolean {
+    return isCategoryDisabled(categoryName);
+  }
+
   ngOnChanges() {
     this.selectedCategories = this.filter['category'] ? this.filter['category'].split(',') : [];
   }
 
   applyFilter(event: Event) {
-    const slug = (<HTMLInputElement>event?.target)?.value;
+    const checkbox = <HTMLInputElement>event?.target;
+    const categoryName = checkbox.getAttribute('data-category-name');
+    
+    // Prevent selection if category is disabled
+    if (this.isCategoryDisabled(categoryName)) {
+      checkbox.checked = false;
+      return;
+    }
+
+    const slug = checkbox?.value;
     const urlFriendlySlug = this.getUrlFriendlySlug(slug);
     const index = this.selectedCategories.indexOf(urlFriendlySlug);  // checked and unchecked value
 
-    if ((<HTMLInputElement>event?.target)?.checked)
+    if (checkbox?.checked)
       this.selectedCategories.push(urlFriendlySlug); // push in array cheked value
     else
       this.selectedCategories.splice(index,1);  // removed in array unchecked value

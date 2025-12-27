@@ -4,6 +4,17 @@
   height: 1px;
   background-color: #e0e0e0;
   margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+// Ensure header doesn't clip dropdowns
+header {
+  overflow: visible !important;
+  
+  .container-fluid {
+    overflow: visible !important;
+  }
 }
 
 // Position search box next to logo with gap
@@ -157,11 +168,19 @@
 
 // Ensure navigation menu displays horizontally
 .header-nav {
+  position: relative;
+  z-index: 10;
+  background-color: #fff;
+  
   .header-nav-middle {
     width: 100%;
+    position: relative;
+    z-index: 10;
     
     .main-nav {
       width: 100%;
+      position: relative;
+      z-index: 10;
       
       .navbar-nav {
         display: flex;
@@ -178,6 +197,37 @@
         .nav-item {
           white-space: nowrap;
           flex-shrink: 0;
+          
+          // Force dropdown visibility
+          .dropdown-menu {
+            position: fixed !important;
+            z-index: 1060 !important;
+            
+            &.show {
+              display: block !important;
+              opacity: 1 !important;
+              visibility: visible !important;
+            }
+          }
+          
+          // Desktop hover behavior
+          @media (min-width: 1200px) {
+            &.dropdown:hover {
+              > .dropdown-menu {
+                display: block !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: translateY(0) !important;
+              }
+              
+              > .dropdown-menu-2 {
+                display: block !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: translateX(-50%) translateY(0) !important;
+              }
+            }
+          }
           
           .nav-link {
             padding: 12px 16px;

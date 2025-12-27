@@ -1,0 +1,43 @@
+// Force dropdown menu visibility with !important overrides
+.navbar-nav {
+  .dropdown-menu {
+    position: fixed !important;
+    z-index: 9999 !important;
+    background-color: #fff !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+    border-radius: 10px !important;
+    
+    &.show {
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translateY(0) !important;
+    }
+    
+    &.dropdown-menu-2 {
+      &.show {
+        transform: translateX(-50%) translateY(0) !important;
+      }
+    }
+  }
+  
+  // Desktop hover behavior
+  @media (min-width: 1200px) {
+    .dropdown:hover {
+      > .dropdown-menu {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+      }
+      
+      > .dropdown-menu-2 {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateX(-50%) translateY(0) !important;
+      }
+    }
+  }
+}
+

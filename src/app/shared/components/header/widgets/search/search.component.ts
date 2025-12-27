@@ -9,6 +9,7 @@ import { Product } from '../../../../interface/product.interface';
 import { CategoryState } from '../../../../state/category.state';
 import { Category, CategoryModel } from '../../../../interface/category.interface';
 import { GetSearchByCategory } from '../../../../action/category.action';
+import { isCategoryDisabled } from '../../../../utils/category.utils';
 
 @Component({
   selector: 'app-box-search',
@@ -182,6 +183,10 @@ export class SearchComponent {
 
   toggleSearchBox(){
     this.show = !this.show
+  }
+
+  isCategoryDisabled(categoryName: string | null | undefined): boolean {
+    return isCategoryDisabled(categoryName);
   }
 
 }

@@ -8,17 +8,34 @@
       <li
         [ngClass]="[menu.link_type == 'sub' && menu.child ? 'nav-item dropdown' : 'nav-item', menu.mega_menu ? 'dropdown-mega' : '']"
         [class.new-nav-item]="menu.badge_text">
-        <a class="nav-link dropdown-toggle" *ngIf="menu.link_type === 'sub'" (click)="toggle(menu)">
+        <a class="nav-link dropdown-toggle" 
+           *ngIf="menu.link_type === 'sub'" 
+           [class.disabled]="isDisabled(menu)"
+           [style.pointer-events]="isDisabled(menu) ? 'none' : 'auto'"
+           [style.opacity]="isDisabled(menu) ? '0.6' : '1'"
+           (click)="toggle(menu)">
           {{ menu.title | translate }}
           <label *ngIf="menu.badge_text" class="new-dropdown">{{ menu.badge_text | translate }}</label>
         </a>
-        <a class="dropdown-item" [class.show]="menu.active"  [class.nav-link]="!menu?.child?.length" (click)="redirect(menu.path)"
+        <a class="dropdown-item" 
+           [class.show]="menu.active"  
+           [class.nav-link]="!menu?.child?.length" 
+           [class.disabled]="isDisabled(menu)"
+           [style.pointer-events]="isDisabled(menu) ? 'none' : 'auto'"
+           [style.opacity]="isDisabled(menu) ? '0.6' : '1'"
+           (click)="redirect(menu.path, menu)"
           *ngIf="menu.link_type === 'link' && menu.is_target_blank === 0" >
           {{ menu.title | translate }}
           <label class="menu-label {{ menu.badge_color }}"
             *ngIf="menu.badge_text">{{ menu.badge_text | translate }}</label>
         </a>
-        <a class="dropdown-item" [class.show]="menu.active" href="{{ menu.path }}" *ngIf="menu.is_target_blank === 1">
+        <a class="dropdown-item" 
+           [class.show]="menu.active" 
+           [class.disabled]="isDisabled(menu)"
+           [style.pointer-events]="isDisabled(menu) ? 'none' : 'auto'"
+           [style.opacity]="isDisabled(menu) ? '0.6' : '1'"
+           href="{{ menu.path }}" 
+           *ngIf="menu.is_target_blank === 1">
           {{ menu.title | translate }}
           <label class="menu-label {{ menu.badge_color }}"
             *ngIf="menu.badge_text">{{ menu.badge_text | translate }}</label>

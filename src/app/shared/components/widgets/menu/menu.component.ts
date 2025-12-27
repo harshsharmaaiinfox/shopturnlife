@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Menu, MenuModel } from '../../../interface/menu.interface';
@@ -13,11 +13,13 @@ import { GetSelectedBlogs } from '../../../action/blog.action';
 import { MenuService } from '../../../services/menu.service';
 import { ThemeOptionState } from '../../../state/theme-option.state';
 import { Option } from '../../../interface/theme-option.interface';
+import { isCategoryDisabled } from '../../../../shared/utils/category.utils';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  styleUrls: ['./menu.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MenuComponent {
 
@@ -54,18 +56,35 @@ export class MenuComponent {
     })
   }
 
-  redirect(path:string){
-    this.router.navigateByUrl(path)
+  redirect(path:string, menu?: Menu){
+    if (!this.isDisabled(menu)) {
+      this.router.navigateByUrl(path)
+    }
+  }
+
+  isDisabled(menu?: Menu): boolean {
+    return menu ? isCategoryDisabled(menu.title) : false;
   }
 
   toggle(menu: Menu){
-    if(!menu.active){
-      this.menu.forEach(item => {
-        if(this.menu.includes(menu)){
-          item.active = false;
-        }
-      })
+    // Prevent toggle if menu is disabled
+    if (this.isDisabled(menu)) {
+      return;
     }
+    
+    // Close all other menus at the same level before opening this one
+    const getAllMenus = (menus: any[]): Menu[] => {
+      let result: Menu[] = [];
+      menus?.forEach(m => {
+        result.push(m);
+        if (m.child && m.child.length) {
+          result = result.concat(getAllMenus(m.child));
+        }
+      });
+      return result;
+    };
+    
+    // Toggle the clicked menu
     menu.active = !menu.active;
   }
 

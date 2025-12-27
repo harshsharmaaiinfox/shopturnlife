@@ -1,10 +1,11 @@
-import { Component, Input, HostListener } from '@angular/core';
+import { Component, Input, HostListener, ViewEncapsulation } from '@angular/core';
 import { Option } from '../../../interface/theme-option.interface';
 
 @Component({
   selector: 'app-basic-header',
   templateUrl: './basic-header.component.html',
-  styleUrls: ['./basic-header.component.scss']
+  styleUrls: ['./basic-header.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class BasicHeaderComponent {
 

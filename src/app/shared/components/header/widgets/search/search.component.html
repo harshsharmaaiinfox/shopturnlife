@@ -93,7 +93,11 @@
       <select class="form-select " id="selectedCategory" [formControl]="selectedCategory">
           <option ngValue="">{{ 'select_category' | translate }}</option>
           <ng-container *ngFor="let category of categories">
-              <option [ngValue]="[category?.id]">{{ category.name }}</option>
+              <option [ngValue]="[category?.id]" 
+                      [disabled]="isCategoryDisabled(category?.name)"
+                      [style.opacity]="isCategoryDisabled(category?.name) ? '0.6' : '1'">
+                  {{ category.name }}
+              </option>
           </ng-container>
       </select>
     </div>

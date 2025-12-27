@@ -7,7 +7,12 @@
         <img [src]="category?.category_icon ? category?.category_icon?.original_url : 'assets/images/category.png'"
           [alt]="category?.name">
         <h5>
-          <a href="/category/{{category.slug}}" [routerLink]="['/category', category.slug ]">{{ category?.name }}</a>
+          <a href="/category/{{category.slug}}" 
+             [routerLink]="['/category', category.slug ]"
+             [class.disabled]="isCategoryDisabled(category?.name)"
+             [style.pointer-events]="isCategoryDisabled(category?.name) ? 'none' : 'auto'"
+             [style.opacity]="isCategoryDisabled(category?.name) ? '0.6' : '1'"
+             (click)="isCategoryDisabled(category?.name) && $event.preventDefault()">{{ category?.name }}</a>
         </h5>
       </div>
     </li>
@@ -37,7 +42,12 @@
     <li class="nav-item" *ngFor="let category of categories; let i = index">
       <app-button
         [class]="selectedCategorySlug.length && selectedCategorySlug.includes(getUrlFriendlySlug(category.slug!)) ? 'nav-link active' : 'nav-link'"
-        [id]="'nav_link_btn'+i" [spinner]="false" (click)="redirectToCollection(category.slug!)">
+        [class.disabled]="isCategoryDisabled(category?.name)"
+        [style.pointer-events]="isCategoryDisabled(category?.name) ? 'none' : 'auto'"
+        [style.opacity]="isCategoryDisabled(category?.name) ? '0.6' : '1'"
+        [id]="'nav_link_btn'+i" 
+        [spinner]="false" 
+        (click)="!isCategoryDisabled(category?.name) && redirectToCollection(category.slug!)">
         {{ category.name }}
         <img [src]="category?.category_icon ? category?.category_icon?.original_url : 'assets/images/category.png'"
           [alt]="category?.name">
@@ -53,9 +63,15 @@
   <owl-carousel-o [options]="sliderOption">
     <ng-template carouselSlide *ngFor="let category of categories">
       <div *ngIf="theme == 'paris'">
-        <a  href="/collections?category={{getUrlFriendlySlug(category.slug)}}&sortBy=asc" [routerLink]="['/collections']" 
-        [queryParams]="{ category: getUrlFriendlySlug(category.slug), sortBy: 'asc' }" class="category-box category-dark"
-          [class.active]="selectedCategorySlug.length && selectedCategorySlug.includes(getUrlFriendlySlug(category.slug!))">
+        <a  href="/collections?category={{getUrlFriendlySlug(category.slug)}}&sortBy=asc" 
+        [routerLink]="['/collections']" 
+        [queryParams]="{ category: getUrlFriendlySlug(category.slug), sortBy: 'asc' }" 
+        class="category-box category-dark"
+          [class.active]="selectedCategorySlug.length && selectedCategorySlug.includes(getUrlFriendlySlug(category.slug!))"
+          [class.disabled]="isCategoryDisabled(category?.name)"
+          [style.pointer-events]="isCategoryDisabled(category?.name) ? 'none' : 'auto'"
+          [style.opacity]="isCategoryDisabled(category?.name) ? '0.6' : '1'"
+          (click)="isCategoryDisabled(category?.name) && $event.preventDefault()">
           <img [src]="image ? image : 'assets/images/shape.png'" class="background-image" [alt]="category?.name">
           <img [src]="category?.category_icon ? category?.category_icon?.original_url : 'assets/images/category.png'"
             [alt]="category?.name">
@@ -63,7 +79,12 @@
         </a>
       </div>
       <div *ngIf="theme == 'madrid'">
-        <a [routerLink]="['/category', category.slug ]" class="category-box-list d-block">
+        <a [routerLink]="['/category', category.slug ]" 
+           class="category-box-list d-block"
+           [class.disabled]="isCategoryDisabled(category?.name)"
+           [style.pointer-events]="isCategoryDisabled(category?.name) ? 'none' : 'auto'"
+           [style.opacity]="isCategoryDisabled(category?.name) ? '0.6' : '1'"
+           (click)="isCategoryDisabled(category?.name) && $event.preventDefault()">
           <div  class="category-name">
             <h4>{{ category.name }}</h4>
             <h6>{{ category.products_count }} {{ 'items' | translate }}</h6>
@@ -83,7 +104,13 @@
       </div>
       <div *ngIf="theme == 'rome'">
         <div class="shop-category-box border-0">
-          <a href="/category/{{category.slug}}" [routerLink]="['/category', category.slug ]" class="circle-1">
+          <a href="/category/{{category.slug}}" 
+             [routerLink]="['/category', category.slug ]" 
+             class="circle-1"
+             [class.disabled]="isCategoryDisabled(category?.name)"
+             [style.pointer-events]="isCategoryDisabled(category?.name) ? 'none' : 'auto'"
+             [style.opacity]="isCategoryDisabled(category?.name) ? '0.6' : '1'"
+             (click)="isCategoryDisabled(category?.name) && $event.preventDefault()">
             <img
               [src]="category?.category_image ? category?.category_image?.original_url : 'assets/images/category.png'"
               [alt]="category?.name">
@@ -105,7 +132,13 @@
     <ng-template carouselSlide *ngFor="let category of categories">
       <div>
         <div class="shop-category-box border-0">
-          <a href="/category/{{category.slug}}" [routerLink]="['/category', category.slug ]" class="circle-1">
+          <a href="/category/{{category.slug}}" 
+             [routerLink]="['/category', category.slug ]" 
+             class="circle-1"
+             [class.disabled]="isCategoryDisabled(category?.name)"
+             [style.pointer-events]="isCategoryDisabled(category?.name) ? 'none' : 'auto'"
+             [style.opacity]="isCategoryDisabled(category?.name) ? '0.6' : '1'"
+             (click)="isCategoryDisabled(category?.name) && $event.preventDefault()">
             <img [src]="category?.category_icon ? category?.category_icon?.original_url : 'assets/images/category.png'"
               [alt]="category?.name">
           </a>
@@ -129,8 +162,13 @@
     </app-button>
   </li>
   <li class="nav-item" *ngFor="let category of categories">
-    <app-button [class]="selectedCategoryId == category.id ? 'nav-link btn active' : 'nav-link btn' " [spinner]="false"
-      [id]="'category'+category.id" (click)="selectCategory(category.id)">
+    <app-button [class]="selectedCategoryId == category.id ? 'nav-link btn active' : 'nav-link btn' " 
+      [class.disabled]="isCategoryDisabled(category?.name)"
+      [style.pointer-events]="isCategoryDisabled(category?.name) ? 'none' : 'auto'"
+      [style.opacity]="isCategoryDisabled(category?.name) ? '0.6' : '1'"
+      [spinner]="false"
+      [id]="'category'+category.id" 
+      (click)="!isCategoryDisabled(category?.name) && selectCategory(category.id)">
       {{category?.name}}
     </app-button>
   </li>
@@ -139,8 +177,13 @@
 <!--- Category Style Dropdown -->
 <ul class="category-list" *ngIf="categories?.length && style == 'dropdown'">
   <li class="onhover-category-list" *ngFor="let category of categories">
-    <a  href="/collections?category={{getUrlFriendlySlug(category.slug)}}&sortBy=asc" [routerLink]="['/collections']" 
+    <a  href="/collections?category={{getUrlFriendlySlug(category.slug)}}&sortBy=asc" 
+    [routerLink]="['/collections']" 
     [queryParams]="{ category: getUrlFriendlySlug(category.slug), sortBy: 'asc' }" 
+    [class.disabled]="isCategoryDisabled(category?.name)"
+    [style.pointer-events]="isCategoryDisabled(category?.name) ? 'none' : 'auto'"
+    [style.opacity]="isCategoryDisabled(category?.name) ? '0.6' : '1'"
+    (click)="isCategoryDisabled(category?.name) && $event.preventDefault()"
     class="category-name">
       <img [src]="category?.category_icon ? category?.category_icon?.original_url : 'assets/images/category.png'"
         [alt]="category?.name">
@@ -161,7 +204,9 @@
   *ngIf="style == 'input_dropdown'">
   <select class="form-select locat-name">
     <option>{{ 'All Category' | translate }}</option>
-    <option *ngFor="let category of categories">
+    <option *ngFor="let category of categories"
+            [disabled]="isCategoryDisabled(category?.name)"
+            [style.opacity]="isCategoryDisabled(category?.name) ? '0.6' : '1'">
       {{ category.name }}
     </option>
   </select>
@@ -178,7 +223,13 @@
           <owl-carousel-o [options]="sliderOption">
             <ng-template carouselSlide *ngFor="let category of categories">
               <div>
-                <a href="/category/{{category.slug}}" [routerLink]="['/category', category.slug ]" class="category-box">
+                <a href="/category/{{category.slug}}" 
+                   [routerLink]="['/category', category.slug ]" 
+                   class="category-box"
+                   [class.disabled]="isCategoryDisabled(category?.name)"
+                   [style.pointer-events]="isCategoryDisabled(category?.name) ? 'none' : 'auto'"
+                   [style.opacity]="isCategoryDisabled(category?.name) ? '0.6' : '1'"
+                   (click)="isCategoryDisabled(category?.name) && $event.preventDefault()">
                   <img
                     [src]="category?.category_image ? category?.category_image?.original_url : 'assets/images/category.png'"
                     [alt]="category?.name" class="img-fluid">
@@ -197,7 +248,12 @@
   <div class="feature-panel-slider">
     <owl-carousel-o [options]="sliderOption">
       <ng-template carouselSlide *ngFor="let category of categories">
-        <a [routerLink]="['/category', category.slug ]" class="cate-box">
+        <a [routerLink]="['/category', category.slug ]" 
+           class="cate-box"
+           [class.disabled]="isCategoryDisabled(category?.name)"
+           [style.pointer-events]="isCategoryDisabled(category?.name) ? 'none' : 'auto'"
+           [style.opacity]="isCategoryDisabled(category?.name) ? '0.6' : '1'"
+           (click)="isCategoryDisabled(category?.name) && $event.preventDefault()">
           <span>{{ category.name }}</span>
         </a>
       </ng-template>
@@ -210,7 +266,12 @@
     <owl-carousel-o [options]="sliderOption">
       <ng-template carouselSlide *ngFor="let category of categories">
         <div class="cate-box">
-          <a href="/category/{{category.slug}}" [routerLink]="['/category', category.slug ]">
+          <a href="/category/{{category.slug}}" 
+             [routerLink]="['/category', category.slug ]"
+             [class.disabled]="isCategoryDisabled(category?.name)"
+             [style.pointer-events]="isCategoryDisabled(category?.name) ? 'none' : 'auto'"
+             [style.opacity]="isCategoryDisabled(category?.name) ? '0.6' : '1'"
+             (click)="isCategoryDisabled(category?.name) && $event.preventDefault()">
             <img [src]="category?.category_icon ? category?.category_icon?.original_url : 'assets/images/category.png'"
               [alt]="category?.name">
           </a>

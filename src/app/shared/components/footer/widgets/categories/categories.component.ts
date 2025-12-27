@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CategoryState } from '../../../../../shared/state/category.state';
 import { Option } from '../../../../../shared/interface/theme-option.interface';
 import { CategoryModel, Category } from '../../../../../shared/interface/category.interface';
+import { isCategoryDisabled } from '../../../../../shared/utils/category.utils';
 
 @Component({
   selector: 'app-footer-categories',
@@ -37,6 +38,10 @@ export class FooterCategoriesComponent {
   getUrlFriendlySlug(slug: string | undefined): string {
     if (!slug) return '';
     return slug.toLowerCase().trim().replace(/\s+/g, '-');
+  }
+
+  isCategoryDisabled(categoryName: string | null | undefined): boolean {
+    return isCategoryDisabled(categoryName);
   }
 
 }

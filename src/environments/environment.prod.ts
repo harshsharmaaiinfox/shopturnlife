@@ -5,9 +5,10 @@
 export const environment = {
   production: true,
   baseURL: 'http://localhost:4200', 
-  URL: 'https://api.fashioncarft.com/public/api', // Change only the domain part, keeping "/api" intact
-  storageURL: 'https://api.fashioncarft.com/public' // Change only the laravel primary domain
+  URL: 'https://nixopay.com/public/api', // Change only the domain part, keeping "/api" intact
+  storageURL: 'https://nixopay.com/public' // Change only the laravel primary domain
 };
+
 
 /*
 * For easier debugging in development mode, you can import the following file

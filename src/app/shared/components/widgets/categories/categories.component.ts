@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Category, CategoryModel } from '../../../interface/category.interface';
 import { CategoryState } from '../../../state/category.state';
 import { AttributeService } from '../../../services/attribute.service';
+import { isCategoryDisabled } from '../../../utils/category.utils';
 
 @Component({
   selector: 'app-categories',
@@ -81,6 +82,10 @@ export class CategoriesComponent {
   getUrlFriendlySlug(slug: string | undefined): string {
     if (!slug) return '';
     return slug.toLowerCase().trim().replace(/\s+/g, '-');
+  }
+
+  isCategoryDisabled(categoryName: string | null | undefined): boolean {
+    return isCategoryDisabled(categoryName);
   }
 
 }

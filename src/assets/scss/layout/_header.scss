@@ -591,6 +591,8 @@ header {
 
   .top-nav {
     padding: 24px 0;
+    position: relative;
+    z-index: 5;
 
     @include mq-max(xl) {
       padding: 24px 0 12px;

@@ -20,8 +20,14 @@
                                id="category-{{category?.id}}"
                                [value]="category?.slug"
                                [checked]="checked(category?.slug!)"
+                               [disabled]="isCategoryDisabled(category?.name)"
+                               [attr.data-category-name]="category?.name"
+                               [style.opacity]="isCategoryDisabled(category?.name) ? '0.6' : '1'"
                                (change)="applyFilter($event)">
-                        <label class="modern-checkbox-label" for="category-{{category?.id}}">
+                        <label class="modern-checkbox-label" 
+                               [class.disabled]="isCategoryDisabled(category?.name)"
+                               [style.pointer-events]="isCategoryDisabled(category?.name) ? 'none' : 'auto'"
+                               for="category-{{category?.id}}">
                             <span class="category-name">{{ category?.name }}</span>
                         </label>
                     </div>
