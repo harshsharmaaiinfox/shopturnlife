@@ -931,14 +931,14 @@ header {
             }
 
             &:first-child {
-              display: none;
+              display: block; // Show profile icon on desktop
 
               @include mq-max(xl) {
                 display: block;
               }
 
               @include mq-max(md) {
-                display: none;
+                display: block; // Keep visible on mobile too
               }
             }
 

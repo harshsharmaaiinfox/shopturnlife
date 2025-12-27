@@ -43,7 +43,17 @@ export class SearchComponent {
         this.filteredCategory = categories
       });
 
-      this.productBySearch$.subscribe(item => this.product = item);
+      this.productBySearch$.subscribe(item => {
+        this.product = item || [];
+        // If products are empty, load them
+        if (!this.product || this.product.length === 0) {
+          this.store.dispatch(new GetProductBySearch({ status: 1 }));
+        }
+      });
+      
+      // Load products on initialization if not already loaded
+      this.store.dispatch(new GetProductBySearch({ status: 1 }));
+      
       this.selectedCategory.valueChanges.subscribe(data => {
         this.isOpenResult = false;
         let category = data ?  { status: 1, category_id: data } : {status: 1};
@@ -72,13 +82,23 @@ export class SearchComponent {
   }
 
   onInputChange() {
-    this.filteredResults = this.term.value <= 0 ? this.product.slice(0, 4) : this.filterWords(this.term.value).slice(0, 4);
-    this.filteredCategory = this.term.value <= 0 ? this.filteredCategory.slice(0, 4) : this.searchCategory(this.term.value);
+    const searchValue = this.term.value || '';
+    if (!searchValue || searchValue.trim().length === 0) {
+      this.filteredResults = this.product && this.product.length > 0 ? this.product.slice(0, 4) : [];
+      this.filteredCategory = this.filteredCategory && this.filteredCategory.length > 0 ? this.filteredCategory.slice(0, 4) : [];
+    } else {
+      this.filteredResults = this.product && this.product.length > 0 ? this.filterWords(searchValue).slice(0, 4) : [];
+      this.searchCategory(searchValue);
+    }
     this.selectedResultIndex = -1;
   }
 
   focusInput(val:boolean){
-    this.filteredResults = this.product.slice(0, 4)
+    if (this.product && this.product.length > 0) {
+      this.filteredResults = this.product.slice(0, 4);
+    } else {
+      this.filteredResults = [];
+    }
     this.isOpenResult = val;
   }
 
@@ -135,13 +155,17 @@ export class SearchComponent {
 
   onEnterKey() {
     // Perform the action you want when the Enter key is pressed in the input
-    if (this.selectedResultIndex !== -1) {
+    if (this.selectedResultIndex !== -1 && this.filteredResults[this.selectedResultIndex]) {
       const selectedItem = this.filteredResults[this.selectedResultIndex];
       this.router.navigateByUrl(`/product/${selectedItem.slug}`)
       this.isOpenResult = false;
-      this.selectedResultIndex = 0
+      this.selectedResultIndex = -1;
       this.term.patchValue('')
-    } 
+    } else if (this.term.value && this.term.value.trim().length > 0) {
+      // If there's a search term but no selected result, navigate to search page
+      this.redirectToSearch();
+      this.isOpenResult = false;
+    }
   }
 
   redirectToSearch() {

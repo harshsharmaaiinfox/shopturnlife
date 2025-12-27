@@ -51,7 +51,8 @@ export class SearchComponent {
     }
     this.store.dispatch(new GetProducts(this.filter)).subscribe({
       next: (val) =>{
-        this.products = val.product.product.data
+        this.products = val.product.product.data;
+        this.totalItems = val.product.product.total || 0;
       }
     });
    });

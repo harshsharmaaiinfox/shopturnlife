@@ -2,7 +2,7 @@
 <div class="search-bg-overlay" [class.show]="isOpenResult" (click)="focusInput(false)"></div>
 <div class="input-group search-box-meesho" *ngIf="style == 'basic'">
   <div class="search-suggestion-wrap">
-    <span class="search-icon-left">
+    <span class="search-icon-left" (click)="redirectToSearch()" style="cursor: pointer;">
       <i class="ri-search-line"></i>
     </span>
     <input type="search" class="form-control search-input-meesho" placeholder="{{'search_placeholder' | translate}}" [formControl]="term" (input)="onInputChange()" (click)="focusInput(true)" (keydown.enter)="onEnterKey()">

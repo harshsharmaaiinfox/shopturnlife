@@ -22,9 +22,46 @@
     flex: 1;
     max-width: 600px;
     margin-right: auto; // Push rightside-box to the right
+    display: flex;
+    align-items: center;
+    gap: 20px;
     
     .search-box {
-      width: 100%;
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .header-links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-shrink: 0;
+      
+      .header-link {
+        color: #333;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 400;
+        padding: 0 12px;
+        transition: color 0.2s ease;
+        white-space: nowrap;
+        
+        &:hover {
+          color: var(--theme-color, #D38E60);
+        }
+      }
+      
+      .link-separator {
+        width: 1px;
+        height: 20px;
+        background-color: #e0e0e0;
+        flex-shrink: 0;
+      }
+      
+      // Hide on mobile and tablet
+      @media (max-width: 1199px) {
+        display: none;
+      }
     }
   }
   
@@ -71,6 +108,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    
+    // Ensure profile icon is visible on desktop
+    app-my-account {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
     
     // Ensure visibility on mobile
     @media (max-width: 767px) {
@@ -147,6 +191,77 @@
           }
         }
       }
+    }
+  }
+}
+
+// Mobile Menu Footer Links
+.mobile-menu-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid #e5e7eb;
+  display: none; // Hidden on desktop
+  background: #ffffff;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  
+  @media (max-width: 1199px) {
+    display: block;
+  }
+  
+  .mobile-menu-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 0;
+    
+    .mobile-menu-link {
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 12px 16px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      border-radius: 8px;
+      
+      &:hover {
+        color: var(--theme-color, #D38E60);
+        background-color: #f9fafb;
+      }
+      
+      &:active {
+        color: var(--theme-color, #D38E60);
+        background-color: #f3f4f6;
+      }
+    }
+    
+    .mobile-link-separator {
+      width: 1px;
+      height: 20px;
+      background-color: #e0e0e0;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// Ensure offcanvas body uses flexbox for footer positioning
+.offcanvas-collapse {
+  .offcanvas-body.modern-menu-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+    padding-bottom: 0; // Remove bottom padding as footer has its own
+    
+    app-menu {
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+      padding-bottom: 20px; // Add padding at bottom of menu content
     }
   }
 }
