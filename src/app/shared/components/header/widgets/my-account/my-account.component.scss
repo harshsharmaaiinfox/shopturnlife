@@ -6,6 +6,18 @@
   justify-content: center;
   cursor: pointer;
   padding: 0 16px;
+  min-width: 40px;
+  min-height: 40px;
+  
+  // Remove padding on mobile and ensure visibility
+  @media (max-width: 767px) {
+    padding: 0 8px;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-width: 36px;
+    min-height: 36px;
+  }
   
   .simple-icon-box {
     display: flex;
@@ -20,10 +32,25 @@
       justify-content: center;
       margin-bottom: 4px;
       
+      @media (max-width: 767px) {
+        margin-bottom: 0;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+      
       i {
         font-size: 18px;
         color: #333;
         line-height: 1;
+        display: inline-block !important;
+        
+        @media (max-width: 767px) {
+          font-size: 20px;
+          display: inline-block !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+        }
       }
       
       .user-box {
@@ -38,6 +65,11 @@
       line-height: 1.2;
       text-align: center;
       margin-top: 2px;
+      
+      // Hide text label on mobile, show only icon
+      @media (max-width: 767px) {
+        display: none;
+      }
     }
   }
   

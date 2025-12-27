@@ -589,36 +589,63 @@
         }
     }
     @media (max-width: 767px) {
+        padding: 15px 0;
+        .container-fluid {
+            padding: 0 10px;
+        }
+        .gold-promotional-wrapper {
+            border-radius: 12px;
+        }
         .gold-main-banner {
-            min-height: 450px;
-            .gold-categories-overlay {
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            .gold-banner-image {
                 position: relative;
                 width: 100%;
+                height: 250px;
+                min-height: 250px;
+                img {
+                    object-fit: cover;
+                    border-radius: 12px 12px 0 0;
+                }
+            }
+            .gold-categories-overlay {
+                position: relative;
+                top: 0;
+                right: 0;
+                width: 100%;
                 max-width: 100%;
-                padding: 20px 15px;
-                background: rgba(139, 69, 19, 0.85);
+                padding: 20px 12px;
+                background: rgba(139, 69, 19, 0.95);
+                border-radius: 0 0 12px 12px;
                 .gold-categories-grid {
                     grid-template-columns: repeat(4, 1fr);
                     gap: 8px;
                 }
                 .gold-category-card {
-                    padding: 5px;
+                    padding: 8px 4px;
                     .gold-category-image-wrapper {
-                        max-width: 70px;
-                        height: 70px;
-                        margin-bottom: 5px;
+                        max-width: 65px;
+                        width: 100%;
+                        height: 65px;
+                        margin: 0 auto 6px;
                         .gold-category-image-bg {
-                            width: 60px;
-                            height: 30px;
+                            width: 55px;
+                            height: 28px;
                         }
                         .gold-category-image {
-                            max-height: 70px;
+                            max-height: 65px;
+                            width: auto;
                         }
                     }
                     .gold-category-label {
-                        margin-top: 3px;
+                        margin-top: 4px;
                         span {
-                            font-size: 11px;
+                            font-size: 10px;
+                            line-height: 1.3;
+                            display: block;
+                            word-break: break-word;
                         }
                     }
                 }
@@ -626,55 +653,136 @@
             .gold-banner-content {
                 position: relative;
                 width: 100%;
-                padding: 25px 30px;
+                padding: 20px 15px;
+                background: transparent;
                 .gold-logo-wrapper {
                     gap: 8px;
                     margin-bottom: 10px;
+                    justify-content: center;
                     .gold-star-icon {
                         width: 24px;
                         height: 24px;
                     }
                     .gold-brand-name {
-                        font-size: 48px;
+                        font-size: 42px;
                     }
                 }
                 .gold-tagline {
-                    font-size: 15px;
-                    margin-bottom: 18px;
+                    font-size: 14px;
+                    margin-bottom: 15px;
+                    text-align: center;
                 }
                 .gold-shop-now-btn {
-                    padding: 11px 24px;
-                    font-size: 14px;
+                    padding: 10px 20px;
+                    font-size: 13px;
+                    margin: 0 auto;
+                    display: block;
+                    width: fit-content;
                 }
             }
         }
     }
     @media (max-width: 575px) {
-        padding: 20px 0;
+        padding: 12px 0;
+        .container-fluid {
+            padding: 0 8px;
+        }
+        .gold-promotional-wrapper {
+            border-radius: 10px;
+        }
         .gold-main-banner {
-            min-height: 400px;
+            min-height: auto;
+            .gold-banner-image {
+                height: 200px;
+                min-height: 200px;
+                img {
+                    border-radius: 10px 10px 0 0;
+                }
+            }
             .gold-categories-overlay {
-                padding: 15px 10px;
+                padding: 16px 8px;
+                border-radius: 0 0 10px 10px;
                 .gold-categories-grid {
                     grid-template-columns: repeat(2, 1fr);
-                    gap: 10px;
+                    gap: 12px;
                 }
                 .gold-category-card {
-                    padding: 5px;
+                    padding: 10px 6px;
                     .gold-category-image-wrapper {
-                        max-width: 80px;
-                        height: 80px;
-                        margin-bottom: 5px;
+                        max-width: 90px;
+                        width: 100%;
+                        height: 90px;
+                        margin: 0 auto 8px;
                         .gold-category-image-bg {
-                            width: 70px;
-                            height: 35px;
+                            width: 75px;
+                            height: 38px;
                         }
                         .gold-category-image {
-                            max-height: 80px;
+                            max-height: 90px;
                         }
                     }
                     .gold-category-label {
-                        margin-top: 4px;
+                        margin-top: 6px;
+                        span {
+                            font-size: 12px;
+                            line-height: 1.4;
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+            .gold-banner-content {
+                padding: 18px 12px;
+                .gold-logo-wrapper {
+                    gap: 6px;
+                    margin-bottom: 8px;
+                    flex-wrap: wrap;
+                    .gold-star-icon {
+                        width: 20px;
+                        height: 20px;
+                    }
+                    .gold-brand-name {
+                        font-size: 32px;
+                        line-height: 1.1;
+                    }
+                }
+                .gold-tagline {
+                    font-size: 13px;
+                    margin-bottom: 12px;
+                }
+                .gold-shop-now-btn {
+                    padding: 10px 18px;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+    
+    @media (max-width: 375px) {
+        .gold-main-banner {
+            .gold-banner-image {
+                height: 180px;
+                min-height: 180px;
+            }
+            .gold-categories-overlay {
+                padding: 12px 6px;
+                .gold-categories-grid {
+                    gap: 8px;
+                }
+                .gold-category-card {
+                    padding: 8px 4px;
+                    .gold-category-image-wrapper {
+                        max-width: 75px;
+                        height: 75px;
+                        .gold-category-image-bg {
+                            width: 65px;
+                            height: 32px;
+                        }
+                        .gold-category-image {
+                            max-height: 75px;
+                        }
+                    }
+                    .gold-category-label {
                         span {
                             font-size: 11px;
                         }
@@ -682,25 +790,14 @@
                 }
             }
             .gold-banner-content {
-                padding: 20px 25px;
+                padding: 15px 10px;
                 .gold-logo-wrapper {
-                    gap: 6px;
-                    margin-bottom: 8px;
-                    .gold-star-icon {
-                        width: 20px;
-                        height: 20px;
-                    }
                     .gold-brand-name {
-                        font-size: 36px;
+                        font-size: 28px;
                     }
                 }
                 .gold-tagline {
-                    font-size: 14px;
-                    margin-bottom: 15px;
-                }
-                .gold-shop-now-btn {
-                    padding: 10px 20px;
-                    font-size: 13px;
+                    font-size: 12px;
                 }
             }
         }

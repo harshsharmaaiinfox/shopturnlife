@@ -8,6 +8,11 @@
   position: relative;
   padding: 0 16px;
   
+  // Remove padding on mobile
+  @media (max-width: 767px) {
+    padding: 0 8px;
+  }
+  
   .simple-cart-icon {
     display: flex;
     align-items: center;
@@ -43,6 +48,11 @@
     line-height: 1.2;
     text-align: center;
     margin-top: 2px;
+    
+    // Hide text label on mobile, show only icon
+    @media (max-width: 767px) {
+      display: none;
+    }
   }
   
   &:hover {

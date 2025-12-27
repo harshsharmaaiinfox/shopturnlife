@@ -8,5 +8,8 @@ import { Component, Input } from '@angular/core';
 export class LoaderComponent {
   
   @Input() loaderClass: string = 'loader-wrapper';
+  @Input() loaderType: 'spinner' | 'dots' | 'pulse' | 'wave' = 'spinner';
+  @Input() message: string = 'Please Wait...';
+  @Input() showMessage: boolean = true;
 
 }

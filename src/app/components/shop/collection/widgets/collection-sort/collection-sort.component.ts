@@ -41,7 +41,7 @@ export class CollectionSortComponent {
     }];
 
   public selectedGrid: string = "collection_4_grid";
-  public class: string = "row g-sm-4 g-3 row-cols-xl-4 row-cols-md-3 row-cols-2 product-list-section";
+  public class: string = "row g-sm-4 g-3 row-cols-xl-4 row-cols-md-3 row-cols-1 product-list-section";
   public gridArray = ['collection_3_grid', 'collection_4_grid', 'collection_5_grid', 'collection_list_view'];
   
   constructor(private route: ActivatedRoute, private attributeService: AttributeService,
@@ -64,11 +64,11 @@ export class CollectionSortComponent {
   grid(value: string) {
     if(this.gridArray.includes(value)){
       if(value == 'collection_3_grid')
-       this.class = "row g-sm-4 g-3 product-list-section row-cols-md-3 row-cols-2";
+       this.class = "row g-sm-4 g-3 product-list-section row-cols-md-3 row-cols-1";
       else if(value == 'collection_4_grid')
-       this.class = "row g-sm-4 g-3 product-list-section row-cols-xl-4 row-cols-md-3 row-cols-2";
+       this.class = "row g-sm-4 g-3 product-list-section row-cols-xl-4 row-cols-md-3 row-cols-1";
       else if(value == 'collection_5_grid')
-        this.class = "row g-sm-4 g-3 product-list-section row-cols-xxl-5 row-cols-xl-4 row-cols-md-3 row-cols-2";
+        this.class = "row g-sm-4 g-3 product-list-section row-cols-xxl-5 row-cols-xl-4 row-cols-md-3 row-cols-1";
       else if(value == 'collection_list_view')
        this.class = "row g-sm-4 g-3 product-list-section list-style";
 

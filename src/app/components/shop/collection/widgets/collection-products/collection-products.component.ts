@@ -21,7 +21,7 @@ export class CollectionProductsComponent {
   @Input() filter: Params;
   @Input() gridCol: string;
 
-  public gridClass: string = "row g-sm-4 g-3 row-cols-xl-4 row-cols-md-3 row-cols-2 product-list-section";
+  public gridClass: string = "row g-sm-4 g-3 row-cols-xl-4 row-cols-md-3 row-cols-1 product-list-section";
 
   public skeletonItems = Array.from({ length: 40 }, (_, index) => index);
 

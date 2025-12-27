@@ -31,6 +31,12 @@
   .rightside-box {
     margin-left: auto;
     flex-shrink: 0;
+    
+    // Ensure visibility on mobile
+    @media (max-width: 767px) {
+      display: flex !important;
+      visibility: visible !important;
+    }
   }
   
   @media (max-width: 1199px) {
@@ -56,10 +62,27 @@
   align-items: center;
   gap: 20px;
   
+  // Reduce gap on mobile
+  @media (max-width: 767px) {
+    gap: 8px;
+  }
+  
   .right-side {
     display: flex;
     align-items: center;
     justify-content: center;
+    
+    // Ensure visibility on mobile
+    @media (max-width: 767px) {
+      display: flex !important;
+      visibility: visible !important;
+      
+      // Ensure profile icon container is visible
+      app-my-account {
+        display: block !important;
+        visibility: visible !important;
+      }
+    }
   }
   
   .header-separator {

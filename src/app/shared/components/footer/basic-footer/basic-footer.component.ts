@@ -13,10 +13,10 @@ export class BasicFooterComponent {
   @Input() footer: Footer;
 
   public active: { [key: string]: boolean } = {
-    categories: false,
-    useful_link: false,
-    help_center: false,
-    legal_policies: false,
+    categories: true,
+    useful_link: true,
+    help_center: true,
+    legal_policies: true,
     more_about: true // Default to expanded
   };
 

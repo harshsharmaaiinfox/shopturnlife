@@ -1,0 +1,322 @@
+// Modern Preloader Styles
+
+.loader-wrapper,
+.custom-loader-wrapper {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  top: 0;
+  transition: opacity 0.3s ease-out;
+
+  .loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    h3 {
+      margin: 0;
+      color: #64748b;
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      animation: fadeInOut 2s ease-in-out infinite;
+    }
+  }
+}
+
+// Spinner Type - Modern Triple Ring
+.loader-spinner {
+  position: relative;
+  width: 60px;
+  height: 60px;
+
+  .spinner-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 3px solid transparent;
+    border-top-color: var(--theme-color, #0ea5e9);
+    border-radius: 50%;
+    animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+
+    &:nth-child(1) {
+      animation-delay: -0.45s;
+      border-top-color: var(--theme-color, #0ea5e9);
+      opacity: 1;
+    }
+
+    &:nth-child(2) {
+      animation-delay: -0.3s;
+      border-top-color: var(--theme-color, #3b82f6);
+      opacity: 0.8;
+      width: 80%;
+      height: 80%;
+      top: 10%;
+      left: 10%;
+    }
+
+    &:nth-child(3) {
+      animation-delay: -0.15s;
+      border-top-color: var(--theme-color, #60a5fa);
+      opacity: 0.6;
+      width: 60%;
+      height: 60%;
+      top: 20%;
+      left: 20%;
+    }
+  }
+}
+
+// Dots Type - Bouncing Dots
+.loader-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--theme-color, #0ea5e9);
+    display: inline-block;
+    animation: bounce 1.4s ease-in-out infinite both;
+
+    &:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: -0.16s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0s;
+    }
+  }
+}
+
+// Pulse Type - Expanding Circle
+.loader-pulse {
+  position: relative;
+  width: 60px;
+  height: 60px;
+
+  .pulse-circle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 3px solid var(--theme-color, #0ea5e9);
+    border-radius: 50%;
+    animation: pulse 1.5s ease-out infinite;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 3px solid var(--theme-color, #0ea5e9);
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: pulse 1.5s ease-out infinite;
+    }
+
+    &::before {
+      animation-delay: 0.5s;
+    }
+
+    &::after {
+      animation-delay: 1s;
+    }
+  }
+}
+
+// Wave Type - Animated Bars
+.loader-wave {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+
+  .wave-bar {
+    width: 6px;
+    height: 40px;
+    background: var(--theme-color, #0ea5e9);
+    border-radius: 3px;
+    animation: wave 1.2s ease-in-out infinite;
+
+    &:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+
+    &:nth-child(5) {
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+// Animations
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes wave {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+    opacity: 0.5;
+  }
+  20% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+// Custom Box Loader (for inline use)
+.custom-box-loader {
+  position: relative;
+  min-height: 350px;
+  z-index: 0;
+
+  .box-loader {
+    .loader-wrapper,
+    .custom-loader-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 8px;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(5px);
+      padding: 0;
+      gap: 0;
+      z-index: 8;
+      align-items: center;
+      justify-content: center;
+
+      .loader-content {
+        padding-top: 0;
+      }
+    }
+  }
+}
+
+// Dark mode support
+html.dark {
+  .loader-wrapper,
+  .custom-loader-wrapper {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.98) 100%);
+
+    .loader-content {
+      h3 {
+        color: #cbd5e1;
+      }
+    }
+  }
+
+  .custom-box-loader {
+    .box-loader {
+      .loader-wrapper,
+      .custom-loader-wrapper {
+        background: rgba(15, 23, 42, 0.95);
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .loader-wrapper,
+  .custom-loader-wrapper {
+    .loader-content {
+      gap: 15px;
+
+      h3 {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .loader-spinner {
+    width: 50px;
+    height: 50px;
+  }
+
+  .loader-pulse {
+    width: 50px;
+    height: 50px;
+  }
+
+  .loader-wave {
+    height: 40px;
+
+    .wave-bar {
+      width: 5px;
+      height: 30px;
+    }
+  }
+}
+

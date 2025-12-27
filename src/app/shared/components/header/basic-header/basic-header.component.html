@@ -16,9 +16,6 @@
                       </div>
                       <div class="rightside-box">
                           <ul class="right-side-menu">
-                            <li class="right-side mobile-search d-xl-none d-inline-block">
-                                <app-box-search [style]="'berlin'"></app-box-search>
-                            </li>
                             <li class="right-side onhover-dropdown header-separator">
                                 <app-my-account></app-my-account>
                             </li>
@@ -42,13 +39,13 @@
                   <div class="header-nav-middle">
                     <div class="main-nav navbar navbar-expand-xl navbar-light navbar-sticky">
                         <div class="offcanvas offcanvas-collapse order-xl-2" [class.show]="active">
-                            <div class="offcanvas-header navbar-shadow">
+                            <div class="offcanvas-header navbar-shadow modern-menu-header">
                                 <h5>{{ 'Menu' | translate }}</h5>
-                                <app-button [type]="'button'" [class]="'btn-close lead'" [id]="'toggle_menu_btn'" [spinner]="false" (click)="toggle(false)">
+                                <app-button [type]="'button'" [class]="'btn-close lead modern-close-btn'" [id]="'toggle_menu_btn'" [spinner]="false" (click)="toggle(false)">
                                     <i class="ri-close-fill"></i>
                                 </app-button>
                             </div>
-                            <div class="offcanvas-body">
+                            <div class="offcanvas-body modern-menu-body">
                                 <app-menu></app-menu>
                             </div>
                         </div>
