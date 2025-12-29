@@ -13,7 +13,6 @@ import { GetSelectedBlogs } from '../../../action/blog.action';
 import { MenuService } from '../../../services/menu.service';
 import { ThemeOptionState } from '../../../state/theme-option.state';
 import { Option } from '../../../interface/theme-option.interface';
-import { isCategoryDisabled } from '../../../../shared/utils/category.utils';
 
 @Component({
   selector: 'app-menu',
@@ -57,21 +56,64 @@ export class MenuComponent {
   }
 
   redirect(path:string, menu?: Menu){
-    if (!this.isDisabled(menu)) {
-      this.router.navigateByUrl(path)
+    // Convert old URL format to new query parameter format
+    let newPath = this.convertMenuPath(path);
+
+    // Check if link should open in new tab
+    if (menu?.is_target_blank === 1) {
+      window.open(newPath, '_blank');
+    } else {
+      this.router.navigateByUrl(newPath);
     }
   }
 
-  isDisabled(menu?: Menu): boolean {
-    return menu ? isCategoryDisabled(menu.title) : false;
+  private convertMenuPath(path: string): string {
+    // Extract category from path - handle various formats
+    let category = '';
+
+    // Handle URL-encoded spaces and special characters
+    const decodedPath = decodeURIComponent(path);
+
+    // Common category mappings
+    const categoryMappings: { [key: string]: string } = {
+      'dress collection': 'dresses',
+      'dresses': 'dresses',
+      'jeans': 'jeans',
+      'shirts': 'shirts',
+      'shirt': 'shirts',
+      'tees': 't-shirts',
+      't-shirts': 't-shirts',
+      't shirt': 't-shirts',
+      'kurta': 'kurtas',
+      'kurtas': 'kurtas',
+      'sherwani': 'sherwani-sets',
+      'lehenga': 'lehenga-choli-sets',
+      'saree': 'lehenga-choli-sets',
+      'sarees': 'lehenga-choli-sets',
+      'winter': 'winter-essentials',
+      'women jeans': 'women-s-jeans'
+    };
+
+    // Try to find category in path
+    const lowerPath = decodedPath.toLowerCase();
+
+    for (const [key, value] of Object.entries(categoryMappings)) {
+      if (lowerPath.includes(key)) {
+        category = value;
+        break;
+      }
+    }
+
+    // If category found, return formatted URL
+    if (category) {
+      return `/?sortBy=asc&category=${category}&page=1`;
+    }
+
+    // If no conversion needed, return original path
+    return path;
   }
 
   toggle(menu: Menu){
-    // Prevent toggle if menu is disabled
-    if (this.isDisabled(menu)) {
-      return;
-    }
-    
     // Close all other menus at the same level before opening this one
     const getAllMenus = (menus: any[]): Menu[] => {
       let result: Menu[] = [];
@@ -105,6 +147,12 @@ export class MenuComponent {
     }
     traverse(obj);
     return result;
+  }
+
+  isDisabled(menu: Menu): boolean {
+    // Add custom logic here if you need to disable specific menu items
+    // For example: return menu.path === '' || menu.child?.length === 0;
+    return false;
   }
    
 }

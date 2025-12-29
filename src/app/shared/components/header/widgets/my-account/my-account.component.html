@@ -17,6 +17,7 @@
         </div>
         <div class="user-auth-box authenticated-box" *ngIf="(isAuthenticated$ | async)">
             <h3 class="auth-title">{{ 'Hello' | translate }}</h3>
+            <p class="auth-subtitle" style="color: #6B7280; font-size: 14px; margin: 0 0 16px 0;">Welcome back to your account</p>
             <ul class="user-box-name">
                 <li class="product-box-contain">
                     <a [routerLink]="['/account/bank-details']"><i class="ri-wallet-3-line me-2"></i> {{ 'Bank Details' | translate }}</a>

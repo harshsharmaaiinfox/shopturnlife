@@ -1,3 +1,10 @@
+// Header top navigation styling
+.top-nav {
+  padding: 24px 0;
+  position: relative;
+  z-index: 1 !important;
+}
+
 // Header separator line between top and bottom sections
 .header-separator-line {
   width: 100%;
@@ -11,7 +18,7 @@
 // Ensure header doesn't clip dropdowns
 header {
   overflow: visible !important;
-  
+
   .container-fluid {
     overflow: visible !important;
   }
@@ -23,12 +30,12 @@ header {
   align-items: center;
   justify-content: flex-start;
   gap: 0;
-  
+
   app-logo {
     flex-shrink: 0;
     margin-right: 20px; // Gap between logo and search
   }
-  
+
   .middle-box {
     flex: 1;
     max-width: 600px;
@@ -36,18 +43,18 @@ header {
     display: flex;
     align-items: center;
     gap: 20px;
-    
+
     .search-box {
       flex: 1;
       min-width: 0;
     }
-    
+
     .header-links {
       display: flex;
       align-items: center;
       gap: 0;
       flex-shrink: 0;
-      
+
       .header-link {
         color: #333;
         text-decoration: none;
@@ -56,47 +63,47 @@ header {
         padding: 0 12px;
         transition: color 0.2s ease;
         white-space: nowrap;
-        
+
         &:hover {
           color: var(--theme-color, #D38E60);
         }
       }
-      
+
       .link-separator {
         width: 1px;
         height: 20px;
         background-color: #e0e0e0;
         flex-shrink: 0;
       }
-      
+
       // Hide on mobile and tablet
       @media (max-width: 1199px) {
         display: none;
       }
     }
   }
-  
+
   .rightside-box {
     margin-left: auto;
     flex-shrink: 0;
-    
+
     // Ensure visibility on mobile
     @media (max-width: 767px) {
       display: flex !important;
       visibility: visible !important;
     }
   }
-  
+
   @media (max-width: 1199px) {
     justify-content: space-between;
-    
+
     .middle-box {
       margin-right: 0;
       max-width: none;
       flex: 0 1 auto;
     }
   }
-  
+
   @media (max-width: 767px) {
     app-logo {
       margin-right: 12px;
@@ -109,29 +116,29 @@ header {
   display: flex;
   align-items: center;
   gap: 20px;
-  
+
   // Reduce gap on mobile
   @media (max-width: 767px) {
     gap: 8px;
   }
-  
+
   .right-side {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     // Ensure profile icon is visible on desktop
     app-my-account {
       display: block !important;
       visibility: visible !important;
       opacity: 1 !important;
     }
-    
+
     // Ensure visibility on mobile
     @media (max-width: 767px) {
       display: flex !important;
       visibility: visible !important;
-      
+
       // Ensure profile icon container is visible
       app-my-account {
         display: block !important;
@@ -139,10 +146,10 @@ header {
       }
     }
   }
-  
+
   .header-separator {
     position: relative;
-    
+
     &::before {
       content: '';
       position: absolute;
@@ -152,12 +159,12 @@ header {
       width: 1px;
       height: 30px;
       background-color: #e0e0e0;
-      
+
       @media (max-width: 767px) {
         display: none;
       }
     }
-    
+
     &:first-child {
       &::before {
         display: none;
@@ -171,17 +178,17 @@ header {
   position: relative;
   z-index: 10;
   background-color: #fff;
-  
+
   .header-nav-middle {
     width: 100%;
     position: relative;
     z-index: 10;
-    
+
     .main-nav {
       width: 100%;
       position: relative;
       z-index: 10;
-      
+
       .navbar-nav {
         display: flex;
         flex-direction: row;
@@ -189,38 +196,38 @@ header {
         overflow-x: auto;
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
-        
+
         &::-webkit-scrollbar {
           display: none;
         }
-        
+
         .nav-item {
           white-space: nowrap;
           flex-shrink: 0;
-          
-          // Force dropdown visibility
-          .dropdown-menu {
-            position: fixed !important;
-            z-index: 1060 !important;
-            
-            &.show {
-              display: block !important;
-              opacity: 1 !important;
-              visibility: visible !important;
-            }
-          }
-          
-          // Desktop hover behavior
+
+          // Desktop-only: Force dropdown visibility with fixed positioning
           @media (min-width: 1200px) {
+            .dropdown-menu {
+              position: fixed !important;
+              z-index: 1060 !important;
+
+              &.show {
+                display: block !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+              }
+            }
+
+            // Desktop hover behavior
             &.dropdown:hover {
-              > .dropdown-menu {
+              >.dropdown-menu {
                 display: block !important;
                 opacity: 1 !important;
                 visibility: visible !important;
                 transform: translateY(0) !important;
               }
-              
-              > .dropdown-menu-2 {
+
+              >.dropdown-menu-2 {
                 display: block !important;
                 opacity: 1 !important;
                 visibility: visible !important;
@@ -228,13 +235,13 @@ header {
               }
             }
           }
-          
+
           .nav-link {
             padding: 12px 16px;
             font-size: 15px;
             color: #333;
             text-decoration: none;
-            
+
             &:hover {
               color: var(--theme-color);
             }
@@ -256,18 +263,18 @@ header {
   position: sticky;
   bottom: 0;
   z-index: 10;
-  
+
   @media (max-width: 1199px) {
     display: block;
   }
-  
+
   .mobile-menu-links {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0;
     padding: 0;
-    
+
     .mobile-menu-link {
       color: #333;
       text-decoration: none;
@@ -277,18 +284,18 @@ header {
       transition: all 0.2s ease;
       white-space: nowrap;
       border-radius: 8px;
-      
+
       &:hover {
         color: var(--theme-color, #D38E60);
         background-color: #f9fafb;
       }
-      
+
       &:active {
         color: var(--theme-color, #D38E60);
         background-color: #f3f4f6;
       }
     }
-    
+
     .mobile-link-separator {
       width: 1px;
       height: 20px;
@@ -306,7 +313,7 @@ header {
     min-height: 0;
     height: 100%;
     padding-bottom: 0; // Remove bottom padding as footer has its own
-    
+
     app-menu {
       flex: 1;
       overflow-y: auto;

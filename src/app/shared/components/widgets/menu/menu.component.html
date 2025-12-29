@@ -29,12 +29,12 @@
           <label class="menu-label {{ menu.badge_color }}"
             *ngIf="menu.badge_text">{{ menu.badge_text | translate }}</label>
         </a>
-        <a class="dropdown-item" 
-           [class.show]="menu.active" 
+        <a class="dropdown-item"
+           [class.show]="menu.active"
            [class.disabled]="isDisabled(menu)"
            [style.pointer-events]="isDisabled(menu) ? 'none' : 'auto'"
            [style.opacity]="isDisabled(menu) ? '0.6' : '1'"
-           href="{{ menu.path }}" 
+           (click)="redirect(menu.path, menu)"
            *ngIf="menu.is_target_blank === 1">
           {{ menu.title | translate }}
           <label class="menu-label {{ menu.badge_color }}"

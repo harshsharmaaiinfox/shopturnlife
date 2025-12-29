@@ -41,10 +41,7 @@
                                     </a>
                                 </li>
                             </ul>
-                            <app-no-data [class]="'no-data-footer'" 
-                                        [text]="'no_link_found'" 
-                                        *ngIf="!data?.footer?.useful_link?.length">
-                            </app-no-data>
+                          
                         </div>
                     </div>
                 </div>
@@ -110,11 +107,7 @@
                             </span>
                         </div>
                         <div class="footer-contain">
-                            <app-footer-links [links]="data?.footer?.help_center || []"></app-footer-links>
-                            <app-no-data [class]="'no-data-footer'" 
-                                        [text]="'no_link_found'" 
-                                        *ngIf="!data?.footer?.help_center?.length">
-                            </app-no-data>
+                            <app-footer-links [links]="getHelpCenterLinks()"></app-footer-links>
                         </div>
                     </div>
                 </div>

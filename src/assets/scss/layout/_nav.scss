@@ -609,7 +609,7 @@ header {
         &::after {
           content: none;
         }
-        
+
         &:hover {
           color: #CB7A43;
         }
@@ -1236,7 +1236,7 @@ header {
             color: #CB7A43;
             background-color: rgba(203, 122, 67, 0.05);
             padding-left: 25px;
-            
+
             body.rtl & {
               padding-left: 20px;
               padding-right: 25px;
@@ -2038,4 +2038,16 @@ header {
       }
     }
   }
+}
+
+header .navbar.navbar-expand-xl .navbar-nav .nav-item>a {
+  color: #222222;
+}
+
+.navbar-nav .nav-item.dropdown .dropdown-menu.dropdown-menu-2,
+.navbar-nav .nav-item.dropdown-mega .dropdown-menu.dropdown-menu-2 {
+  min-width: 52vw !important;
+  left: 28% !important;
+  padding: 30px 25px !important;
+  top: 28px !important;
 }
