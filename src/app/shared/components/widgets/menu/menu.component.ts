@@ -68,6 +68,11 @@ export class MenuComponent {
   }
 
   private convertMenuPath(path: string): string {
+    // If path already starts with /collections, return it as-is
+    if (path.startsWith('/collections')) {
+      return path;
+    }
+
     // Extract category from path - handle various formats
     let category = '';
 

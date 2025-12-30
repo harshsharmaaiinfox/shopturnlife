@@ -1350,7 +1350,7 @@ export const menuOptions: any[] = [
                 "item_image_id": null,
                 "banner_image_id": null,
                 "parent_id": null,
-                "is_target_blank": 1,
+                "is_target_blank": 0,
                 "status": 1,
                 "created_by_id": 1,
                 "created_at": "2025-12-19T11:34:00.000000Z",
