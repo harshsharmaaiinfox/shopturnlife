@@ -11,12 +11,12 @@
     </div>
     <div class="onhover-div onhover-div-login">
         <div class="user-auth-box" *ngIf="!(isAuthenticated$ | async)">
-            <h3 class="auth-title">{{ 'Hello' | translate }}</h3>
+            <h3 class="auth-title">{{ 'hello' | translate }}</h3>
             <p class="auth-subtitle">{{ 'To access your account' | translate }}</p>
             <a [routerLink]="['/auth/register']" class="auth-signup-btn">{{ 'Sign Up' | translate }}</a>
         </div>
         <div class="user-auth-box authenticated-box" *ngIf="(isAuthenticated$ | async)">
-            <h3 class="auth-title">{{ 'Hello' | translate }}</h3>
+            <h3 class="auth-title">{{ 'hello' | translate }}</h3>
             <p class="auth-subtitle" style="color: #6B7280; font-size: 14px; margin: 0 0 16px 0;">Welcome back to your account</p>
             <ul class="user-box-name">
                 <li class="product-box-contain">
