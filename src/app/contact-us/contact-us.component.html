@@ -68,11 +68,12 @@
                                 <div class="form-row">
                                     <div class="form-field">
                                         <label for="name">Full Name <span class="required">*</span></label>
-                                        <input 
-                                            type="text" 
-                                            id="name" 
-                                            placeholder="John Doe" 
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            placeholder="John Doe"
                                             formControlName="name"
+                                            (input)="onNameInput($event)"
                                             [class.error]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
                                         <span class="error-message" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
                                             Name should contain only letters and spaces.
@@ -96,11 +97,12 @@
 
                                     <div class="form-field">
                                         <label for="phone">Phone Number <span class="required">*</span></label>
-                                        <input 
-                                            type="tel" 
-                                            id="phone" 
-                                            placeholder="1234567890" 
+                                        <input
+                                            type="tel"
+                                            id="phone"
+                                            placeholder="1234567890"
                                             formControlName="phone"
+                                            (input)="onPhoneInput($event)"
                                             [class.error]="contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched">
                                         <span class="error-message" *ngIf="contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched">
                                             Phone number should be exactly 10 digits.

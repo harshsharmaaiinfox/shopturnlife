@@ -144,6 +144,37 @@ export class RegisterComponent {
     }
   }
 
+  // Allow only letters, numbers, @, and . in email field
+  allowOnlyEmailChars(event: KeyboardEvent): void {
+    const allowedControlKeys = [
+      'Backspace', 'Delete', 'Tab', 'Enter', 'Escape', 'ArrowLeft', 'ArrowRight', 'Home', 'End'
+    ];
+    if (allowedControlKeys.includes(event.key)) return;
+    // Allow Ctrl/Cmd combinations (copy, paste, select all)
+    if (event.ctrlKey || event.metaKey) return;
+    if (!/^[A-Za-z0-9@.]$/.test(event.key)) {
+      event.preventDefault();
+    }
+  }
+
+  sanitizeEmailInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const sanitized = (input.value || '').replace(/[^A-Za-z0-9@.]/g, '');
+    if (sanitized !== input.value) {
+      input.value = sanitized;
+      this.form.controls['email'].setValue(sanitized, { emitEvent: false });
+    }
+  }
+
+  sanitizeEmailPaste(event: ClipboardEvent): void {
+    const pasted = event.clipboardData?.getData('text') ?? '';
+    if (/[^A-Za-z0-9@.]/.test(pasted)) {
+      event.preventDefault();
+      const sanitized = pasted.replace(/[^A-Za-z0-9@.]/g, '');
+      document.execCommand('insertText', false, sanitized);
+    }
+  }
+
   submit() {
     this.form.markAllAsTouched();
     if(this.tnc.invalid){

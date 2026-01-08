@@ -67,12 +67,15 @@
                                                     <path d="M3 7L12 13L21 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                 </svg>
                                             </span>
-                                            <input 
-                                                type="email" 
-                                                class="form-input-modern" 
-                                                id="email" 
-                                                formControlName="email" 
+                                            <input
+                                                type="email"
+                                                class="form-input-modern"
+                                                id="email"
+                                                formControlName="email"
                                                 placeholder="{{ 'your.email@example.com' | translate }}"
+                                                (keydown)="allowOnlyEmailChars($event)"
+                                                (input)="sanitizeEmailInput($event)"
+                                                (paste)="sanitizeEmailPaste($event)"
                                                 [class.is-invalid]="form.controls['email'].touched && form.controls['email'].invalid">
                                         </div>
                                         <div *ngIf="form.controls['email'].touched && form.controls['email'].errors?.['required']" class="error-message">

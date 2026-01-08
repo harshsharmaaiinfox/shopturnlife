@@ -952,5 +952,66 @@ export class CheckoutComponent implements OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  // Input filtering methods
+  onNameInput(event: any) {
+    const input = event.target;
+    const value = input.value;
+    // Remove any character that is not a letter or space
+    const filteredValue = value.replace(/[^A-Za-z ]/g, '');
+    if (value !== filteredValue) {
+      input.value = filteredValue;
+      // Update the form control value
+      this.form.get('name')?.setValue(filteredValue);
+    }
+  }
+
+  onTitleInput(event: any) {
+    const input = event.target;
+    const value = input.value;
+    // Remove any character that is not a letter or space
+    const filteredValue = value.replace(/[^A-Za-z ]/g, '');
+    if (value !== filteredValue) {
+      input.value = filteredValue;
+      // Update the form control value
+      this.form.get('shipping_address.title')?.setValue(filteredValue);
+    }
+  }
+
+  onPhoneInput(event: any) {
+    const input = event.target;
+    const value = input.value;
+    // Remove any character that is not a digit and limit to 10 digits
+    const filteredValue = value.replace(/[^0-9]/g, '').substring(0, 10);
+    if (value !== filteredValue) {
+      input.value = filteredValue;
+      // Update the form control value
+      this.form.get('phone')?.setValue(filteredValue);
+    }
+  }
+
+  onShippingPhoneInput(event: any) {
+    const input = event.target;
+    const value = input.value;
+    // Remove any character that is not a digit and limit to 10 digits
+    const filteredValue = value.replace(/[^0-9]/g, '').substring(0, 10);
+    if (value !== filteredValue) {
+      input.value = filteredValue;
+      // Update the form control value
+      this.form.get('shipping_address.phone')?.setValue(filteredValue);
+    }
+  }
+
+  onCityInput(event: any) {
+    const input = event.target;
+    const value = input.value;
+    // Remove any character that is not a letter or space
+    const filteredValue = value.replace(/[^A-Za-z ]/g, '');
+    if (value !== filteredValue) {
+      input.value = filteredValue;
+      // Update the form control value
+      this.form.get('shipping_address.city')?.setValue(filteredValue);
+    }
+  }
   
 }

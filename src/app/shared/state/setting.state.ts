@@ -63,8 +63,8 @@ export class SettingState {
                 // icon: './assets/images/payment/Shop Trurn Life_nabu.png',
               },
               {
-                name: 'cash_free',
-                status: false,
+                name: 'cash_free_1',
+                status: true,
                 title: 'Cash Free',
                 icon: './assets/images/cash_free.jpg',
               },
