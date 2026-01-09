@@ -43,6 +43,16 @@ export const content: Routes = [
     title: 'Shipping & Delivery Information – Fast & Safe | Shop Trurn Life'
   },
   {
+    path: "become-a-supplier",
+    loadComponent: () => import("../../become-a-supplier/become-a-supplier/become-a-supplier.component").then((m) => m.BecomeASupplierComponent),
+    title: 'Become a Supplier – Partner with Shop Trurn Life'
+  },
+  {
+    path: "investor-relations",
+    loadComponent: () => import("../../investor-relations/investor-relations/investor-relations.component").then((m) => m.InvestorRelationsComponent),
+    title: 'Investor Relations – Shop Trurn Life Investment Opportunities'
+  },
+  {
     path: "auth",
     loadChildren: () => import("../../components/auth/auth.module").then((m) => m.AuthModule),
     canActivateChild: [AuthGuard],

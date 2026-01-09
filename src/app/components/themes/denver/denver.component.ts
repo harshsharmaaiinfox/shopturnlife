@@ -9,7 +9,7 @@ import { GetBrands } from '../../../shared/action/brand.action';
 import { GetStores } from '../../../shared/action/store.action';
 import { ThemeOptionState } from '../../../shared/state/theme-option.state';
 import { Option } from '../../../shared/interface/theme-option.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Params } from '../../../shared/interface/core.interface';
 
 @Component({
@@ -44,6 +44,7 @@ export class DenverComponent implements OnInit, AfterViewInit {
 
   constructor(private store: Store,
     private route: ActivatedRoute,
+    private router: Router,
     private themeOptionService: ThemeOptionService) {}
 
   ngAfterViewInit() {
@@ -96,6 +97,19 @@ export class DenverComponent implements OnInit, AfterViewInit {
       // Load products for collection section with updated filters
       this.store.dispatch(new GetProducts(this.filter));
 
+      // Scroll to collection section if category is selected
+      if (params['category']) {
+        setTimeout(() => {
+          const collectionSection = document.getElementById('filtered_products');
+          if (collectionSection) {
+            collectionSection.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }, 500); // Increased delay to ensure products are loaded
+      }
+
       // Handle product box slider settings
       if(this.route.snapshot.data['data']?.theme_option?.productBox === 'digital'){
         if (this.productSlider6ItemMargin && this.productSlider6ItemMargin.responsive && this.productSlider6ItemMargin.responsive['1180']) {
@@ -117,6 +131,35 @@ export class DenverComponent implements OnInit, AfterViewInit {
         }
       }
     });
+  }
+
+  // Method to handle category selection on home page
+  selectCategory(category: string, event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
+
+    // Navigate to same route with updated query params
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        category: category,
+        page: 1,
+        sortBy: 'asc'
+      },
+      queryParamsHandling: 'merge' // merge with existing query params
+    });
+
+    // Scroll to collection section after a brief delay to allow DOM update
+    setTimeout(() => {
+      const collectionSection = document.getElementById('filtered_products');
+      if (collectionSection) {
+        collectionSection.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }, 100);
   }
 
 }
