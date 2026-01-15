@@ -8,7 +8,7 @@
   padding: 0 16px;
   min-width: 40px;
   min-height: 40px;
-  
+
   // Remove padding on mobile and ensure visibility
   @media (max-width: 767px) {
     padding: 0 8px;
@@ -18,33 +18,33 @@
     min-width: 36px;
     min-height: 36px;
   }
-  
+
   .simple-icon-box {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 0;
-    
+
     .delivery-icon {
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 4px;
-      
+
       @media (max-width: 767px) {
         margin-bottom: 0;
         display: flex !important;
         visibility: visible !important;
         opacity: 1 !important;
       }
-      
+
       i {
         font-size: 18px;
         color: #333;
         line-height: 1;
         display: inline-block !important;
-        
+
         @media (max-width: 767px) {
           font-size: 20px;
           display: inline-block !important;
@@ -52,12 +52,12 @@
           opacity: 1 !important;
         }
       }
-      
+
       .user-box {
         display: none; // Hide user box for simple icon style
       }
     }
-    
+
     .icon-label {
       font-size: 18px;
       color: #333;
@@ -65,20 +65,20 @@
       line-height: 1.2;
       text-align: center;
       margin-top: 2px;
-      
+
       // Hide text label on mobile, show only icon
       @media (max-width: 767px) {
         display: none;
       }
     }
   }
-  
+
   &:hover {
     .simple-icon-box {
       .delivery-icon i {
         color: #D38E60;
       }
-      
+
       .icon-label {
         color: #D38E60;
       }
@@ -156,22 +156,40 @@
 
         .auth-title {
           text-align: left;
-          margin: 0 0 20px 0 !important;
-          padding: 0 0 16px 0 !important;
-          border-bottom: 1px solid #E5E7EB;
-          font-size: 26px !important;
+          margin: 0 0 8px 0 !important;
+          padding: 0 !important;
+          border-bottom: none;
+          font-size: 24px !important;
           font-weight: 700 !important;
           color: #2C2C2C !important;
           display: block !important;
           visibility: visible !important;
           opacity: 1 !important;
           line-height: 1.3 !important;
-          min-height: 34px;
+          min-height: auto;
           height: auto;
           position: relative !important;
           z-index: 1 !important;
           text-indent: 0 !important;
           text-shadow: none !important;
+          white-space: normal !important;
+          overflow: visible !important;
+        }
+
+        .auth-subtitle {
+          font-size: 14px !important;
+          color: #6B7280 !important;
+          margin: 0 0 20px 0 !important;
+          padding: 0 0 16px 0 !important;
+          border-bottom: 1px solid #E5E7EB;
+          line-height: 1.5 !important;
+          font-weight: 400 !important;
+          display: block !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          position: relative !important;
+          z-index: 1 !important;
+          text-indent: 0 !important;
           white-space: normal !important;
           overflow: visible !important;
         }
@@ -185,7 +203,7 @@
             display: block;
             width: 100%;
 
-            + li {
+            +li {
               padding-top: 14px;
               margin-top: 14px;
               border-top: 1px solid #F3F4F6;
@@ -216,7 +234,7 @@
               &:hover {
                 color: #D38E60;
                 background-color: #FEF7F0;
-                
+
                 i {
                   color: #D38E60;
                 }
@@ -228,4 +246,3 @@
     }
   }
 }
-

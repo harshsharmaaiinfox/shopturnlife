@@ -10,7 +10,9 @@ import { ProductState } from '../../../shared/state/product.state';
 import { ThemeOptionState } from '../../../shared/state/theme-option.state';
 import { Option } from '../../../shared/interface/theme-option.interface';
 import { Title, Meta } from '@angular/platform-browser';
- 
+
+import { ViewportScroller } from '@angular/common';
+
 @Component({
   selector: 'app-collection',
   templateUrl: './collection.component.html',
@@ -48,10 +50,16 @@ export class CollectionComponent {
   constructor(private route: ActivatedRoute,
     private store: Store,
     private title: Title,
-    private meta: Meta) {
+    private meta: Meta,
+    private viewportScroller: ViewportScroller) {
 
     // Get Query params..
     this.route.queryParams.subscribe(params => {
+      // Add a small timeout to ensure the view has updated before scrolling
+      setTimeout(() => {
+        this.viewportScroller.scrollToPosition([0, 0]);
+      }, 100);
+
       this.filter = {
         'page': params['page'] ? params['page'] : 1,
         'paginate': 40,
@@ -70,7 +78,7 @@ export class CollectionComponent {
       this.store.dispatch(new GetProducts(this.filter));
 
       // Params For Demo Purpose only
-      if(params['layout']) {
+      if (params['layout']) {
         this.layout = params['layout'];
       } else {
         // Get Collection Layout
@@ -101,7 +109,7 @@ export class CollectionComponent {
     let title = '';
     let description = '';
     let keywords = '';
-    
+
     switch (categoryLower) {
       case 'activewear':
         title = 'Activewear Collection | Gym Wear, Sportswear & Fitness Clothes | Shop Trurn Life';
@@ -130,7 +138,7 @@ export class CollectionComponent {
 
     // Force title update using multiple methods to ensure it works
     this.forceUpdateTitle(title);
-    
+
     // Update meta tags
     this.meta.updateTag({ name: 'description', content: description });
     this.meta.updateTag({ name: 'keywords', content: keywords });
@@ -142,7 +150,7 @@ export class CollectionComponent {
 
     // Update canonical URL
     this.meta.updateTag({ rel: 'canonical', href: `https://Shop Trurn Life.in/collections/${category}` });
-    
+
     // Update breadcrumb
     this.breadcrumb.title = `${category.charAt(0).toUpperCase() + category.slice(1)} Collection`;
     this.breadcrumb.items = [
@@ -162,7 +170,7 @@ export class CollectionComponent {
 
     // Force title update
     this.forceUpdateTitle(title);
-    
+
     // Update meta tags
     this.meta.updateTag({ name: 'description', content: description });
     this.meta.updateTag({ name: 'keywords', content: keywords });
@@ -172,7 +180,7 @@ export class CollectionComponent {
     this.meta.updateTag({ name: 'twitter:title', content: title });
     this.meta.updateTag({ name: 'twitter:description', content: description });
     this.meta.updateTag({ rel: 'canonical', href: 'https://Shop Trurn Life.in/collections' });
-    
+
     // Reset breadcrumb to default
     this.breadcrumb.title = 'Collections';
     this.breadcrumb.items = [
@@ -187,19 +195,19 @@ export class CollectionComponent {
   private forceUpdateTitle(title: string): void {
     // Method 1: Angular Title service
     this.title.setTitle(title);
-    
+
     // Method 2: Update meta title tag as backup
     this.meta.updateTag({ name: 'title', content: title });
-    
+
     // Method 3: Direct DOM manipulation
     document.title = title;
-    
+
     // Method 4: Force update with setTimeout to ensure it takes effect
     setTimeout(() => {
       this.title.setTitle(title);
       document.title = title;
     }, 0);
-    
+
     // Method 5: Additional timeout for browser compatibility
     setTimeout(() => {
       this.title.setTitle(title);

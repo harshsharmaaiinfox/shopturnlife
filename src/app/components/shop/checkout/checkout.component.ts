@@ -53,7 +53,7 @@ export class CheckoutComponent implements OnDestroy {
   @Select(SettingState.setting) setting$: Observable<Values>;
   @Select(CartState.cartHasDigital) cartDigital$: Observable<boolean | number>;
   @Select(CountryState.countries) countries$: Observable<Select2Data>;
-  
+
   @ViewChild("addressModal") AddressModal: AddressModalComponent;
   @ViewChild('cpn', { static: false }) cpnRef: ElementRef<HTMLInputElement>;
   @ViewChild("payByQRModal") payByQRModal: TemplateRef<any>;
@@ -94,10 +94,10 @@ export class CheckoutComponent implements OnDestroy {
   constructor(
     private store: Store, private router: Router,
     private formBuilder: FormBuilder, public cartService: CartService,
-        private modalService: NgbModal,
-        private sanitizer: DomSanitizer,
-        private orderService: OrderService
-      ) {
+    private modalService: NgbModal,
+    private sanitizer: DomSanitizer,
+    private orderService: OrderService
+  ) {
     this.store.dispatch(new GetSettingOption());
 
     this.form = this.formBuilder.group({
@@ -138,10 +138,10 @@ export class CheckoutComponent implements OnDestroy {
         state_id: new FormControl('', [Validators.required]),
       })
     });
-    
+
     this.store.selectSnapshot(state => state.setting).setting.activation.guest_checkout = true;
-    
-    if(this.store.selectSnapshot(state => state.auth && state.auth.access_token)) {
+
+    if (this.store.selectSnapshot(state => state.auth && state.auth.access_token)) {
       this.form.removeControl('create_account');
       this.form.removeControl('name');
       this.form.removeControl('email');
@@ -153,7 +153,7 @@ export class CheckoutComponent implements OnDestroy {
       this.form.removeControl('billing_address');
 
       this.cartDigital$.pipe(takeUntil(this.destroy$)).subscribe(value => {
-        if(value == 1) {
+        if (value == 1) {
           this.form.controls['shipping_address_id'].clearValidators();
           this.form.controls['delivery_description'].clearValidators();
         } else {
@@ -166,35 +166,35 @@ export class CheckoutComponent implements OnDestroy {
 
       // Trigger checkout when shipping address changes
       this.form.controls['shipping_address_id'].valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
-        if(this.form.controls['shipping_address_id'].valid && this.form.controls['delivery_description'].valid) {
+        if (this.form.controls['shipping_address_id'].valid && this.form.controls['delivery_description'].valid) {
           this.checkout();
         }
       });
 
       // Trigger checkout when delivery description changes
       this.form.controls['delivery_description'].valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
-        if(this.form.controls['shipping_address_id'].valid && this.form.controls['delivery_description'].valid) {
+        if (this.form.controls['shipping_address_id'].valid && this.form.controls['delivery_description'].valid) {
           this.checkout();
         }
       });
 
       // Trigger checkout when payment method changes
       this.form.controls['payment_method'].valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
-        if(this.form.valid) {
+        if (this.form.valid) {
           this.checkout();
         }
       });
 
     } else {
 
-      if(this.store.selectSnapshot(state => state.setting).setting.activation.guest_checkout) {
+      if (this.store.selectSnapshot(state => state.setting).setting.activation.guest_checkout) {
         this.form.removeControl('shipping_address_id');
         this.form.removeControl('billing_address_id');
         this.form.removeControl('points_amount');
         this.form.removeControl('wallet_balance');
-        
+
         this.form.controls['create_account'].valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-          if(value) {
+          if (value) {
             this.form.controls['name'].setValidators([Validators.required]);
             this.form.controls['password'].setValidators([Validators.required]);
           } else {
@@ -206,7 +206,7 @@ export class CheckoutComponent implements OnDestroy {
         });
 
         this.form.statusChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-          if(value == 'VALID') {
+          if (value == 'VALID') {
             this.checkout();
           }
         });
@@ -216,7 +216,7 @@ export class CheckoutComponent implements OnDestroy {
     }
 
     this.form.get('billing_address.same_shipping')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      if(value) {
+      if (value) {
         this.form.get('billing_address.title')?.setValue(this.form.get('shipping_address.title')?.value);
         this.form.get('billing_address.street')?.setValue(this.form.get('shipping_address.street')?.value);
         this.form.get('billing_address.country_id')?.setValue(this.form.get('shipping_address.country_id')?.value);
@@ -236,32 +236,32 @@ export class CheckoutComponent implements OnDestroy {
         this.form.get('billing_address.phone')?.setValue('');
       }
     });
-    
+
     this.cartService.getUpdateQtyClickEvent().pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.products();
       this.checkout();
     });
 
     this.form.controls['phone']?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value) => {
-      if(value && value.toString().length > 10) {
+      if (value && value.toString().length > 10) {
         this.form.controls['phone']?.setValue(+value.toString().slice(0, 10));
       }
     });
 
     this.form.get('shipping_address.phone')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value) => {
-      if(value && value.toString().length > 10) {
+      if (value && value.toString().length > 10) {
         this.form.get('shipping_address.phone')?.setValue(+value.toString().slice(0, 10));
       }
     });
 
     this.form.get('billing_address.phone')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value) => {
-      if(value && value.toString().length > 10) {
+      if (value && value.toString().length > 10) {
         this.form.get('billing_address.phone')?.setValue(+value.toString().slice(0, 10));
       }
     });
-    
+
     this.localUserCheck = JSON.parse(localStorage.getItem('account') || '');
-    
+
   }
 
   get productControl(): FormArray {
@@ -277,10 +277,10 @@ export class CheckoutComponent implements OnDestroy {
   ngOnInit() {
     this.checkout$.pipe(takeUntil(this.destroy$)).subscribe(data => this.checkoutTotal = data);
     this.products();
-    
+
     // Trigger initial checkout if form is already valid (for logged-in users with saved addresses)
     setTimeout(() => {
-      if(this.form.valid && this.store.selectSnapshot(state => state.auth && state.auth.access_token)) {
+      if (this.form.valid && this.store.selectSnapshot(state => state.auth && state.auth.access_token)) {
         this.checkout();
       }
     }, 500);
@@ -296,7 +296,7 @@ export class CheckoutComponent implements OnDestroy {
             variation_id: new FormControl(item?.variation_id ? item?.variation_id : ''),
             quantity: new FormControl(item?.quantity),
           })
-      ));
+        ));
     });
   }
 
@@ -310,14 +310,14 @@ export class CheckoutComponent implements OnDestroy {
   }
 
   selectShippingAddress(id: number) {
-    if(id) {
+    if (id) {
       this.form.controls['shipping_address_id'].setValue(Number(id));
       this.checkout();
     }
   }
 
   selectBillingAddress(id: number) {
-    if(id) {
+    if (id) {
       this.form.controls['billing_address_id'].setValue(Number(id));
       this.checkout();
     }
@@ -338,10 +338,10 @@ export class CheckoutComponent implements OnDestroy {
         break;
       case 'sub_paisa':
         this.checkout(value);
-        break;  
+        break;
       case 'cash_free':
         this.checkout(value);
-        break;  
+        break;
       case 'zyaada_pay':
         this.checkout(value);
         break;
@@ -368,8 +368,8 @@ export class CheckoutComponent implements OnDestroy {
       checkout: this.checkoutTotal
     }
     this.cartService.initiateSubPaisa(
-      { 
-        uuid: payload.uuid, 
+      {
+        uuid: payload.uuid,
         email: payload.email,
         total: this.checkoutTotal?.total?.total,
         phone: JSON.parse(userData || '').user.phone,
@@ -381,11 +381,11 @@ export class CheckoutComponent implements OnDestroy {
         if (data) {
           this.formData = this.sanitizer.bypassSecurityTrustHtml(data?.data);
           const container = document.getElementById('paymentContainer');
-        
+
           if (container) {
             container.innerHTML = data.data;
             const form = container.querySelector('form') as HTMLFormElement;
-        
+
             // Store payment info in session storage
             sessionStorage.setItem('payment_uuid', uuid);
             sessionStorage.setItem('payment_method', payment_method);
@@ -414,7 +414,7 @@ export class CheckoutComponent implements OnDestroy {
       checkout: this.checkoutTotal
     };
 
-    this.cartService.initiateNeoKredIntent({ 
+    this.cartService.initiateNeoKredIntent({
       uuid: payload.uuid,
       email: payload.email,
       total: this.checkoutTotal?.total?.total,
@@ -426,7 +426,7 @@ export class CheckoutComponent implements OnDestroy {
         if (response?.R && response?.data) {
           try {
             const cashFreeData = response.data;
-            
+
             if (cashFreeData?.payment_url) {
               // Store payment info in session storage
               sessionStorage.setItem('payment_uuid', uuid);
@@ -474,7 +474,7 @@ export class CheckoutComponent implements OnDestroy {
         if (response?.R && response?.data) {
           try {
             const easeBuzzData = response.data;
-            
+
             if (easeBuzzData?.payment_url) {
               // Store payment info in session storage
               sessionStorage.setItem('payment_uuid', uuid);
@@ -498,7 +498,7 @@ export class CheckoutComponent implements OnDestroy {
       }
     });
   }
-  
+
   // CashFree Payment Integration
   initiateCashFreePaymentIntent(payment_method: string, uuid: any, order_result: any) {
     const userData = localStorage.getItem('account');
@@ -522,7 +522,7 @@ export class CheckoutComponent implements OnDestroy {
         if (response?.R && response?.data) {
           try {
             const cashFreeData = response.data;
-            
+
             if (cashFreeData?.payment_link) {
               // Store payment info in session storage
               localStorage.setItem('payment_uuid', uuid);
@@ -570,7 +570,7 @@ export class CheckoutComponent implements OnDestroy {
         if (response?.R && response?.data) {
           try {
             const zyaadaPayData = response.data;
-            
+
             if (zyaadaPayData?.payment_url) {
               // Store payment info in session storage
               sessionStorage.setItem('payment_uuid', uuid);
@@ -583,7 +583,7 @@ export class CheckoutComponent implements OnDestroy {
               console.error("Invalid response: Payment link is missing.");
             }
           } catch (error) {
-              console.error("Error parsing Zyaada Pay response:", error);
+            console.error("Error parsing Zyaada Pay response:", error);
           }
         } else {
           console.error("Payment initiation failed:", response?.msg);
@@ -619,7 +619,7 @@ export class CheckoutComponent implements OnDestroy {
         if (response?.R && response?.data) {
           try {
             const zyaadaPayData = response.data;
-            
+
             if (zyaadaPayData?.payment_url) {
               // Store payment info in session storage
               sessionStorage.setItem('payment_uuid', uuid);
@@ -632,7 +632,7 @@ export class CheckoutComponent implements OnDestroy {
               console.error("Invalid response: Payment link is missing.");
             }
           } catch (error) {
-              console.error("Error parsing Zyaada Pay response:", error);
+            console.error("Error parsing Zyaada Pay response:", error);
           }
         } else {
           console.error("Payment initiation failed:", response?.msg);
@@ -644,7 +644,7 @@ export class CheckoutComponent implements OnDestroy {
     });
   }
 
-  // Shop Turn Life Nabu Payment Integration
+  // Shop Shop Turn Life Nabu Payment Integration
   initiateShopTurnLifeNabuPaymentIntent(payment_method: string, uuid: any, order_result: any) {
     const userData = localStorage.getItem('account');
     const parsedUserData = JSON.parse(userData || '{}')?.user || {};
@@ -748,7 +748,7 @@ export class CheckoutComponent implements OnDestroy {
     });
   }
 
-  payByNeoKredIntentSaveDataUpiIntentString(upi:string) {
+  payByNeoKredIntentSaveDataUpiIntentString(upi: string) {
     switch (upi) {
       case 'gpay_upi':
         return this.payByNeoKredIntentSaveData.upiIntentString.replace("upi://pay?", "tez://pay?");
@@ -758,7 +758,7 @@ export class CheckoutComponent implements OnDestroy {
         return this.payByNeoKredIntentSaveData.upiIntentString.replace("upi://pay?", "paytmmp://pay?");
       case 'bhim_upi':
         break;
-        // return this.payByNeoKredIntentSaveData.upiIntentString.replace()
+      // return this.payByNeoKredIntentSaveData.upiIntentString.replace()
       default:
         break;
     }
@@ -793,7 +793,7 @@ export class CheckoutComponent implements OnDestroy {
   setCoupon(value?: string) {
     this.couponError = null;
 
-    if(value)
+    if (value)
       this.form.controls['coupon'].setValue(value);
     else
       this.form.controls['coupon'].reset();
@@ -814,10 +814,10 @@ export class CheckoutComponent implements OnDestroy {
   }
 
   shippingCountryChange(data: Select2UpdateEvent) {
-    if(data && data?.value) {
+    if (data && data?.value) {
       this.shippingStates$ = this.store
-          .select(StateState.states)
-          .pipe(map(filterFn => filterFn(+data?.value)));
+        .select(StateState.states)
+        .pipe(map(filterFn => filterFn(+data?.value)));
     } else {
       this.form.get('shipping_address.state_id')?.setValue('');
       this.shippingStates$ = of();
@@ -825,11 +825,11 @@ export class CheckoutComponent implements OnDestroy {
   }
 
   billingCountryChange(data: Select2UpdateEvent) {
-    if(data && data?.value) {
+    if (data && data?.value) {
       this.billingStates$ = this.store
-          .select(StateState.states)
-          .pipe(map(filterFn => filterFn(+data?.value)));
-      if(this.form.get('billing_address.same_shipping')?.value) {
+        .select(StateState.states)
+        .pipe(map(filterFn => filterFn(+data?.value)));
+      if (this.form.get('billing_address.same_shipping')?.value) {
         setTimeout(() => {
           this.form.get('billing_address.state_id')?.setValue(this.form.get('shipping_address.state_id')?.value);
         }, 200);
@@ -840,18 +840,18 @@ export class CheckoutComponent implements OnDestroy {
     }
   }
 
-  checkout(payment_method?:string) {
+  checkout(payment_method?: string) {
     // If has coupon error while checkout
-    if(this.couponError){
+    if (this.couponError) {
       this.couponError = null;
       this.cpnRef.nativeElement.value = '';
       this.form.controls['coupon'].reset();
     }
 
-    if(this.form.valid) {
+    if (this.form.valid) {
       this.loading = true;
       this.store.dispatch(new Checkout(this.form.value)).subscribe({
-        next:(value) => {
+        next: (value) => {
           this.storeData = value;
           console.log(this.storeData);
         },
@@ -870,12 +870,12 @@ export class CheckoutComponent implements OnDestroy {
 
   placeorder() {
     // Prevent double submission
-    if(this.loading) {
+    if (this.loading) {
       return;
     }
 
-    if(this.form.valid) {
-      if(this.cpnRef && !this.cpnRef.nativeElement.value) {
+    if (this.form.valid) {
+      if (this.cpnRef && !this.cpnRef.nativeElement.value) {
         this.form.controls['coupon'].reset();
       }
 
@@ -904,28 +904,28 @@ export class CheckoutComponent implements OnDestroy {
         })
       ).subscribe({
         next: (result) => {
-        if(this.payment_method === 'cash_free'){
-          this.initiateCashFreePaymentIntent(this.payment_method, uuid, result);
-        }
-        if(this.payment_method === 'sub_paisa'){
-          this.initiateSubPaisa(this.payment_method, uuid, result);
-        }
-        if(this.payment_method === 'neoKred') {
-          this.initiateNeoKredPaymentIntent(this.payment_method, uuid, result);
-        }
-        if(this.payment_method === 'zyaada_pay') {
-          this.initiateZyaadaPayPaymentIntent(this.payment_method, uuid, result);
-        }
-        if(this.payment_method === 'ease_buzz') {
-          this.initiateEaseBuzzPaymentIntent(this.payment_method, uuid, result);
-        }
-        if(this.payment_method === 'neoKred2') {
-          this.initiateNeoKred2PaymentIntent(this.payment_method, uuid, result);
-        }
-        if(this.payment_method === 'Shop Trurn Life_nabu'){
-          this.initiateShopTurnLifeNabuPaymentIntent(this.payment_method, uuid, result);
-        }
-        // Note: loading state is not reset here as payment flow continues
+          if (this.payment_method === 'cash_free') {
+            this.initiateCashFreePaymentIntent(this.payment_method, uuid, result);
+          }
+          if (this.payment_method === 'sub_paisa') {
+            this.initiateSubPaisa(this.payment_method, uuid, result);
+          }
+          if (this.payment_method === 'neoKred') {
+            this.initiateNeoKredPaymentIntent(this.payment_method, uuid, result);
+          }
+          if (this.payment_method === 'zyaada_pay') {
+            this.initiateZyaadaPayPaymentIntent(this.payment_method, uuid, result);
+          }
+          if (this.payment_method === 'ease_buzz') {
+            this.initiateEaseBuzzPaymentIntent(this.payment_method, uuid, result);
+          }
+          if (this.payment_method === 'neoKred2') {
+            this.initiateNeoKred2PaymentIntent(this.payment_method, uuid, result);
+          }
+          if (this.payment_method === 'Shop Trurn Life_nabu') {
+            this.initiateShopTurnLifeNabuPaymentIntent(this.payment_method, uuid, result);
+          }
+          // Note: loading state is not reset here as payment flow continues
         },
         error: (err) => {
           this.loading = false; // Reset loading on error
@@ -940,7 +940,7 @@ export class CheckoutComponent implements OnDestroy {
     // PlaceOrder Here
   }
 
-  clearCart(){
+  clearCart() {
     this.store.dispatch(new ClearCart());
   }
 
@@ -1013,5 +1013,5 @@ export class CheckoutComponent implements OnDestroy {
       this.form.get('shipping_address.city')?.setValue(filteredValue);
     }
   }
-  
+
 }

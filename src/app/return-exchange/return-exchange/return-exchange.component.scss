@@ -24,7 +24,7 @@ $orange-dark: #a85d2a;
 
   .policy-hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 0;
   }
 
   .policy-hero-title {
@@ -64,7 +64,7 @@ $orange-dark: #a85d2a;
   padding: 50px;
   margin-top: -40px;
   position: relative;
-  z-index: 2;
+  z-index: 0;
 }
 
 .policy-section {

@@ -12,7 +12,7 @@
   background-color: #e0e0e0;
   margin: 0;
   position: relative;
-  z-index: 1;
+  z-index: 0;
 }
 
 // Ensure header doesn't clip dropdowns
@@ -176,18 +176,19 @@ header {
 // Ensure navigation menu displays horizontally
 .header-nav {
   position: relative;
-  z-index: 10;
+  z-index: 1;
   background-color: #fff;
+  width: 50%;
 
   .header-nav-middle {
     width: 100%;
     position: relative;
-    z-index: 10;
+    z-index: 0;
 
     .main-nav {
       width: 100%;
       position: relative;
-      z-index: 10;
+      z-index: 0 !important;
 
       .navbar-nav {
         display: flex;
@@ -216,6 +217,13 @@ header {
                 opacity: 1 !important;
                 visibility: visible !important;
               }
+            }
+
+            .dropdown-menu.dropdown-menu-2 {
+              min-width: 52vw !important;
+              left: 70% !important;
+              padding: 30px 25px !important;
+              top: 28px !important;
             }
 
             // Desktop hover behavior

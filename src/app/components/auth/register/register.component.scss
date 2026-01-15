@@ -52,7 +52,7 @@
     justify-content: center;
     width: 64px;
     height: 64px;
-    background: #dfa986;
+    background: #CB7A45;
     border-radius: 16px;
     color: #ffffff;
     margin: 0 auto 12px;
@@ -166,11 +166,11 @@
 
       &:focus {
         background-color: #ffffff;
-        border-color: #dfa986;
+        border-color: #CB7A45;
         box-shadow: 0 0 0 3px rgba(223, 169, 134, 0.1);
 
-        ~ .input-icon {
-          color: #dfa986;
+        ~.input-icon {
+          color: #CB7A45;
         }
       }
 
@@ -178,7 +178,7 @@
         border-color: #e53e3e;
         background-color: #fff5f5;
 
-        ~ .input-icon {
+        ~.input-icon {
           color: #e53e3e;
         }
 
@@ -207,7 +207,7 @@
 
             &:hover,
             &.select2-selection--focus {
-              border-color: #dfa986;
+              border-color: #CB7A45;
               background-color: #ffffff;
             }
 
@@ -227,12 +227,12 @@
                   align-items: center;
 
                   .iti-flag {
-                        width: 20px;
-                        height: 15px;
-                        background-size: contain;
-                        background-repeat: no-repeat;
-                        background-position: center;
-                      }
+                    width: 20px;
+                    height: 15px;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                  }
                 }
 
                 .dial-code {
@@ -291,7 +291,7 @@
       height: 20px;
       margin-top: 2px;
       cursor: pointer;
-      accent-color: #dfa986;
+      accent-color: #CB7A45;
       flex-shrink: 0;
     }
 
@@ -311,7 +311,7 @@
         display: block;
 
         .link-primary {
-          color: #dfa986;
+          color: #CB7A45;
           text-decoration: none;
           font-weight: 600;
           transition: color 0.3s ease;
@@ -356,7 +356,7 @@
       font-size: 15px;
       font-weight: 600;
       border-radius: 10px;
-      background: #dfa986;
+      background: #CB7A45;
       border: none;
       color: #ffffff;
       cursor: pointer;
@@ -413,7 +413,7 @@
     margin: 0;
 
     .login-link {
-      color: #dfa986;
+      color: #CB7A45;
       text-decoration: none;
       font-weight: 600;
       margin-left: 4px;

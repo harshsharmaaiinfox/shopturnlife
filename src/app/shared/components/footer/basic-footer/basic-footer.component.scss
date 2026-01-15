@@ -13,11 +13,11 @@
 
         @media (max-width: 767px) {
             padding: 30px 0 25px;
-            
+
             .row {
-                > div {
+                >div {
                     margin-bottom: 20px;
-                    
+
                     &:last-child {
                         margin-bottom: 0;
                     }
@@ -118,19 +118,19 @@
             margin-bottom: 25px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             padding-bottom: 20px;
-            
+
             &:last-child {
                 border-bottom: none;
                 margin-bottom: 0;
                 padding-bottom: 0;
             }
-            
+
             // Disable click on mobile - all sections always open
             pointer-events: none;
-            
+
             .footer-title {
                 pointer-events: none;
-                
+
                 // Hide toggle icons on mobile
                 .mobile-toggle-icon {
                     display: none !important;
@@ -195,7 +195,7 @@
                 transform: rotate(180deg);
             }
 
-            ~ .footer-contain {
+            ~.footer-contain {
                 @media (max-width: 767px) {
                     max-height: 1000px;
                     opacity: 1;
@@ -245,7 +245,7 @@
                     text-decoration: none;
                     font-size: 14px;
                     line-height: 1.6;
-                    transition: color 0.2s ease;
+                    transition: all 0.8s ease !important;
 
                     &:hover {
                         color: #2c3e50;
@@ -282,7 +282,7 @@
                     color: #2c3e50;
                     display: inline-block;
                     min-width: 100px;
-                    
+
                     @media (max-width: 767px) {
                         min-width: 90px;
                         font-size: 13px;
@@ -292,7 +292,7 @@
                 a {
                     color: #275E5E;
                     text-decoration: none;
-                    transition: color 0.2s ease;
+                    transition: color 0.8s ease;
                     word-break: break-word;
 
                     &:hover {
@@ -323,7 +323,7 @@
                     line-height: 1.7;
                     color: #666;
                     margin-bottom: 12px;
-                    
+
                     @media (max-width: 767px) {
                         font-size: 12px;
                         line-height: 1.6;
@@ -335,7 +335,7 @@
             .company-phone {
                 p {
                     margin-bottom: 10px;
-                    
+
                     @media (max-width: 767px) {
                         margin-bottom: 8px;
                     }
@@ -396,7 +396,7 @@
     margin-top: 20px;
     border-top: 1px solid #e5e5e5;
     background-color: #f8f9fa;
-   
+
     h2 {
         font-size: 18px;
         font-weight: 600;
@@ -404,61 +404,61 @@
         margin-bottom: 15px;
         line-height: 1.3;
         text-align: left;
-       
+
         @media (max-width: 768px) {
             font-size: 16px;
             margin-bottom: 12px;
         }
     }
-   
+
     h3 {
         font-size: 14px;
         font-weight: 600;
         color: #333;
         margin: 20px 0 10px 0;
         line-height: 1.2;
-       
+
         @media (max-width: 768px) {
             font-size: 13px;
             margin: 16px 0 8px 0;
         }
     }
-   
+
     p {
         font-size: 12px;
         line-height: 1.5;
         color: #333;
         margin-bottom: 12px;
         text-align: justify;
-       
+
         @media (max-width: 768px) {
             font-size: 11px;
             margin-bottom: 10px;
             text-align: left;
         }
-       
+
         strong {
             color: #333;
             font-weight: 600;
         }
-       
+
         a {
             color: #333;
             text-decoration: underline;
             border-bottom: none;
             transition: none;
-           
+
             &:hover {
                 color: #333;
                 text-decoration: underline;
             }
         }
     }
-   
+
     ul {
         margin: 12px 0 15px 15px;
         padding-left: 0;
-       
+
         li {
             font-size: 12px;
             line-height: 1.5;
@@ -467,35 +467,35 @@
             list-style: disc;
             position: relative;
             padding-left: 0;
-           
+
             @media (max-width: 768px) {
                 font-size: 11px;
                 margin-bottom: 5px;
             }
         }
     }
-   
+
     @media (max-width: 768px) {
         padding: 25px 0;
         margin-top: 15px;
     }
-   
+
     @media (max-width: 480px) {
         padding: 20px 0;
         margin-top: 10px;
-       
+
         h2 {
             font-size: 15px;
         }
-       
+
         h3 {
             font-size: 12px;
         }
-       
+
         p {
             font-size: 10px;
         }
-       
+
         ul li {
             font-size: 10px;
         }
@@ -505,7 +505,6 @@
 // More About ShopTurnLife Section
 .more-about-section {
     padding: 20px 0;
-    margin-top: 100px;
     background-color: #f8f9fa;
 
     @media (max-width: 767px) {
@@ -544,7 +543,7 @@
             cursor: default;
             pointer-events: none;
             background-color: transparent;
-            
+
             .toggle-icon {
                 display: none !important; // Hide toggle icon on mobile
             }
@@ -602,7 +601,7 @@
             overflow: visible !important;
             padding: 25px 20px !important;
             display: block !important;
-            
+
             &.expanded {
                 padding: 25px 20px;
             }

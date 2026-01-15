@@ -29,7 +29,7 @@ export class ContactUsComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private store: Store,
-    private seoService: SeoService){
+    private seoService: SeoService) {
     this.form = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -44,9 +44,9 @@ export class ContactUsComponent implements OnInit {
   ngOnInit() {
     // Set unique SEO data for Contact Us page
     this.seoService.setSEOData({
-      title: 'Contact Turn Life – We\'re Here to Help You',
-      description: 'Get in touch with Turn Life customer support. Contact us for orders, products, and any questions you may have.',
-      keywords: 'contact us, customer support, help, turn life contact, customer service, shopturnlife',
+      title: 'Contact Shop Turn Life – We\'re Here to Help You',
+      description: 'Get in touch with Shop Turn Life customer support. Contact us for orders, products, and any questions you may have.',
+      keywords: 'contact us, customer support, help, Shop Turn Life contact, customer service, shopturnlife',
       canonicalUrl: 'https://shopturnlife.com/Contact-Us',
       url: 'https://shopturnlife.com/Contact-Us',
       type: 'website',
@@ -54,11 +54,11 @@ export class ContactUsComponent implements OnInit {
     });
   }
 
-  submit(){
+  submit() {
     this.form.markAllAsTouched();
     if (this.form.valid) {
       this.store.dispatch(new ContactUs(this.form.value)).subscribe({
-        complete: ()=>{
+        complete: () => {
           this.form.reset();
         }
       })

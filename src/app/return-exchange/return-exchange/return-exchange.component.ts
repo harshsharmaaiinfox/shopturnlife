@@ -12,13 +12,13 @@ import { SeoService } from '../../shared/services/seo.service';
 export class ReturnExchangeComponent implements OnInit {
   currentDate = new Date();
 
-  constructor(private seoService: SeoService) {}
+  constructor(private seoService: SeoService) { }
 
   ngOnInit() {
     // Set unique SEO data for Return Policy page
     this.seoService.setSEOData({
-      title: 'Easy 7-Day Return Policy – Shop Risk-Free | Shop Turn Life',
-      description: 'Shop with confidence at Shop Turn Life. Our easy 7-day return policy ensures you can shop risk-free. Learn about our simple return and exchange process.',
+      title: 'Easy 7-Day Return Policy – Shop Risk-Free | Shop Shop Turn Life',
+      description: 'Shop with confidence at Shop Shop Turn Life. Our easy 7-day return policy ensures you can shop risk-free. Learn about our simple return and exchange process.',
       keywords: 'return policy, exchange policy, 7-day return, shop risk-free, shopturnlife returns',
       canonicalUrl: 'https://shopturnlife.com/return-policy',
       url: 'https://shopturnlife.com/return-policy',

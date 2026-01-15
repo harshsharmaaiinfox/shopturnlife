@@ -1,23 +1,17 @@
 <!-- Cart Style Basic -->
 <div class="cart-icon-wrapper" *ngIf="style == 'basic'">
-  <app-button
-    [type]="'button'"
-    [class]="'btn p-0 position-relative simple-cart-icon'"
-    [spinner]="false"
-    [id]="'cart_sidebar_btn'"
-    (click)="navigateToCart()">
-      <i class="ri-shopping-cart-line"></i>
-      <span class="position-absolute top-0 start-100 translate-middle badge" *ngIf="(cartItem$ | async)?.length">
-          {{ (cartItem$ | async)?.length }} <span class="visually-hidden">{{ 'unread_messages' | translate }}</span>
-      </span>
-  </app-button>
-  <span class="icon-label">{{ 'cart' | translate }}</span>
+    <app-button [type]="'button'" [class]="'btn p-0 position-relative simple-cart-icon'" [spinner]="false"
+        [id]="'cart_sidebar_btn'" (click)="navigateToCart()">
+        <i class="ri-shopping-cart-line"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge" *ngIf="(cartItem$ | async)?.length">
+            {{ (cartItem$ | async)?.length }} <span class="visually-hidden">{{ 'unread_messages' | translate }}</span>
+        </span>
+    </app-button>
+    <span class="icon-label">{{ 'cart' | translate }}</span>
 </div>
 
 <!-- Cart Style Classic -->
-<a href="javascript:void(0)" class="header-icon swap-icon"
-    (click)="navigateToCart()"
-    *ngIf="style == 'classic'">
+<a href="javascript:void(0)" class="header-icon swap-icon" (click)="navigateToCart()" *ngIf="style == 'classic'">
     <small class="badge-number badge-light" *ngIf="(cartItem$ | async)?.length">
         {{ (cartItem$ | async)?.length }}
     </small>
@@ -26,8 +20,7 @@
 
 <!-- Cart On Hover -->
 <ng-container *ngIf="!cartHide">
-    <div class="onhover-div"
-        [ngClass]="{ 'fixed-cart': cartStyle == 'cart_sidebar' }"
+    <div class="onhover-div" [ngClass]="{ 'fixed-cart': cartStyle == 'cart_sidebar' }"
         [class.show]="(sidebarCartOpen$ | async)">
         <div class="cart-title">
             <h4>{{ 'Shopping Cart' | translate }}</h4>
@@ -37,22 +30,25 @@
         </div>
         <div class="pere-text-box success-box" *ngIf="(cartItem$ | async)?.length">
             <p *ngIf="shippingFreeAmt > cartTotal else content">
-                {{ 'Spend' | translate }} <span class="shipping">{{ (shippingFreeAmt - cartTotal) | currencySymbol }}</span> {{ 'More And Enjoy' | translate }} <span class="shipping">{{ 'Free Shipping' | translate }}!</span>
+                {{ 'Spend' | translate }} <span class="shipping">{{ (shippingFreeAmt - cartTotal) | currencySymbol
+                    }}</span> {{ 'More And Enjoy' | translate }} <span class="shipping">{{ 'Free Shipping' | translate
+                    }}!</span>
             </p>
             <ng-template #content>
-                <p><span class="shipping">{{ 'Congratulations' | translate }}!</span> {{ 'Enjoy Free Shipping On Us' | translate }}!</p>
+                <p><span class="shipping">{{ 'Congratulations' | translate }}!</span> {{ 'Enjoy Free Shipping On Us' |
+                    translate }}!</p>
             </ng-template>
             <div class="progress"
                 [ngClass]="{ 'danger-progress': shippingCal <= 30, 'warning-progress': shippingCal >= 31 && shippingCal <= 80 }">
-                <div class="progress-bar progress-bar-striped progress-bar-animated"
-                    role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
-                    [ngStyle]="{ width: shippingCal+'%' }">
-                <i class="ri-truck-line"></i>
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: shippingCal+'%' }">
+                    <i class="ri-truck-line"></i>
                 </div>
             </div>
         </div>
         <div class="sidebar-title" *ngIf="(cartItem$ | async)?.length">
-            <h4>{{ (cartItem$ | async)?.length }} {{ ((cartItem$ | async)?.length == 1 ? 'product' : 'products') | translate }} <a href="javascript:void(0)" (click)="clearCart()">{{ 'clear_cart' | translate }}</a></h4>
+            <h4>{{ (cartItem$ | async)?.length }} {{ ((cartItem$ | async)?.length == 1 ? 'product' : 'products') |
+                translate }} <a href="javascript:void(0)" (click)="clearCart()">{{ 'clear_cart' | translate }}</a></h4>
         </div>
         <ul class="cart-list" *ngIf="(cartItem$ | async)?.length">
             <li class="product-box-contain" *ngFor="let item of cartItem$ | async">
@@ -68,36 +64,36 @@
                         <a href="javascript:void(0)">
                             <h5>{{ item?.variation ? item?.variation?.name : item?.product?.name }}</h5>
                         </a>
-                        <h6>{{ (item?.variation ? item.variation.sale_price : item?.product && item?.wholesale_price ? item?.wholesale_price : item?.product?.sale_price)! | currencySymbol }}</h6>
+                        <h6>{{ (item?.variation ? item.variation.sale_price : item?.product && item?.wholesale_price ?
+                            item?.wholesale_price : item?.product?.sale_price)! | currencySymbol }}</h6>
                         <h5 class="gram" *ngIf="item?.variation">
                             {{ item?.variation?.selected_variation }}
                         </h5>
                         <div class="cart_qty qty-box product-qty">
-                        <div class="input-group h-100">
-                            <app-button
-                                [class]="'btn qty-left-minus'"
-                                [id]="'add-to-cart'+item.product.id"
-                                [spinner]="false"
-                                (click)="updateQuantity(item, -1)">
-                                <i class="ri-subtract-line" *ngIf="item.quantity > 1"></i>
-                                <i class="ri-delete-bin-line" *ngIf="item.quantity <= 1"></i>
-                            </app-button>
-                            <input class="form-control input-number qty-input" type="number" name="quantity" [value]="item?.quantity" readonly>
-                            <app-button
-                                [class]="'btn qty-left-minus'"
-                                [id]="'qty-left-minus'+item.product.id"
-                                [spinner]="false"
-                                (click)="updateQuantity(item, 1)">
-                                <i class="ri-add-line"></i>
-                            </app-button>
-                        </div>
+                            <div class="input-group h-100">
+                                <app-button [class]="'btn qty-left-minus'" [id]="'add-to-cart'+item.product.id"
+                                    [spinner]="false" (click)="updateQuantity(item, -1)">
+                                    <i class="ri-subtract-line" *ngIf="item.quantity > 1"></i>
+                                    <i class="ri-delete-bin-line" *ngIf="item.quantity <= 1"></i>
+                                </app-button>
+                                <input class="form-control input-number qty-input" type="number" name="quantity"
+                                    [value]="item?.quantity" readonly>
+                                <app-button [class]="'btn qty-left-minus'" [id]="'qty-left-minus'+item.product.id"
+                                    [spinner]="false" (click)="updateQuantity(item, 1)">
+                                    <i class="ri-add-line"></i>
+                                </app-button>
+                            </div>
                         </div>
                         <div>
                             <div class="header-button-group">
-                                <app-button [class]="'edit-button close_button'" [id]="'cart_item_edit_btn'+item.product.id" [spinner]="false" (click)="VariationModal.openModal(item)" *ngIf="item?.variation">
+                                <app-button [class]="'edit-button close_button'"
+                                    [id]="'cart_item_edit_btn'+item.product.id" [spinner]="false"
+                                    (click)="VariationModal.openModal(item)" *ngIf="item?.variation">
                                     <i class="ri-pencil-line"></i>
                                 </app-button>
-                                <app-button [class]="'delete-button close_button'" [id]="'cart_item_delete_btn'+item.product.id" [spinner]="false" (click)="delete(item.id)">
+                                <app-button [class]="'delete-button close_button'"
+                                    [id]="'cart_item_delete_btn'+item.product.id" [spinner]="false"
+                                    (click)="delete(item.id)">
                                     <i class="ri-delete-bin-line"></i>
                                 </app-button>
                             </div>
@@ -120,13 +116,15 @@
                 <a [routerLink]="['/cart']" class="btn btn-sm cart-button" (click)="cartToggle(false)">
                     {{ 'View Cart' | translate }}
                 </a>
-                <a [routerLink]="['/checkout']" class="btn btn-sm cart-button theme-bg-color text-white" (click)="cartToggle(false)">
+                <a [routerLink]="['/checkout']" class="btn btn-sm cart-button theme-bg-color text-white"
+                    (click)="cartToggle(false)">
                     {{ 'Checkout' | translate }}
                 </a>
             </div>
         </div>
     </div>
-    <div class="bg-overlay" [class.show]="cartStyle == 'cart_sidebar' && (sidebarCartOpen$ | async)" (click)="cartStyle == 'cart_sidebar' && cartToggle(false)"></div>
+    <div class="bg-overlay" [class.show]="cartStyle == 'cart_sidebar' && (sidebarCartOpen$ | async)"
+        (click)="cartStyle == 'cart_sidebar' && cartToggle(false)"></div>
 </ng-container>
 <!-- Free Shipping Celebration -->
 <!-- <div class="confetti-wrapper" [class.show]="confetti == 1 && (sidebarCartOpen$ | async)" *ngIf="(themeOption$ | async)?.general?.celebration_effect">
