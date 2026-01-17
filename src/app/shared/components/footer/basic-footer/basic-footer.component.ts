@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, HostListener } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
 import { Option } from '../../../../shared/interface/theme-option.interface';
 import { Footer } from '../../../../shared/interface/theme.interface';
 
@@ -8,6 +9,10 @@ import { Footer } from '../../../../shared/interface/theme.interface';
   styleUrls: ['./basic-footer.component.scss']
 })
 export class BasicFooterComponent {
+
+  public showBackToTop: boolean = false;
+
+  constructor(private scroller: ViewportScroller) { }
 
   @Input() data: Option | null;
   @Input() footer: Footer;
@@ -39,7 +44,7 @@ export class BasicFooterComponent {
     }
   ];
 
-  toggle(value: string){
+  toggle(value: string) {
     this.active[value] = !this.active[value];
   }
 
@@ -55,5 +60,19 @@ export class BasicFooterComponent {
     return this.data?.footer?.useful_link?.length
       ? this.data.footer.useful_link
       : [];
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    let number = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    if (number > 400) {
+      this.showBackToTop = true;
+    } else {
+      this.showBackToTop = false;
+    }
+  }
+
+  tapToTop() {
+    this.scroller.scrollToPosition([0, 0]);
   }
 }

@@ -36,6 +36,11 @@
                                         Contact Us
                                     </a>
                                 </li>
+                                <li>
+                                    <a routerLink="/wishlist" title="Wishlist" href="/wishlist">
+                                        Wishlist
+                                    </a>
+                                </li>
                             </ul>
 
                         </div>
@@ -182,5 +187,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="tap-to-top" [class.show]="showBackToTop" (click)="tapToTop()">
+        <i class="ri-arrow-up-s-line"></i>
     </div>
 </footer>

@@ -1,4 +1,4 @@
-// Meesho Style Footer - Clean and Minimalist
+﻿// Meesho Style Footer - Clean and Minimalist
 .meesho-style-footer {
     padding: 0;
     margin: 0;
@@ -668,5 +668,44 @@
                 }
             }
         }
+    }
+}
+
+// Back to Top Button
+.tap-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 100%;
+    font-size: 24px;
+    cursor: pointer;
+    background-color: var(--theme-color);
+    color: #fff;
+    opacity: 0;
+    transition: all 0.5s ease;
+    transform: translateY(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    &.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+
+    @media (max-width: 576px) {
+        bottom: 20px;
+        right: 20px;
+        width: 35px;
+        height: 35px;
+        line-height: 37px;
+        font-size: 20px;
     }
 }
