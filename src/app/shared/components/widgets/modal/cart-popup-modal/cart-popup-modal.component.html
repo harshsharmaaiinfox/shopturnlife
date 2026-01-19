@@ -3,7 +3,7 @@
     <div class="header-content">
       <div class="header-icon">
         <i class="ri-check-line"></i>
-        <span class="cart-count" *ngIf="(cartItem$ | async)?.length">{{ (cartItem$ | async)?.length }}</span>
+       
       </div>
       <h4 class="modal-title">{{ 'Added to Bag' | translate }}</h4>
     </div>
@@ -79,7 +79,6 @@
     </div>
 
     <div class="cart-summary" *ngIf="(cartItem$ | async)?.length">
-      <p class="shipping-note">{{ 'Shipping & taxes calculated at checkout' | translate }}</p>
       <div class="total-section">
         <h5>{{ 'Subtotal' | translate }}</h5>
         <h4 class="total-price">{{ (cartTotal$ | async)! | currencySymbol }}</h4>

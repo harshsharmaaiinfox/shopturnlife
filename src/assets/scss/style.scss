@@ -770,21 +770,30 @@ section.category-showcase-section {
         font-size: 18px !important;
     }
 }
+
 .payment-info {
     display: flex;
     flex-direction: row !important;
     align-items: center;
     gap: 5px;
 }
+
 select2#select2-1 {
     display: none;
 }
+
 .select2.select2-container.select2-container--default.select2-container--focus.select2-container--below {
     display: none;
 }
+
 .register-section .container {
     z-index: 0 !important;
 }
+
 .login-section .container {
     z-index: 0 !important;
+}
+
+.digital-price {
+    gap: 15px;
 }

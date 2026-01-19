@@ -400,19 +400,19 @@
                                         <div class="breakdown-item">
                                             <span class="breakdown-label">{{ 'Subtotal' | translate }}</span>
                                             <span class="breakdown-value">
-                                                {{ (checkoutTotal ? (checkoutTotal.total.sub_total | currencySymbol) : 'Not Calculated Yet' | translate ) }}
+                                                {{ (checkoutTotal ? checkoutTotal.total.sub_total : getCalculatedTotals().sub_total) | currencySymbol }}
                                             </span>
                                         </div>
                                         <div class="breakdown-item" *ngIf="!(cartDigital$ | async)">
                                             <span class="breakdown-label">{{ 'Shipping' | translate }}</span>
                                             <span class="breakdown-value">
-                                                {{ (checkoutTotal ? (checkoutTotal.total.shipping_total | currencySymbol) : 'Not Calculated Yet' | translate) }}
+                                                {{ (checkoutTotal ? checkoutTotal.total.shipping_total : getCalculatedTotals().shipping_total) | currencySymbol }}
                                             </span>
                                         </div>
                                         <div class="breakdown-item">
                                             <span class="breakdown-label">{{ 'Tax' | translate }}</span>
                                             <span class="breakdown-value">
-                                                {{ (checkoutTotal ? (checkoutTotal.total.tax_total | currencySymbol) : 'Not Calculated Yet' | translate ) }}
+                                                {{ (checkoutTotal ? checkoutTotal.total.tax_total : getCalculatedTotals().tax_total) | currencySymbol }}
                                             </span>
                                         </div>
                                    
@@ -424,17 +424,18 @@
                                         <div class="breakdown-total">
                                             <span class="total-label">{{ 'Total' | translate }}</span>
                                             <span class="total-value">
-                                                {{ (checkoutTotal ? (checkoutTotal.total.total | currencySymbol) : 'Not Calculated Yet' | translate ) }}
+                                                {{ (checkoutTotal ? checkoutTotal.total.total : getCalculatedTotals().total) | currencySymbol }}
                                             </span>
                                         </div>
                                     </div>
                                     
                                     <app-button
-                                        [class]="'btn-place-order place-order-btn'"
+                                        [class]="'btn-pay-now pay-now-btn'"
                                         [id]="'place_order'"
                                         [disabled]="loading || !(form.valid && checkoutTotal)">
-                                        <i class="ri-lock-line me-2"></i>
-                                        {{ 'Place Order' | translate }}
+                                        <i class="ri-shopping-bag-3-fill me-2"></i>
+                                        {{ 'Pay Now' | translate }}
+                                        <i class="ri-arrow-right-line ms-2"></i>
                                     </app-button>
                                 </div>
                             </form>

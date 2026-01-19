@@ -82,6 +82,31 @@ export class CheckoutComponent implements OnDestroy {
   payByNeoStep = 0;
   payment_method = '';
 
+  // Calculate cart totals with shipping and tax as zero (shown regardless of login)
+  getCalculatedTotals() {
+    let subTotal = 0;
+    let shippingTotal = 0; // Always zero as requested
+    let taxTotal = 0; // Always zero as requested
+
+    this.cartItem$.subscribe(items => {
+      if (items) {
+        subTotal = items.reduce((total, item) => {
+          const itemPrice = item.variation ? item.variation.sale_price : (item.wholesale_price || item.product?.sale_price || 0);
+          return total + (itemPrice * item.quantity);
+        }, 0);
+      }
+    });
+
+    const grandTotal = subTotal + shippingTotal + taxTotal;
+
+    return {
+      sub_total: subTotal,
+      shipping_total: shippingTotal,
+      tax_total: taxTotal,
+      total: grandTotal
+    };
+  }
+
   // Sub Paisa Config
   // @ViewChild('SubPaisaSdk', { static: true }) containerRef!: ElementRef;
   // formData = {
@@ -945,8 +970,8 @@ export class CheckoutComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.store.dispatch(new Clear());
-    this.store.dispatch(new ClearCart());
+    // Removed cart clearing on navigation - users should be able to go back to cart page
+    // this.store.dispatch(new ClearCart());
     this.form.reset();
     this.pollingSubscription && this.pollingSubscription.unsubscribe();
     this.destroy$.next();

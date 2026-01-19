@@ -21,27 +21,34 @@
     border: none;
     background: transparent;
     margin-bottom: 4px;
+    position: relative;
 
     i {
       font-size: 18px;
       color: #333;
       line-height: 1;
     }
+  }
 
-    .badge {
-      top: -8px;
-      right: -8px;
-      font-size: 11px;
-      padding: 2px 6px;
-      min-width: 18px;
-      height: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: var(--theme-color);
-      color: #fff;
-      border-radius: 50%;
-    }
+  .cart-count-badge {
+    position: absolute;
+    top: -10px;
+    right: -8px;
+    background-color: #ce7b43;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 2px 6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 10;
   }
 
   .icon-label {

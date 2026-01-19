@@ -3,8 +3,8 @@
     <app-button [type]="'button'" [class]="'btn p-0 position-relative simple-cart-icon'" [spinner]="false"
         [id]="'cart_sidebar_btn'" (click)="navigateToCart()">
         <i class="ri-shopping-cart-line"></i>
-        <span class="position-absolute top-0 start-100 translate-middle badge" *ngIf="(cartItem$ | async)?.length">
-            {{ (cartItem$ | async)?.length }} <span class="visually-hidden">{{ 'unread_messages' | translate }}</span>
+        <span class="cart-count-badge" *ngIf="(cartItem$ | async)?.length">
+            {{ (cartItem$ | async)?.length }}
         </span>
     </app-button>
     <span class="icon-label">{{ 'cart' | translate }}</span>

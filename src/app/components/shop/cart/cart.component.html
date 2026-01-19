@@ -48,6 +48,19 @@
                 </h4>
 
                 <div class="item-info">
+                  <div class="item-quantity-info">
+                    <span class="quantity-badge">
+                      <i class="ri-shopping-bag-line me-1"></i>
+                      {{ 'Quantity' | translate }}: {{ item.quantity }} {{ 'pieces' | translate }}
+                    </span>
+                  </div>
+
+                  <div class="item-variation-info" *ngIf="item?.variation">
+                    <span class="variation-badge">
+                      <i class="ri-ruler-line me-1"></i>
+                      {{ item.variation.selected_variation }}
+                    </span>
+                  </div>
                   <span class="item-unit" *ngIf="item?.product && item?.product?.unit">
                     <i class="ri-ruler-line me-1"></i>
                     {{ 'Unit' | translate }}: {{ item.product.unit }}
@@ -119,23 +132,23 @@
         <div class="summary-details">
           <div class="summary-item">
             <span>{{ 'Subtotal' | translate }}</span>
-            <span class="summary-value">{{ (cartTotal$ | async) || 0 | currencySymbol }}</span>
+            <span class="summary-value">{{ getCalculatedTotals().sub_total | currencySymbol }}</span>
           </div>
 
           <div class="summary-item" *ngIf="!(cartDigital$ | async)">
             <span>{{ 'Shipping' | translate }}</span>
-            <span class="summary-value">{{ 'Cost At Checkout' | translate }}</span>
+            <span class="summary-value">{{ getCalculatedTotals().shipping_total | currencySymbol }}</span>
           </div>
 
           <div class="summary-item">
             <span>{{ 'Tax' | translate }}</span>
-            <span class="summary-value">{{ 'Cost at Checkout' | translate }}</span>
+            <span class="summary-value">{{ getCalculatedTotals().tax_total | currencySymbol }}</span>
           </div>
         </div>
 
         <div class="summary-total">
           <span>{{ 'Total' | translate }}</span>
-          <span class="total-value">{{ (cartTotal$ | async) || 0 | currencySymbol }}</span>
+          <span class="total-value">{{ getCalculatedTotals().total | currencySymbol }}</span>
         </div>
 
         <div class="summary-actions">
