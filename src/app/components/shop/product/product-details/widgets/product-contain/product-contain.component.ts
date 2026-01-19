@@ -104,7 +104,7 @@ export class ProductContainComponent {
             // Open cart popup modal after adding to cart
             setTimeout(() => {
               if (this.cartPopupModal) {
-                this.cartPopupModal.openModal();
+                this.cartPopupModal.openModal(product);
               }
             }, 200);
           }

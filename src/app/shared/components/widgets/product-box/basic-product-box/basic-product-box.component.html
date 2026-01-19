@@ -24,13 +24,21 @@
             <span class="price">{{ product.sale_price | currencySymbol }}</span>
             <del *ngIf="product.discount" class="original-price">{{ product.price | currencySymbol }}</del>
         </h5>
-        <div class="product-rating">
-            <div class="rating-badge">
-                <i class="ri-star-fill"></i>
-                <span class="rating-value">{{ (product.rating_count || 0) | number:'1.1-1' }}</span>
+        <div class="d-flex product-flex gap-3">
+            <div class="product-rating">
+                <div class="rating-badge">
+                    <i class="ri-star-fill"></i>
+                    <span class="rating-value">{{ (product.rating_count || 0) | number:'1.1-1' }}</span>
+                </div>
+            </div>
+            <div class="add-to-cart-section">
+                <app-button [class]="'btn add-to-cart-btn'" [spinner]="false" [style]="'background-color: #28595F; border-color: #28595F; color: white;'" (click)="openCartPopupModal()">
+                    Add to Cart
+                </app-button>
             </div>
         </div>
     </div>
 </div>
 <app-product-detail-modal #productDetailModal [product]="product"></app-product-detail-modal>
 <app-variation-modal #variationModal></app-variation-modal>
+<app-cart-popup-modal #cartPopupModal></app-cart-popup-modal>

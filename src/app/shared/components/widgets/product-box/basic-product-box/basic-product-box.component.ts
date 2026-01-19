@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component, Input, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, ViewChild, TemplateRef } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
-import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbRatingConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { ProductDetailModalComponent } from '../../../widgets/modal/product-detail-modal/product-detail-modal.component';
+import { CartPopupModalComponent } from '../../../widgets/modal/cart-popup-modal/cart-popup-modal.component';
 import { Product } from '../../../../../shared/interface/product.interface';
 import { CartAddOrUpdate, Cart } from '../../../../../shared/interface/cart.interface';
 import { AddToWishlist, DeleteWishlist } from '../../../../../shared/action/wishlist.action';
@@ -26,6 +27,7 @@ export class BasicProductBoxComponent {
 
   @ViewChild("productDetailModal") productDetailModal: ProductDetailModalComponent;
   @ViewChild("variationModal") VariationModal: VariationModalComponent;
+  @ViewChild("cartPopupModal") cartPopupModal: CartPopupModalComponent;
 
   public cartItem: Cart | null;
   public currentDate: number | null;
@@ -34,7 +36,8 @@ export class BasicProductBoxComponent {
   constructor(
     private store: Store,
     config: NgbRatingConfig,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private modalService: NgbModal
   ) {
 		config.max = 5;
 		config.readonly = true;
@@ -86,5 +89,13 @@ export class BasicProductBoxComponent {
       window.open(link, "_blank");
     }
   }
+
+  openCartPopupModal() {
+    if (this.cartPopupModal && this.product) {
+      this.cartPopupModal.openModal(this.product);
+    }
+  }
+
+
 
 }

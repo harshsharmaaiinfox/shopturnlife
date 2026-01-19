@@ -797,3 +797,16 @@ select2#select2-1 {
 .digital-price {
     gap: 15px;
 }
+.add-to-cart-btn {
+    background: #cd7c46;
+    color: #fff;
+    padding: 7px 10px;
+    margin-top: 15px;
+    transition: 0.5s ease-in-out;
+}
+.add-to-cart-btn:hover{
+    background: #2B605E;
+    color: #fff;
+    padding: 7px 10px;
+    margin-top: 15px;
+}
