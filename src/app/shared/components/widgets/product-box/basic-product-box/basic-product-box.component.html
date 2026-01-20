@@ -20,22 +20,24 @@
         <a [routerLink]="['/product/', product.slug]">
             <h6 class="product-title">{{ product.name }}</h6>
         </a>
-        <h5 class="product-price">
-            <span class="price">{{ product.sale_price | currencySymbol }}</span>
-            <del *ngIf="product.discount" class="original-price">{{ product.price | currencySymbol }}</del>
-        </h5>
-        <div class="d-flex product-flex gap-3">
-            <div class="product-rating">
+      
+        <div class="d-flex product-flex gap-3 align-items-center">
+            <h5 class="product-price m-0">
+                <span class="price">{{ product.sale_price | currencySymbol }}</span>
+                <del *ngIf="product.discount" class="original-price">{{ product.price | currencySymbol }}</del>
+            </h5>
+            <div class="product-rating m-0">
                 <div class="rating-badge">
                     <i class="ri-star-fill"></i>
                     <span class="rating-value">{{ (product.rating_count || 0) | number:'1.1-1' }}</span>
                 </div>
             </div>
-            <div class="add-to-cart-section">
-                <app-button [class]="'btn add-to-cart-btn'" [spinner]="false" [style]="'background-color: #28595F; border-color: #28595F; color: white;'" (click)="openCartPopupModal()">
-                    Add to Cart
-                </app-button>
-            </div>
+          
+        </div>
+        <div class="add-to-cart-section">
+            <app-button [class]="'btn add-to-cart-btn'" [spinner]="false" [style]="'background-color: #28595F; border-color: #28595F; color: white;'" (click)="openCartPopupModal()">
+                Add to Cart
+            </app-button>
         </div>
     </div>
 </div>
