@@ -7,7 +7,8 @@
     <ng-container *ngFor="let menu of menus">
       <li
         [ngClass]="[menu.link_type == 'sub' && menu.child ? 'nav-item dropdown' : 'nav-item', menu.mega_menu ? 'dropdown-mega' : '']"
-        [class.new-nav-item]="menu.badge_text">
+        [class.new-nav-item]="menu.badge_text"
+        [attr.data-menu-id]="menu.id">
         <a class="nav-link dropdown-toggle" 
            *ngIf="menu.link_type === 'sub'" 
            [class.disabled]="isDisabled(menu)"

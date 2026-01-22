@@ -119,6 +119,12 @@ export class MenuComponent {
   }
 
   toggle(menu: Menu){
+    // Skip toggle for specific menu items: Men Collection (169), Women Collection (170), Winter Essentials (222)
+    const disabledMenuIds = [169, 170, 222];
+    if (menu.id && disabledMenuIds.includes(menu.id)) {
+      return;
+    }
+
     // Close all other menus at the same level before opening this one
     const getAllMenus = (menus: any[]): Menu[] => {
       let result: Menu[] = [];
@@ -130,7 +136,7 @@ export class MenuComponent {
       });
       return result;
     };
-    
+
     // Toggle the clicked menu
     menu.active = !menu.active;
   }

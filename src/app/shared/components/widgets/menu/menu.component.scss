@@ -175,5 +175,17 @@
             transform: none !important;
           }
         }
+
+        // Disable hover behavior for specific menu items: Men Collection (169), Women Collection (170), Winter Essentials (222)
+        .nav-item[data-menu-id="169"]:hover .dropdown-menu,
+        .nav-item[data-menu-id="169"]:hover .dropdown-menu-2,
+        .nav-item[data-menu-id="170"]:hover .dropdown-menu,
+        .nav-item[data-menu-id="170"]:hover .dropdown-menu-2,
+        .nav-item[data-menu-id="222"]:hover .dropdown-menu,
+        .nav-item[data-menu-id="222"]:hover .dropdown-menu-2 {
+          display: none !important;
+          opacity: 0 !important;
+          visibility: hidden !important;
+        }
       }
     }
