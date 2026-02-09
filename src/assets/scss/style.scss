@@ -818,3 +818,7 @@ select2#select2-1 {
     width: 40px !important;
     padding: 20px !important;
 }
+ul.policy-list {
+    flex-direction: column;
+    display: flex;
+}
