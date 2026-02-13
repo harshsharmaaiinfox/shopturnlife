@@ -21,9 +21,9 @@ export class CollectionCategoryFilterComponent {
   public categories: Category[];
   public selectedCategories: string[] = [];
   public searchText: string = '';
-  
+
   constructor(private route: ActivatedRoute,
-    private router: Router){
+    private router: Router) {
     this.category$.subscribe(res => this.categories = res.data.filter(category => category.type == 'product'));
   }
 
@@ -38,7 +38,7 @@ export class CollectionCategoryFilterComponent {
   applyFilter(event: Event) {
     const checkbox = <HTMLInputElement>event?.target;
     const categoryName = checkbox.getAttribute('data-category-name');
-    
+
     // Prevent selection if category is disabled
     if (this.isCategoryDisabled(categoryName)) {
       checkbox.checked = false;
@@ -49,10 +49,16 @@ export class CollectionCategoryFilterComponent {
     const urlFriendlySlug = this.getUrlFriendlySlug(slug);
     const index = this.selectedCategories.indexOf(urlFriendlySlug);  // checked and unchecked value
 
+    // Track if we're adding or removing a category
+    const isRemoving = !checkbox?.checked;
+
     if (checkbox?.checked)
       this.selectedCategories.push(urlFriendlySlug); // push in array cheked value
     else
-      this.selectedCategories.splice(index,1);  // removed in array unchecked value
+      this.selectedCategories.splice(index, 1);  // removed in array unchecked value
+
+    // Store current scroll position before navigation (for when selecting)
+    const currentScrollY = window.scrollY;
 
     this.router.navigate([], {
       relativeTo: this.route,
@@ -62,13 +68,29 @@ export class CollectionCategoryFilterComponent {
       },
       queryParamsHandling: 'merge', // preserve the existing query params in the route
       skipLocationChange: false  // do trigger navigation
+    }).then(() => {
+      setTimeout(() => {
+        if (isRemoving) {
+          // When removing a category, scroll to the "Products For You" section
+          const productsSection = document.getElementById('filtered_products');
+          if (productsSection) {
+            productsSection.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        } else {
+          // When adding a category, maintain current scroll position
+          window.scrollTo(0, currentScrollY);
+        }
+      }, 100);
     });
   }
 
   // check if the item are selected
-  checked(item: string){
+  checked(item: string) {
     const urlFriendlySlug = this.getUrlFriendlySlug(item);
-    if(this.selectedCategories?.indexOf(urlFriendlySlug) != -1){
+    if (this.selectedCategories?.indexOf(urlFriendlySlug) != -1) {
       return true;
     }
     return false;

@@ -6,8 +6,7 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
-  backdrop-filter: blur(10px);
+  background-color: #ffffff;
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -20,58 +19,42 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
 
     h3 {
       margin: 0;
-      color: #64748b;
-      font-weight: 500;
+      color: #334155;
+      font-weight: 600;
       font-size: 16px;
       letter-spacing: 0.5px;
-      animation: fadeInOut 2s ease-in-out infinite;
+      font-family: 'Inter', sans-serif;
+      text-transform: uppercase;
+      opacity: 0.8;
+      // Remove pulsing animation for text to keep it clean and professional
     }
   }
 }
 
-// Spinner Type - Modern Triple Ring
+// Spinner Type - Professional Minimal Ring
 .loader-spinner {
   position: relative;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
 
   .spinner-ring {
+    /* We only need one visible ring for the minimal look, or we can overlay them */
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 3px solid transparent;
-    border-top-color: var(--theme-color, #0ea5e9);
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-top-color: var(--theme-color, #0f172a);
     border-radius: 50%;
-    animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    animation: spin 1s linear infinite;
 
-    &:nth-child(1) {
-      animation-delay: -0.45s;
-      border-top-color: var(--theme-color, #0ea5e9);
-      opacity: 1;
-    }
-
-    &:nth-child(2) {
-      animation-delay: -0.3s;
-      border-top-color: var(--theme-color, #3b82f6);
-      opacity: 0.8;
-      width: 80%;
-      height: 80%;
-      top: 10%;
-      left: 10%;
-    }
-
+    /* Hide the other rings to keep it simple as per request or make them subtly support the animation */
+    &:nth-child(2),
     &:nth-child(3) {
-      animation-delay: -0.15s;
-      border-top-color: var(--theme-color, #60a5fa);
-      opacity: 0.6;
-      width: 60%;
-      height: 60%;
-      top: 20%;
-      left: 20%;
+      display: none;
     }
   }
 }
@@ -178,21 +161,79 @@
   }
 }
 
+// Text Type - Animated Brand Text
+.loader-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+
+  .brand-text {
+    display: flex;
+    gap: 4px;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 2px;
+
+    span {
+      display: inline-block;
+      background: linear-gradient(135deg, #CF7F48 0%, #2B5F5E 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: letterPop 1.5s ease-in-out infinite;
+      transform-origin: center;
+      text-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+
+      // Add subtle glow effect
+      filter: drop-shadow(0 0 6px rgba(207, 127, 72, 0.4));
+    }
+  }
+
+  .loading-bar {
+    width: 220px;
+    height: 3px;
+    background: rgba(148, 163, 184, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    .loading-progress {
+      height: 100%;
+      background: linear-gradient(90deg,
+          #CF7F48 0%,
+          #2B5F5E 50%,
+          #CF7F48 100%);
+      background-size: 200% 100%;
+      border-radius: 10px;
+      animation: loadingProgress 2s ease-in-out infinite;
+      box-shadow: 0 0 10px rgba(207, 127, 72, 0.5);
+    }
+  }
+}
+
 // Animations
 @keyframes spin {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
 @keyframes bounce {
-  0%, 80%, 100% {
+
+  0%,
+  80%,
+  100% {
     transform: scale(0);
     opacity: 0.5;
   }
+
   40% {
     transform: scale(1);
     opacity: 1;
@@ -204,10 +245,12 @@
     transform: scale(0.8);
     opacity: 1;
   }
+
   50% {
     transform: scale(1.2);
     opacity: 0.5;
   }
+
   100% {
     transform: scale(1.6);
     opacity: 0;
@@ -215,10 +258,14 @@
 }
 
 @keyframes wave {
-  0%, 40%, 100% {
+
+  0%,
+  40%,
+  100% {
     transform: scaleY(0.4);
     opacity: 0.5;
   }
+
   20% {
     transform: scaleY(1);
     opacity: 1;
@@ -226,11 +273,46 @@
 }
 
 @keyframes fadeInOut {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.6;
   }
+
   50% {
     opacity: 1;
+  }
+}
+
+@keyframes letterPop {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateY(-10px) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes loadingProgress {
+  0% {
+    width: 0%;
+    background-position: 0% 50%;
+  }
+
+  50% {
+    width: 100%;
+    background-position: 100% 50%;
+  }
+
+  100% {
+    width: 100%;
+    background-position: 200% 50%;
+    opacity: 0.7;
   }
 }
 
@@ -241,6 +323,7 @@
   z-index: 0;
 
   .box-loader {
+
     .loader-wrapper,
     .custom-loader-wrapper {
       position: absolute;
@@ -266,6 +349,7 @@
 
 // Dark mode support
 html.dark {
+
   .loader-wrapper,
   .custom-loader-wrapper {
     background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.98) 100%);
@@ -279,9 +363,34 @@ html.dark {
 
   .custom-box-loader {
     .box-loader {
+
       .loader-wrapper,
       .custom-loader-wrapper {
         background: rgba(15, 23, 42, 0.95);
+      }
+    }
+  }
+
+  .loader-text {
+    .brand-text {
+      span {
+        background: linear-gradient(135deg, #E8A574 0%, #3D8A87 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 0 10px rgba(232, 165, 116, 0.6));
+      }
+    }
+
+    .loading-bar {
+      background: rgba(71, 85, 105, 0.3);
+
+      .loading-progress {
+        background: linear-gradient(90deg,
+            #E8A574 0%,
+            #3D8A87 50%,
+            #E8A574 100%);
+        box-shadow: 0 0 14px rgba(232, 165, 116, 0.7);
       }
     }
   }
@@ -289,6 +398,7 @@ html.dark {
 
 // Responsive adjustments
 @media (max-width: 768px) {
+
   .loader-wrapper,
   .custom-loader-wrapper {
     .loader-content {
@@ -318,5 +428,17 @@ html.dark {
       height: 30px;
     }
   }
-}
 
+  .loader-text {
+    .brand-text {
+      font-size: 26px;
+      gap: 2px;
+      letter-spacing: 1px;
+    }
+
+    .loading-bar {
+      width: 200px;
+      height: 3px;
+    }
+  }
+}

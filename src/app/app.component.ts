@@ -37,6 +37,9 @@ export class AppComponent implements OnInit {
   public favIcon: HTMLLinkElement | null;
   public isTabInFocus = true;
 
+  loaderType: 'spinner' | 'dots' | 'pulse' | 'wave' | 'text' = 'text';
+  showLoader: boolean = true;
+
   constructor(@Inject(DOCUMENT) document: Document,
     config: NgbRatingConfig, private actions: Actions,
     private router: Router,
@@ -49,7 +52,7 @@ export class AppComponent implements OnInit {
     this.translate.addLangs(['de', 'en']);
     this.translate.setDefaultLang('en');
     this.translate.use('en');
- 
+
     // this.seoService.seo();
     config.max = 5;
     config.readonly = true;
@@ -63,19 +66,19 @@ export class AppComponent implements OnInit {
     this.store.dispatch(new GetThemes());
 
     this.themeOption$.subscribe(theme => {
-      if(theme?.general?.mode === 'dark') {
+      if (theme?.general?.mode === 'dark') {
         document.getElementsByTagName('html')[0].classList.add(theme?.general && theme?.general?.mode)
       } else {
         document.getElementsByTagName('html')[0].classList.remove('dark')
       }
 
       // Set Direction
-      if(theme?.general?.language_direction === 'rtl'){
+      if (theme?.general?.language_direction === 'rtl') {
         document.getElementsByTagName('html')[0].setAttribute('dir', 'rtl');
         document.body.classList.add('rtl');
       } else {
         document.getElementsByTagName('html')[0].removeAttribute('dir');
-        document.body.classList.remove('rtl');  
+        document.body.classList.remove('rtl');
       }
 
       // Set Favicon
@@ -83,12 +86,15 @@ export class AppComponent implements OnInit {
       if (this.favIcon && theme?.logo?.favicon_icon?.original_url) {
         this.favIcon.href = theme.logo.favicon_icon.original_url;
       }
-            
+
+      // Update loader type if localized settings or theme options were real, 
+      // but for now we default to spinner.
+
     });
 
     this.setting$.subscribe(option => {
-      if(option?.analytics){
-        if(option?.analytics?.google_analytics && option?.analytics?.google_analytics.status){
+      if (option?.analytics) {
+        if (option?.analytics?.google_analytics && option?.analytics?.google_analytics.status) {
           this.loadScript(option?.analytics);
         }
       }
@@ -97,14 +103,14 @@ export class AppComponent implements OnInit {
     this.actions.pipe(ofActionDispatched(Logout)).subscribe(() => {
       this.router.navigate(['/auth/login']);
     });
-    
+
     this.router.events.subscribe((event) => {
-      if(event instanceof NavigationEnd) {
-        if(event.url.includes('/success')){
+      if (event instanceof NavigationEnd) {
+        if (event.url.includes('/success')) {
           console.log('Coming After Payment Successfully or Failed');
           setTimeout(() => {
             const getOrderId = localStorage.getItem('order_id');
-            if(getOrderId){
+            if (getOrderId) {
               this.router.navigate(['/account/order/details', getOrderId]);
             }
           }, 500);
@@ -117,14 +123,19 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // Set default SEO data
     this.seoService.updateDefaultSeo();
+
+    // Simulate loading time or wait for resources
+    setTimeout(() => {
+      this.showLoader = false;
+    }, 1500);
   }
 
   loadScript(val: Analytics): void {
-    if(val.google_analytics.status){
+    if (val.google_analytics.status) {
       const script = document.createElement('script');
       script.src = `https://www.googletagmanager.com/gtag/js?id=${val.google_analytics.measurement_id}`;
       document.head.appendChild(script);
-  
+
       const configScript = document.createElement('script');
       configScript.innerHTML = `
         window.dataLayer = window.dataLayer || [];
@@ -135,11 +146,11 @@ export class AppComponent implements OnInit {
       document.head.appendChild(configScript);
     }
 
-    if(val.facebook_pixel.status){
+    if (val.facebook_pixel.status) {
       const script = document.createElement('script');
       script.src = `https://www.facebook.com/tr?id=${val.facebook_pixel.pixel_id}`;
       document.head.appendChild(script);
-  
+
       const configScript = document.createElement('script');
       configScript.innerHTML = `
       !function(f,b,e,v,n,t,s)

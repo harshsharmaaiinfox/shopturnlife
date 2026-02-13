@@ -6,19 +6,19 @@
          <div class="spinner-ring"></div>
          <div class="spinner-ring"></div>
       </div>
-      
+
       <!-- Dots Type -->
       <div *ngIf="loaderType === 'dots'" class="loader-dots">
          <span></span>
          <span></span>
          <span></span>
       </div>
-      
+
       <!-- Pulse Type -->
       <div *ngIf="loaderType === 'pulse'" class="loader-pulse">
          <div class="pulse-circle"></div>
       </div>
-      
+
       <!-- Wave Type -->
       <div *ngIf="loaderType === 'wave'" class="loader-wave">
          <div class="wave-bar"></div>
@@ -27,7 +27,19 @@
          <div class="wave-bar"></div>
          <div class="wave-bar"></div>
       </div>
-      
-      <h3 *ngIf="showMessage">{{ message | translate }}</h3>
+
+      <!-- Text Type - Animated Brand Text -->
+      <div *ngIf="loaderType === 'text'" class="loader-text">
+         <div class="brand-text">
+            <span *ngFor="let letter of brandText.split(''); let i = index" [style.animation-delay]="(i * 0.1) + 's'">
+               {{ letter === ' ' ? '\u00A0' : letter }}
+            </span>
+         </div>
+         <div class="loading-bar">
+            <div class="loading-progress"></div>
+         </div>
+      </div>
+
+      <h3 *ngIf="showMessage && loaderType !== 'text'">{{ message | translate }}</h3>
    </div>
 </div>

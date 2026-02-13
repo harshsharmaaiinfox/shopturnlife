@@ -2,7 +2,7 @@
 <ngx-loading-bar class="loader-bg" [includeSpinner]="true" [height]="'3px'"></ngx-loading-bar>
 
 <!-- Main Loader -->
-<app-loader *ngIf="themeOptionService.preloader"></app-loader>
+<app-loader loaderType="text" brandText="ShopTurnLife" *ngIf="themeOptionService.preloader"></app-loader>
 
 <!-- Layout Partial -->
 <app-header [logo]="setLogo().header_logo"></app-header>

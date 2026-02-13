@@ -33,29 +33,29 @@ export class MenuComponent {
   public products: any[];
   public blogs: Blog[];
 
-  constructor(private store: Store, private router: Router, public menuService: MenuService){
+  constructor(private store: Store, private router: Router, public menuService: MenuService) {
     this.menu$.subscribe(menu => {
       const productIds = Array.from(new Set(this.concatDynamicProductKeys(menu, 'product_ids')));
-      if(productIds && productIds.length){
-        this.store.dispatch(new GetMenuProducts({ids: productIds?.join()})).subscribe({
+      if (productIds && productIds.length) {
+        this.store.dispatch(new GetMenuProducts({ ids: productIds?.join() })).subscribe({
           next: (val) => {
-            this.products = val.product.menuProducts.slice(0,2);
+            this.products = val.product.menuProducts.slice(0, 2);
           }
         })
       }
 
       const blogIds = Array.from(new Set(this.concatDynamicProductKeys(menu, 'blog_ids')));
-      if(blogIds && blogIds.length){
-        this.store.dispatch(new GetSelectedBlogs({status: 1, ids: blogIds?.join()})).subscribe({
+      if (blogIds && blogIds.length) {
+        this.store.dispatch(new GetSelectedBlogs({ status: 1, ids: blogIds?.join() })).subscribe({
           next: (val) => {
-            this.blogs = val.blog.selectedBlogs.slice(0,2);
+            this.blogs = val.blog.selectedBlogs.slice(0, 2);
           }
         })
       }
     })
   }
 
-  redirect(path:string, menu?: Menu){
+  redirect(path: string, menu?: Menu) {
     // Convert old URL format to new query parameter format
     let newPath = this.convertMenuPath(path);
 
@@ -118,24 +118,15 @@ export class MenuComponent {
     return path;
   }
 
-  toggle(menu: Menu){
-    // Skip toggle for specific menu items: Men Collection (169), Women Collection (170), Winter Essentials (222)
-    const disabledMenuIds = [169, 170, 222];
-    if (menu.id && disabledMenuIds.includes(menu.id)) {
-      return;
-    }
+  toggle(menu: Menu) {
+    // Check if device is mobile
+    const isMobile = window.innerWidth <= 991; // Bootstrap's lg breakpoint
 
-    // Close all other menus at the same level before opening this one
-    const getAllMenus = (menus: any[]): Menu[] => {
-      let result: Menu[] = [];
-      menus?.forEach(m => {
-        result.push(m);
-        if (m.child && m.child.length) {
-          result = result.concat(getAllMenus(m.child));
-        }
-      });
-      return result;
-    };
+    // Skip toggle for Men Collection (169), Women Collection (170), and Active Style (171) on desktop/laptop
+    const hoverOnlyMenuIds = [169, 170, 171];
+    if (!isMobile && menu.id && hoverOnlyMenuIds.includes(menu.id)) {
+      return; // On desktop, these menus work on hover only
+    }
 
     // Toggle the clicked menu
     menu.active = !menu.active;
@@ -149,8 +140,8 @@ export class MenuComponent {
           result.push(...obj[key]);
         } else if (typeof obj[key] === 'object' && obj[key] !== null) {
           traverse(obj[key]);
-        }else {
-          if(key === keyName && obj.product_ids){
+        } else {
+          if (key === keyName && obj.product_ids) {
             result.push(obj.product_ids)
           };
         }
@@ -165,5 +156,5 @@ export class MenuComponent {
     // For example: return menu.path === '' || menu.child?.length === 0;
     return false;
   }
-   
+
 }

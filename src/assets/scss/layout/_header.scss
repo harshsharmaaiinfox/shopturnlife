@@ -385,14 +385,14 @@ header {
         display: flex;
         gap: 20px;
         justify-content: center;
-        
+
         li {
           a {
             color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
             font-size: 0.85rem;
             transition: color 0.3s ease;
-            
+
             &:hover {
               color: white;
               text-decoration: none;
@@ -1050,11 +1050,18 @@ header {
       top: 60px;
       right: -10px;
       z-index: 1001;
-      width: 360px;
+      width: 298px;
       border-radius: 10px;
       opacity: 0;
       transition: all 0.3s ease-in-out;
       visibility: hidden;
+
+      // Mobile responsive width
+      @media (max-width: 767px) {
+        width: calc(100vw - 32px);
+        max-width: 298px;
+        right: 16px;
+      }
 
       .cart-title,
       .free,
@@ -1408,6 +1415,12 @@ header {
       &-login {
         right: 0;
         padding: 10px;
+
+        // Mobile specific positioning
+        @media (max-width: 767px) {
+          right: -22px;
+          padding: 10px;
+        }
 
         body.rtl & {
           right: unset;
@@ -4356,7 +4369,7 @@ header.header-3 {
     }
   }
 
-  .delivery-login-box  {
+  .delivery-login-box {
     .delivery-icon {
       i {
         @media (max-width: 1199px) {
@@ -5034,6 +5047,7 @@ header.header-3 {
         }
 
         @include mq-max(md) {
+
           &:nth-child(2),
           &:nth-child(3),
           &:nth-child(4) {
