@@ -55,11 +55,6 @@ export class CollectionComponent {
 
     // Get Query params..
     this.route.queryParams.subscribe(params => {
-      // Add a small timeout to ensure the view has updated before scrolling
-      setTimeout(() => {
-        this.viewportScroller.scrollToPosition([0, 0]);
-      }, 100);
-
       this.filter = {
         'page': params['page'] ? params['page'] : 1,
         'paginate': 40,

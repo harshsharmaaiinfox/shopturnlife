@@ -21,7 +21,7 @@ export class CollectionBrandFilterComponent {
   public searchText: string = ''
 
   constructor(private route: ActivatedRoute,
-    private router: Router){
+    private router: Router) {
     this.brand$.subscribe(res => this.brands = res.data);
 
   }
@@ -36,7 +36,7 @@ export class CollectionBrandFilterComponent {
     if ((<HTMLInputElement>event?.target)?.checked)
       this.selectedBrands.push((<HTMLInputElement>event?.target)?.value); // push in array cheked value
     else
-      this.selectedBrands.splice(index,1);  // removed in array unchecked value
+      this.selectedBrands.splice(index, 1);  // removed in array unchecked value
 
     this.router.navigate([], {
       relativeTo: this.route,
@@ -46,12 +46,23 @@ export class CollectionBrandFilterComponent {
       },
       queryParamsHandling: 'merge', // preserve the existing query params in the route
       skipLocationChange: false  // do trigger navigation
+    }).then(() => {
+      this.scrollToProducts();
     });
   }
 
+  private scrollToProducts() {
+    setTimeout(() => {
+      const element = document.getElementById('filtered_products');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  }
+
   // check if the item are selected
-  checked(item: string){
-    if(this.selectedBrands?.indexOf(item) != -1){
+  checked(item: string) {
+    if (this.selectedBrands?.indexOf(item) != -1) {
       return true;
     }
     return false;

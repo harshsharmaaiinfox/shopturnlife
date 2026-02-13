@@ -22,7 +22,7 @@ export class CollectionFilterComponent implements OnChanges {
   };
 
   constructor(private route: ActivatedRoute,
-    private router: Router) {}
+    private router: Router) { }
 
   ngOnChanges() {
     this.filtersObj = {
@@ -59,6 +59,8 @@ export class CollectionFilterComponent implements OnChanges {
       queryParams: params,
       queryParamsHandling: 'merge',
       skipLocationChange: false
+    }).then(() => {
+      this.scrollToProducts();
     });
   }
 
@@ -67,7 +69,18 @@ export class CollectionFilterComponent implements OnChanges {
       relativeTo: this.route,
       queryParams: null,
       skipLocationChange: false
+    }).then(() => {
+      this.scrollToProducts();
     });
+  }
+
+  private scrollToProducts() {
+    setTimeout(() => {
+      const element = document.getElementById('filtered_products');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   }
 
   private splitFilter(filterKey: keyof Params): string[] {

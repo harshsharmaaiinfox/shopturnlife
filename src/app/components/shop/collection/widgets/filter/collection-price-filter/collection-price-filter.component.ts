@@ -41,6 +41,24 @@ export class CollectionPriceFilterComponent {
       price: 2000,
       text: 'Under',
       value: '0-2000'
+    },
+    {
+      id: 6,
+      price: 3000,
+      text: 'Under',
+      value: '0-3000'
+    },
+    {
+      id: 7,
+      price: 5000,
+      text: 'Under',
+      value: '0-5000'
+    },
+    {
+      id: 8,
+      price: 6000,
+      text: 'Under',
+      value: '0-6000'
     }
   ]
 
@@ -77,12 +95,23 @@ export class CollectionPriceFilterComponent {
       },
       queryParamsHandling: 'merge', // preserve the existing query params in the route
       skipLocationChange: false  // do trigger navigation
+    }).then(() => {
+      this.scrollToProducts();
     });
   }
 
+  private scrollToProducts() {
+    setTimeout(() => {
+      const element = document.getElementById('filtered_products');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  }
+
   // check if the item are selected
-  checked(item: string){
-    if(this.selectedPrices?.indexOf(item) != -1){
+  checked(item: string) {
+    if (this.selectedPrices?.indexOf(item) != -1) {
       return true;
     }
     return false;

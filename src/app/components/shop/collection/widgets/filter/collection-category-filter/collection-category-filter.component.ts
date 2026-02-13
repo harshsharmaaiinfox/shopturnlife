@@ -69,21 +69,7 @@ export class CollectionCategoryFilterComponent {
       queryParamsHandling: 'merge', // preserve the existing query params in the route
       skipLocationChange: false  // do trigger navigation
     }).then(() => {
-      setTimeout(() => {
-        if (isRemoving) {
-          // When removing a category, scroll to the "Products For You" section
-          const productsSection = document.getElementById('filtered_products');
-          if (productsSection) {
-            productsSection.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-          }
-        } else {
-          // When adding a category, maintain current scroll position
-          window.scrollTo(0, currentScrollY);
-        }
-      }, 100);
+      this.scrollToProducts();
     });
   }
 
@@ -94,6 +80,15 @@ export class CollectionCategoryFilterComponent {
       return true;
     }
     return false;
+  }
+
+  private scrollToProducts() {
+    setTimeout(() => {
+      const element = document.getElementById('filtered_products');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   }
 
   /**

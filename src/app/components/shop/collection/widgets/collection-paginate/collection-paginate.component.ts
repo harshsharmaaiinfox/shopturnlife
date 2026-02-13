@@ -31,7 +31,18 @@ export class CollectionPaginateComponent {
         page: page
       },
       queryParamsHandling: 'merge', // preserve the existing query params in the route
+    }).then(() => {
+      this.scrollToProducts();
     });
+  }
+
+  private scrollToProducts() {
+    setTimeout(() => {
+      const element = document.getElementById('filtered_products');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   }
 
 }
