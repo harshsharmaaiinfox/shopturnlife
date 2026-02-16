@@ -43,7 +43,7 @@ export class ProductStateModel {
 export class ProductState {
 
   constructor(private store: Store, private router: Router,
-    private productService: ProductService, private themeOptionService: ThemeOptionService) {}
+    private productService: ProductService, private themeOptionService: ThemeOptionService) { }
 
   @Selector()
   static product(state: ProductStateModel) {
@@ -93,7 +93,7 @@ export class ProductState {
   @Action(GetProducts)
   getProducts(ctx: StateContext<ProductStateModel>, action: GetProducts) {
     this.productService.skeletonLoader = true;
-    if (action.payload) { 
+    if (action.payload) {
       action.payload['store_id'] = '27';
     }
     return this.productService.getProducts(action.payload).pipe(
@@ -195,7 +195,7 @@ export class ProductState {
 
           const ids = [...result.related_products, ...result.cross_sell_products];
           const categoryIds = [...result?.categories?.map(category => category.id)];
-          this.store.dispatch(new GetRelatedProducts({ids: ids?.join(','), category_ids: categoryIds?.join(','), status: 1}));
+          this.store.dispatch(new GetRelatedProducts({ ids: ids?.join(','), category_ids: categoryIds?.join(','), status: 1 }));
 
           const state = ctx.getState();
           ctx.patchState({

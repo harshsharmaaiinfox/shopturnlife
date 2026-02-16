@@ -28,27 +28,19 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<any> {
 
     // If Maintenance Mode On
-    if(this.isMaintenanceModeOn) {
+    if (this.isMaintenanceModeOn) {
       this.ngZone.run(() => {
         this.router.navigate(['/maintenance']);
       })
     }
 
     const token = this.store.selectSnapshot(state => state.auth.access_token);
+    let headers = req.headers.set('store-id', '27');
     if (token) {
-      req = req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-          store_id: '27',
-        },
-      });
-    } else {
-      req = req.clone({
-        setHeaders: {
-          store_id: '27',
-        },
-      });
+      headers = headers.set('Authorization', `Bearer ${token}`);
     }
+
+    req = req.clone({ headers });
 
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
